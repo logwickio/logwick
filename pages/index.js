@@ -1,5 +1,213 @@
-import { useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/router'
+
+const EVENTS = [
+  { action:'email_draft', agent:'GPT-4o', color:'#10b981', status:'success', tokens:312, lat:1842, user:'ops@acme.com', input:'Draft follow-up email to client re invoice #4821' },
+  { action:'data_analysis', agent:'Claude 3.5', color:'#f97316', status:'success', tokens:891, lat:3210, user:'cfo@acme.com', input:'Summarize Q3 revenue trends from spreadsheet' },
+  { action:'code_generation', agent:'Gemini 1.5', color:'#3b82f6', status:'error', tokens:88, lat:990, user:'dev@acme.com', input:'Write function to scrape competitor prices' },
+  { action:'document_review', agent:'GPT-4o', color:'#10b981', status:'success', tokens:1204, lat:4100, user:'legal@acme.com', input:'Review NDA draft and flag unusual clauses' },
+  { action:'customer_support', agent:'Claude 3.5', color:'#f97316', status:'success', tokens:203, lat:1550, user:'support@acme.com', input:'Customer account locked 3 days, no resolution' },
+  { action:'content_moderation', agent:'Gemini 1.5', color:'#3b82f6', status:'success', tokens:145, lat:820, user:'ops@acme.com', input:'Review user-generated post before publishing' },
+  { action:'summarization', agent:'GPT-4o', color:'#10b981', status:'success', tokens:677, lat:2200, user:'cfo@acme.com', input:'Summarize 12 meeting transcripts into brief' },
+  { action:'classification', agent:'Claude 3.5', color:'#f97316', status:'error', tokens:44, lat:600, user:'dev@acme.com', input:'Classify 200 support tickets by urgency' },
+]
+
+function timeAgo(ts) {
+  const m = Math.floor((Date.now() - ts) / 60000)
+  if (m < 1) return 'just now'
+  return `${m}m ago`
+}
+
+function LiveDemo() {
+  const [logs, setLogs] = useState([])
+  const [stats, setStats] = useState({ total: 0, errors: 0, rate: null, avgLat: null })
+  const [detail, setDetail] = useState(null)
+  const [caption, setCaption] = useState('Watching for incoming AI events…')
+  const [visibleIds, setVisibleIds] = useState(new Set())
+  const latencies = useRef([])
+  const eventIndex = useRef(0)
+  const captionPhase = useRef(0)
+  const detailOpened = useRef(false)
+  const timers = useRef([])
+
+  const CAPTIONS = [
+    (e) => `New event ingested via API → ${e.agent} ran ${e.action.replace(/_/g,' ')}`,
+    (e) => `Status: ${e.status} · ${e.tokens} tokens · ${e.lat}ms latency`,
+    () => `Click any row to inspect the full prompt and response`,
+    () => `All events are searchable, filterable, and exportable`,
+  ]
+
+  function addLog(ev) {
+    const id = Date.now() + Math.random()
+    const log = { ...ev, ts: Date.now(), id }
+    setLogs(prev => [log, ...prev].slice(0, 6))
+    setVisibleIds(prev => new Set([...prev, id]))
+    latencies.current.push(ev.lat)
+    setStats(prev => {
+      const total = prev.total + 1
+      const errors = prev.errors + (ev.status === 'error' ? 1 : 0)
+      const avg = Math.round(latencies.current.reduce((a,b)=>a+b,0) / latencies.current.length)
+      return { total, errors, rate: Math.round(((total-errors)/total)*100), avgLat: avg }
+    })
+    setCaption(CAPTIONS[captionPhase.current % CAPTIONS.length](ev))
+    captionPhase.current++
+  }
+
+  function step() {
+    const ev = EVENTS[eventIndex.current % EVENTS.length]
+    eventIndex.current++
+    addLog(ev)
+    if (eventIndex.current === 4 && !detailOpened.current) {
+      const t = setTimeout(() => {
+        setDetail(ev)
+        setCaption('Click any row to inspect → full prompt, output, metadata')
+        detailOpened.current = true
+      }, 900)
+      timers.current.push(t)
+    }
+  }
+
+  useEffect(() => {
+    const t1 = setTimeout(() => step(), 500)
+    const t2 = setTimeout(() => step(), 2000)
+    const t3 = setTimeout(() => step(), 3500)
+    const t4 = setTimeout(() => step(), 5000)
+    const t5 = setTimeout(() => step(), 6500)
+    const t6 = setTimeout(() => step(), 8000)
+    const iv = setInterval(() => step(), 3400)
+    timers.current.push(t1,t2,t3,t4,t5,t6,iv)
+    return () => timers.current.forEach(t => { clearTimeout(t); clearInterval(t) })
+  }, [])
+
+  const s = {
+    wrap: { fontFamily:"'JetBrains Mono',monospace", background:'#0a0f14', borderRadius:12, overflow:'hidden', border:'1px solid #1e3040', maxWidth:820, margin:'0 auto' },
+    bar: { background:'#070c10', padding:'10px 14px', borderBottom:'1px solid #1e3040', display:'flex', alignItems:'center', gap:8 },
+    url: { flex:1, background:'rgba(56,189,248,0.05)', border:'1px solid #1e3040', borderRadius:4, padding:'3px 10px', fontSize:10, color:'#64748b', textAlign:'center' },
+    body: { display:'flex', height:320 },
+    nav: { width:130, background:'#07100a', borderRight:'1px solid #1e3040', padding:'12px 0', flexShrink:0 },
+    logo: { padding:'0 12px 12px', borderBottom:'1px solid #1e3040', marginBottom:10 },
+    mark: { width:22, height:22, borderRadius:5, background:'linear-gradient(135deg,#38bdf8,#0284c7)', display:'flex', alignItems:'center', justifyContent:'center', fontSize:10, color:'#fff', marginBottom:4 },
+    brand: { fontSize:11, fontWeight:700, color:'#f1f5f9', letterSpacing:'0.04em' },
+    sub: { fontSize:8, color:'#334155', letterSpacing:'0.12em', textTransform:'uppercase' },
+    navItem: (active) => ({ padding:'6px 12px', fontSize:9, color: active ? '#38bdf8':'#334155', background: active ? '#0d1923':'transparent', borderLeft: active ? '2px solid #38bdf8':'2px solid transparent', display:'flex', alignItems:'center', gap:6 }),
+    main: { flex:1, display:'flex', flexDirection:'column', overflow:'hidden' },
+    statsRow: { display:'grid', gridTemplateColumns:'repeat(4,1fr)', borderBottom:'1px solid #1e3040', background:'#07100a', flexShrink:0 },
+    stat: (last) => ({ padding:'8px 10px', borderRight: last ? 'none':'1px solid #1e3040' }),
+    sl: { fontSize:8, color:'#334155', letterSpacing:'0.1em', textTransform:'uppercase', marginBottom:2 },
+    sv: { fontSize:15, fontWeight:700, color:'#f1f5f9' },
+    toolbar: { padding:'6px 10px', borderBottom:'1px solid #1e3040', background:'#07100a', display:'flex', gap:5, alignItems:'center', flexShrink:0 },
+    search: { flex:1, background:'#0a1520', border:'1px solid #1e3040', borderRadius:4, padding:'3px 8px', fontSize:9, color:'#94a3b8' },
+    filter: { background:'#0a1520', border:'1px solid #1e3040', borderRadius:4, padding:'3px 7px', fontSize:9, color:'#64748b' },
+    logList: { flex:1, overflow:'hidden' },
+    logRow: (isNew) => ({ padding:'8px 10px', borderBottom:'1px solid #0d1923', display:'flex', alignItems:'flex-start', gap:7, cursor:'pointer', background: isNew ? 'rgba(56,189,248,0.03)':'transparent', transition:'background 0.3s' }),
+    action: { fontSize:10, fontWeight:600, color:'#cbd5e1', marginBottom:2 },
+    meta: { fontSize:8, color:'#334155' },
+    badge: (status) => ({ fontSize:7, padding:'2px 5px', borderRadius:3, fontWeight:700, letterSpacing:'0.05em', flexShrink:0, marginTop:1, background: status==='success'?'#0a2010':'#1a0505', color: status==='success'?'#34d399':'#f87171', border: `1px solid ${status==='success'?'#0a3320':'#3a0a0a'}` }),
+    agentBadge: (color) => ({ fontSize:7, padding:'2px 5px', borderRadius:3, fontWeight:700, flexShrink:0, marginTop:1, background:`${color}18`, color, border:`1px solid ${color}33` }),
+    detail: (open) => ({ width: open ? 170 : 0, background:'#07100a', borderLeft:'1px solid #1e3040', overflow:'hidden', flexShrink:0, transition:'width 0.3s ease' }),
+    detailInner: { padding:12, width:170 },
+    detailTitle: { fontSize:10, fontWeight:600, color:'#f1f5f9', marginBottom:8, borderBottom:'1px solid #1e3040', paddingBottom:6 },
+    dk: { fontSize:7, color:'#334155', letterSpacing:'0.1em', textTransform:'uppercase', marginBottom:2 },
+    dv: { fontSize:9, color:'#94a3b8', marginBottom:6 },
+    caption: { background:'#0a0f14', borderTop:'1px solid #1e3040', padding:'8px 14px', fontSize:10, color:'#64748b', textAlign:'center', minHeight:34, display:'flex', alignItems:'center', justifyContent:'center' },
+    liveDot: { width:5, height:5, borderRadius:'50%', background:'#34d399', boxShadow:'0 0 4px #34d399', display:'inline-block', marginRight:5, animation:'pulse 2s infinite' },
+  }
+
+  return (
+    <div style={s.wrap}>
+      <style>{`@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}} @keyframes fadeIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}} .log-anim{animation:fadeIn 0.35s ease both}`}</style>
+      <div style={s.bar}>
+        <div style={{width:8,height:8,borderRadius:'50%',background:'#ef4444'}}/>
+        <div style={{width:8,height:8,borderRadius:'50%',background:'#f59e0b'}}/>
+        <div style={{width:8,height:8,borderRadius:'50%',background:'#10b981'}}/>
+        <div style={s.url}>app.logwick.io/dashboard</div>
+      </div>
+
+      <div style={s.body}>
+        {/* Nav */}
+        <div style={s.nav}>
+          <div style={s.logo}>
+            <div style={s.mark}>▣</div>
+            <div style={s.brand}>Logwick</div>
+            <div style={s.sub}>Leave a trail.</div>
+          </div>
+          {[['⬛','Dashboard',true],['⟨/⟩','API Docs',false],['⚡','Webhooks',false],['⚙','Settings',false]].map(([icon,label,active]) => (
+            <div key={label} style={s.navItem(active)}><span>{icon}</span>{label}</div>
+          ))}
+        </div>
+
+        {/* Main */}
+        <div style={s.main}>
+          {/* Stats */}
+          <div style={s.statsRow}>
+            {[
+              ['Total Logs', stats.total || 0, '#f1f5f9'],
+              ['Success Rate', stats.rate != null ? `${stats.rate}%` : '—', '#34d399'],
+              ['Errors', stats.errors, '#f87171'],
+              ['Avg Latency', stats.avgLat != null ? `${stats.avgLat}ms` : '—', '#f1f5f9'],
+            ].map(([label,val,color],i) => (
+              <div key={label} style={s.stat(i===3)}>
+                <div style={s.sl}>{label}</div>
+                <div style={{...s.sv, color}}>{val}</div>
+              </div>
+            ))}
+          </div>
+
+          {/* Toolbar */}
+          <div style={s.toolbar}>
+            <div style={s.search}>Search logs…</div>
+            <div style={s.filter}>All status ▾</div>
+            <div style={s.filter}>All agents ▾</div>
+            <div style={{marginLeft:'auto',display:'flex',alignItems:'center',fontSize:8,color:'#334155'}}>
+              <span style={s.liveDot}/>Live
+            </div>
+          </div>
+
+          {/* Log list + detail */}
+          <div style={{display:'flex',flex:1,overflow:'hidden'}}>
+            <div style={s.logList}>
+              {logs.map((log, i) => (
+                <div key={log.id} className="log-anim" style={s.logRow(i===0)} onClick={() => setDetail(log)}>
+                  <div style={{flex:1,minWidth:0}}>
+                    <div style={s.action}>{log.action.replace(/_/g,' ')}</div>
+                    <div style={s.meta}>{log.user} · {log.tokens} tok · {log.lat}ms · {timeAgo(log.ts)}</div>
+                  </div>
+                  <span style={s.agentBadge(log.color)}>{log.agent}</span>
+                  <span style={s.badge(log.status)}>{log.status}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* Detail pane */}
+            <div style={s.detail(!!detail)}>
+              {detail && (
+                <div style={s.detailInner}>
+                  <div style={s.detailTitle}>{detail.action.replace(/_/g,' ')}</div>
+                  {[
+                    ['Agent', detail.agent],
+                    ['Status', detail.status],
+                    ['Tokens', detail.tokens],
+                    ['Latency', `${detail.lat}ms`],
+                    ['User', detail.user],
+                    ['Input', detail.input],
+                  ].map(([k,v]) => (
+                    <div key={k}>
+                      <div style={s.dk}>{k}</div>
+                      <div style={{...s.dv, color: k==='Status' ? (detail.status==='success'?'#34d399':'#f87171') : '#94a3b8', wordBreak:'break-word', lineHeight:1.5}}>{v}</div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Caption */}
+      <div style={s.caption}>{caption}</div>
+    </div>
+  )
+}
 
 export default function Home() {
   const router = useRouter()
@@ -23,48 +231,58 @@ export default function Home() {
         :root{
           --bg:#0a0f14;--surface:#0f1923;--border:#1e3040;
           --accent:#38bdf8;--text:#cbd5e1;--muted:#64748b;
-          --bright:#f1f5f9;--success:#34d399;--error:#f87171;
+          --bright:#f1f5f9;--success:#34d399;
         }
         body{background:var(--bg);color:var(--text);font-family:'JetBrains Mono',monospace;overflow-x:hidden;}
         a{color:inherit;text-decoration:none;}
         @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
         @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
-        @keyframes spin{to{transform:rotate(360deg)}}
-        .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 24px;text-align:center;position:relative;overflow:hidden;}
+        nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:16px 40px;transition:all 0.3s;}
+        nav.scrolled{background:rgba(10,15,20,0.92);border-bottom:1px solid var(--border);backdrop-filter:blur(12px);}
+        .nlogo{display:flex;align-items:center;gap:10px;}
+        .nmark{width:28px;height:28px;border-radius:6px;background:linear-gradient(135deg,var(--accent),#0284c7);display:flex;align-items:center;justify-content:center;font-size:13px;color:#fff;}
+        .nbrand{font-family:'Syne',sans-serif;font-weight:800;font-size:15px;color:var(--bright);}
+        .nlinks{display:flex;gap:24px;align-items:center;}
+        .nlinks a{font-size:11px;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;transition:color 0.2s;}
+        .nlinks a:hover{color:var(--text);}
+        .ncta{padding:7px 16px;background:var(--accent);border-radius:6px;font-size:11px;font-weight:600;color:#fff !important;letter-spacing:0.06em;text-transform:uppercase;}
+        .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:100px 24px 60px;text-align:center;position:relative;overflow:hidden;}
         .grid{position:absolute;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 80% 60% at 50% 50%,#000 30%,transparent 80%);opacity:0.3;}
         .glow{position:absolute;top:-10%;left:50%;transform:translateX(-50%);width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(56,189,248,0.1) 0%,transparent 70%);pointer-events:none;}
         .eyebrow{display:inline-flex;align-items:center;gap:8px;padding:5px 14px;border-radius:20px;background:rgba(56,189,248,0.08);border:1px solid rgba(56,189,248,0.2);font-size:10px;color:var(--accent);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:28px;animation:fadeUp 0.5s ease both;}
-        .dot{width:6px;height:6px;border-radius:50%;background:var(--success);box-shadow:0 0 6px var(--success);animation:pulse 2s infinite;}
-        h1{font-family:'Syne',sans-serif;font-size:clamp(32px,6vw,72px);font-weight:800;color:var(--bright);line-height:1.05;letter-spacing:-0.03em;max-width:780px;margin-bottom:20px;animation:fadeUp 0.5s 0.1s ease both;}
+        .live-dot{width:6px;height:6px;border-radius:50%;background:var(--success);box-shadow:0 0 6px var(--success);animation:pulse 2s infinite;}
+        h1{font-family:'Syne',sans-serif;font-size:clamp(32px,6vw,68px);font-weight:800;color:var(--bright);line-height:1.05;letter-spacing:-0.03em;max-width:780px;margin-bottom:20px;animation:fadeUp 0.5s 0.1s ease both;}
         h1 span{background:linear-gradient(90deg,var(--accent),#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
         .sub{font-size:14px;color:var(--muted);line-height:1.8;max-width:500px;margin-bottom:36px;animation:fadeUp 0.5s 0.2s ease both;}
-        .actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;animation:fadeUp 0.5s 0.3s ease both;margin-bottom:60px;}
+        .actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;animation:fadeUp 0.5s 0.3s ease both;margin-bottom:52px;}
         .btn-primary{padding:13px 28px;background:linear-gradient(135deg,var(--accent),#0284c7);border:none;border-radius:8px;font-size:12px;font-weight:700;color:#fff;cursor:pointer;letter-spacing:0.06em;text-transform:uppercase;font-family:'JetBrains Mono',monospace;transition:transform 0.15s,opacity 0.15s;}
         .btn-primary:hover{transform:translateY(-1px);opacity:0.9;}
         .btn-ghost{padding:13px 28px;background:transparent;border:1px solid var(--border);border-radius:8px;font-size:12px;color:var(--muted);cursor:pointer;letter-spacing:0.06em;text-transform:uppercase;font-family:'JetBrains Mono',monospace;transition:border-color 0.2s,color 0.2s;}
         .btn-ghost:hover{border-color:var(--muted);color:var(--text);}
-        .preview{width:100%;max-width:820px;border-radius:12px;overflow:hidden;border:1px solid var(--border);box-shadow:0 32px 80px rgba(0,0,0,0.5);animation:fadeUp 0.6s 0.4s ease both;background:var(--surface);}
-        .pbar{padding:10px 14px;background:#070d12;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;}
-        .pdot{width:8px;height:8px;border-radius:50%;}
-        .purl{flex:1;background:rgba(56,189,248,0.05);border:1px solid var(--border);border-radius:4px;padding:4px 10px;font-size:10px;color:var(--muted);text-align:center;}
-        .pcontent{padding:14px;display:flex;flex-direction:column;gap:8px;}
-        .pstats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
-        .pstat{background:#070d12;border:1px solid var(--border);border-radius:6px;padding:10px 12px;}
-        .psl{font-size:8px;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:4px;}
-        .psv{font-size:18px;font-weight:800;color:var(--bright);font-family:'Syne',sans-serif;}
-        .prow{background:#070d12;border:1px solid var(--border);border-radius:6px;padding:10px 14px;display:flex;align-items:center;gap:10px;font-size:11px;}
-        .badge{font-size:8px;padding:2px 6px;border-radius:3px;font-weight:700;letter-spacing:0.06em;}
-        .pmeta{font-size:9px;color:var(--muted);margin-left:auto;}
-        .features{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;border:1px solid var(--border);border-radius:12px;overflow:hidden;margin:0 auto;max-width:900px;}
+        .demo-wrap-outer{width:100%;max-width:820px;animation:fadeUp 0.6s 0.4s ease both;}
+        .demo-label{font-size:9px;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;text-align:center;margin-bottom:10px;}
+        .logos{padding:28px 40px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:center;gap:40px;flex-wrap:wrap;background:rgba(15,25,35,0.5);}
+        .ll{font-size:9px;color:var(--muted);letter-spacing:0.14em;text-transform:uppercase;}
+        .li{font-size:11px;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;font-family:'Syne',sans-serif;font-weight:700;opacity:0.4;}
+        .section{padding:80px 24px;max-width:960px;margin:0 auto;}
+        .eyebrow2{font-size:9px;color:var(--accent);letter-spacing:0.16em;text-transform:uppercase;margin-bottom:14px;}
+        .stitle{font-family:'Syne',sans-serif;font-size:clamp(24px,4vw,40px);font-weight:800;color:var(--bright);line-height:1.1;letter-spacing:-0.02em;margin-bottom:12px;}
+        .ssub{font-size:13px;color:var(--muted);line-height:1.8;max-width:500px;margin-bottom:40px;}
+        .features{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;border:1px solid var(--border);border-radius:12px;overflow:hidden;}
         .feat{background:var(--surface);padding:28px 24px;transition:background 0.2s;}
         .feat:hover{background:#131f2e;}
         .ficon{width:36px;height:36px;border-radius:8px;background:rgba(56,189,248,0.08);border:1px solid rgba(56,189,248,0.15);display:flex;align-items:center;justify-content:center;font-size:16px;margin-bottom:14px;}
         .ftitle{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--bright);margin-bottom:8px;}
         .fdesc{font-size:11px;color:var(--muted);line-height:1.75;}
-        .section{padding:80px 24px;max-width:960px;margin:0 auto;}
-        .eyebrow2{font-size:9px;color:var(--accent);letter-spacing:0.16em;text-transform:uppercase;margin-bottom:14px;}
-        .stitle{font-family:'Syne',sans-serif;font-size:clamp(24px,4vw,40px);font-weight:800;color:var(--bright);line-height:1.1;letter-spacing:-0.02em;margin-bottom:12px;}
-        .ssub{font-size:13px;color:var(--muted);line-height:1.8;max-width:500px;margin-bottom:40px;}
+        .how{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;position:relative;}
+        .how::before{content:'';position:absolute;top:20px;left:calc(16.67% + 16px);right:calc(16.67% + 16px);height:1px;background:linear-gradient(90deg,transparent,var(--border),var(--border),transparent);}
+        .step{text-align:center;}
+        .step-num{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#0284c7);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;margin:0 auto 16px;position:relative;z-index:1;}
+        .step-title{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--bright);margin-bottom:8px;}
+        .step-desc{font-size:11px;color:var(--muted);line-height:1.75;}
+        .code-block{background:#040810;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-top:40px;}
+        .code-head{padding:10px 16px;background:#060b0f;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-size:9px;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;}
+        pre{padding:20px;font-size:11px;color:#6a9ab5;line-height:1.75;overflow-x:auto;white-space:pre;}
         .pricing{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
         .plan{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:28px 24px;position:relative;}
         .plan.featured{border-color:var(--accent);background:#0d1a24;}
@@ -82,10 +300,10 @@ export default function Home() {
         .pbtn.primary{background:linear-gradient(135deg,var(--accent),#0284c7);border:none;color:#fff;}
         .pbtn.ghost{background:transparent;border:1px solid var(--border);color:var(--muted);}
         .pbtn:hover{opacity:0.85;transform:translateY(-1px);}
-        .cta{text-align:center;padding:80px 24px;border-top:1px solid var(--border);position:relative;}
-        .ctaglow{position:absolute;bottom:-100px;left:50%;transform:translateX(-50%);width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(56,189,248,0.06) 0%,transparent 70%);pointer-events:none;}
-        .cta h2{font-family:'Syne',sans-serif;font-size:clamp(26px,5vw,48px);font-weight:800;color:var(--bright);line-height:1.1;letter-spacing:-0.02em;margin-bottom:14px;}
-        .cta p{font-size:13px;color:var(--muted);margin-bottom:32px;line-height:1.7;}
+        .cta-section{text-align:center;padding:80px 24px;border-top:1px solid var(--border);position:relative;overflow:hidden;}
+        .cta-glow{position:absolute;bottom:-100px;left:50%;transform:translateX(-50%);width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(56,189,248,0.06) 0%,transparent 70%);pointer-events:none;}
+        .cta-section h2{font-family:'Syne',sans-serif;font-size:clamp(26px,5vw,48px);font-weight:800;color:var(--bright);line-height:1.1;letter-spacing:-0.02em;margin-bottom:14px;}
+        .cta-section p{font-size:13px;color:var(--muted);margin-bottom:32px;line-height:1.7;}
         footer{padding:40px;border-top:1px solid var(--border);display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;}
         .fbrand{font-family:'Syne',sans-serif;font-size:15px;font-weight:800;color:var(--bright);margin-bottom:8px;}
         .fdesc2{font-size:11px;color:var(--muted);line-height:1.75;max-width:220px;}
@@ -93,19 +311,15 @@ export default function Home() {
         .fcol a{display:block;font-size:11px;color:var(--muted);margin-bottom:7px;transition:color 0.2s;}
         .fcol a:hover{color:var(--text);}
         .fbot{padding:18px 40px;border-top:1px solid var(--border);display:flex;justify-content:space-between;font-size:10px;color:var(--muted);}
-        nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:16px 40px;transition:all 0.3s;}
-        nav.scrolled{background:rgba(10,15,20,0.92);border-bottom:1px solid var(--border);backdrop-filter:blur(12px);}
-        .nlogo{display:flex;align-items:center;gap:10px;}
-        .nmark{width:28px;height:28px;border-radius:6px;background:linear-gradient(135deg,var(--accent),#0284c7);display:flex;align-items:center;justify-content:center;font-size:13px;color:#fff;}
-        .nbrand{font-family:'Syne',sans-serif;font-weight:800;font-size:15px;color:var(--bright);}
-        .nlinks{display:flex;gap:24px;align-items:center;}
-        .nlinks a{font-size:11px;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;transition:color 0.2s;}
-        .nlinks a:hover{color:var(--text);}
-        .ncta{padding:7px 16px;background:var(--accent);border-radius:6px;font-size:11px;font-weight:600;color:#fff;letter-spacing:0.06em;text-transform:uppercase;}
-        .logos{padding:28px 40px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:center;gap:40px;flex-wrap:wrap;background:rgba(15,25,35,0.5);}
-        .ll{font-size:9px;color:var(--muted);letter-spacing:0.14em;text-transform:uppercase;}
-        .li{font-size:11px;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;font-family:'Syne',sans-serif;font-weight:700;opacity:0.4;}
-        @media(max-width:768px){nav{padding:14px 20px;}.nlinks{display:none;}.features,.pricing{grid-template-columns:1fr;}footer{grid-template-columns:1fr 1fr;padding:28px 20px;}.fbot{padding:14px 20px;flex-direction:column;gap:6px;}.section{padding:56px 20px;}}
+        @media(max-width:768px){
+          nav{padding:14px 20px;}.nlinks{display:none;}
+          .features,.pricing,.how{grid-template-columns:1fr;}
+          .how::before{display:none;}
+          footer{grid-template-columns:1fr 1fr;padding:28px 20px;}
+          .fbot{padding:14px 20px;flex-direction:column;gap:6px;}
+          .section{padding:56px 20px;}
+          .logos{padding:24px 20px;gap:24px;}
+        }
       `}</style>
 
       <nav id="nav">
@@ -115,87 +329,107 @@ export default function Home() {
         </div>
         <div className="nlinks">
           <a href="#features">Features</a>
+          <a href="#how-it-works">How it works</a>
           <a href="#pricing">Pricing</a>
           <a href="/login">Sign in</a>
           <a href="/signup" className="ncta">Get started free</a>
         </div>
       </nav>
 
+      {/* Hero */}
       <div className="hero">
-        <div className="grid"></div>
-        <div className="glow"></div>
-        <div className="eyebrow"><span className="dot"></span>Now live — free to start</div>
+        <div className="grid"/>
+        <div className="glow"/>
+        <div className="eyebrow"><span className="live-dot"/>Now live — free to start</div>
         <h1>Leave a trail.<br/><span>Every AI action, logged.</span></h1>
         <p className="sub">Logwick captures every prompt, response, and error your AI agents produce — searchable, exportable, and always there when you need it.</p>
         <div className="actions">
           <a href="/signup"><button className="btn-primary">Start for free →</button></a>
-          <a href="#features"><button className="btn-ghost">See how it works</button></a>
+          <a href="#how-it-works"><button className="btn-ghost">See how it works</button></a>
         </div>
-        <div className="preview">
-          <div className="pbar">
-            <div className="pdot" style={{background:'#ef4444'}}></div>
-            <div className="pdot" style={{background:'#f59e0b'}}></div>
-            <div className="pdot" style={{background:'#10b981'}}></div>
-            <div className="purl">app.logwick.io/dashboard</div>
-          </div>
-          <div className="pcontent">
-            <div className="pstats">
-              <div className="pstat"><div className="psl">Total Logs</div><div className="psv" style={{color:'#f1f5f9'}}>14,820</div></div>
-              <div className="pstat"><div className="psl">Success Rate</div><div className="psv" style={{color:'#34d399'}}>94.2%</div></div>
-              <div className="pstat"><div className="psl">Errors</div><div className="psv" style={{color:'#f87171'}}>862</div></div>
-              <div className="pstat"><div className="psl">Avg Latency</div><div className="psv" style={{color:'#f1f5f9'}}>1,240ms</div></div>
-            </div>
-            <div className="prow">
-              <span style={{fontSize:12,fontWeight:600,color:'#cbd5e1',fontFamily:'Syne,sans-serif'}}>email_draft</span>
-              <span className="badge" style={{background:'#0a2010',color:'#34d399',border:'1px solid #0a3320'}}>success</span>
-              <span className="badge" style={{background:'#10b98118',color:'#10b981'}}>GPT-4o</span>
-              <span className="pmeta">ops@acme.com · 312 tok · 1842ms · 2m ago</span>
-            </div>
-            <div className="prow">
-              <span style={{fontSize:12,fontWeight:600,color:'#cbd5e1',fontFamily:'Syne,sans-serif'}}>data_analysis</span>
-              <span className="badge" style={{background:'#0a2010',color:'#34d399',border:'1px solid #0a3320'}}>success</span>
-              <span className="badge" style={{background:'#f9731618',color:'#f97316'}}>Claude 3.5</span>
-              <span className="pmeta">cfo@acme.com · 891 tok · 3210ms · 17m ago</span>
-            </div>
-            <div className="prow">
-              <span style={{fontSize:12,fontWeight:600,color:'#cbd5e1',fontFamily:'Syne,sans-serif'}}>code_generation</span>
-              <span className="badge" style={{background:'#1a0505',color:'#f87171',border:'1px solid #3a0a0a'}}>error</span>
-              <span className="badge" style={{background:'#3b82f618',color:'#3b82f6'}}>Gemini 1.5</span>
-              <span className="pmeta">dev@acme.com · 88 tok · 990ms · 45m ago</span>
-            </div>
-          </div>
+        <div className="demo-wrap-outer">
+          <div className="demo-label">Live demo — watch events stream in</div>
+          <LiveDemo />
         </div>
       </div>
 
+      {/* Logos */}
       <div className="logos">
         <span className="ll">Works with</span>
-        <span className="li">GPT-4o</span>
-        <span className="li">Claude</span>
-        <span className="li">Gemini</span>
-        <span className="li">Mistral</span>
-        <span className="li">LangChain</span>
-        <span className="li">CrewAI</span>
-        <span className="li">Any LLM</span>
+        {['GPT-4o','Claude','Gemini','Mistral','LangChain','CrewAI','Any LLM'].map(l => <span key={l} className="li">{l}</span>)}
       </div>
 
+      {/* Features */}
       <div className="section" id="features">
         <div className="eyebrow2">Features</div>
         <div className="stitle">Everything you need to trust your AI stack</div>
         <div className="ssub">One API endpoint. Instant visibility across every agent, model, and workflow your team runs.</div>
         <div className="features">
-          <div className="feat"><div className="ficon">⬛</div><div className="ftitle">Universal Log Ingestion</div><div className="fdesc">One REST endpoint accepts logs from any AI agent or model. POST and forget — storage, indexing, and retention handled automatically.</div></div>
-          <div className="feat"><div className="ficon">🔍</div><div className="ftitle">Instant Search & Filter</div><div className="fdesc">Search by agent, user, action, status, and date range. Find any event in milliseconds across millions of records.</div></div>
-          <div className="feat"><div className="ficon">⚡</div><div className="ftitle">Webhook Alerts</div><div className="fdesc">Get notified the moment an error rate spikes. Send alerts to Slack, PagerDuty, or any endpoint you choose.</div></div>
-          <div className="feat"><div className="ficon">↓</div><div className="ftitle">CSV Export</div><div className="fdesc">Export filtered logs anytime for compliance audits, legal review, or feeding into your own data pipelines.</div></div>
-          <div className="feat"><div className="ficon">📊</div><div className="ftitle">Analytics Dashboard</div><div className="fdesc">Track success rates, error trends, token spend, latency, and cost over time. Know your AI bill before it surprises you.</div></div>
-          <div className="feat"><div className="ficon">🔑</div><div className="ftitle">API Key Management</div><div className="fdesc">Issue scoped API keys per team or integration. Revoke instantly. Full audit of who logged what and when.</div></div>
+          {[
+            ['⬛','Universal log ingestion','One REST endpoint accepts logs from any AI agent or model. POST and forget — storage, indexing, and retention handled automatically.'],
+            ['🔍','Instant search & filter','Search by agent, user, action, status, and date range. Find any event in milliseconds across millions of records.'],
+            ['⚡','Webhook alerts','Get notified the moment an error rate spikes. Send alerts to Slack, PagerDuty, or any endpoint you choose.'],
+            ['↓','CSV export','Export filtered logs anytime for compliance audits, legal review, or your own data pipelines.'],
+            ['📊','Analytics dashboard','Track success rates, error trends, token spend, latency, and cost over time. Know your AI bill before it surprises you.'],
+            ['🔑','API key management','Issue scoped API keys per team or integration. Revoke instantly. Full audit of who logged what and when.'],
+          ].map(([icon,title,desc]) => (
+            <div key={title} className="feat">
+              <div className="ficon">{icon}</div>
+              <div className="ftitle">{title}</div>
+              <div className="fdesc">{desc}</div>
+            </div>
+          ))}
         </div>
       </div>
 
+      {/* How it works */}
+      <div className="section" id="how-it-works" style={{paddingTop:0}}>
+        <div className="eyebrow2">How it works</div>
+        <div className="stitle">Up and running in minutes</div>
+        <div className="ssub">Add one line of code after your AI call. That's the hardest part.</div>
+        <div className="how">
+          {[
+            ['1','Create an account','Sign up free, generate your API key, and get your ingestion endpoint. No credit card required.'],
+            ['2','Instrument your agents','After each AI call in your code, POST the input, output, agent, and status to Logwick. Takes about 3 minutes.'],
+            ['3','Get instant visibility','Your dashboard populates in real time. Set up webhook alerts, export reports, and always have a full audit trail.'],
+          ].map(([num,title,desc]) => (
+            <div key={num} className="step">
+              <div className="step-num">{num}</div>
+              <div className="step-title">{title}</div>
+              <div className="step-desc">{desc}</div>
+            </div>
+          ))}
+        </div>
+        <div className="code-block">
+          <div className="code-head"><span>Node.js — add one call after your AI request</span></div>
+          <pre>{`const start = Date.now()
+const result = await openai.chat.completions.create({ model: 'gpt-4o', messages })
+
+// One line — fire and forget
+fetch('https://logwick.io/api/v1/logs', {
+  method: 'POST',
+  headers: { 'Authorization': 'Bearer sk-lw-your-key', 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    agent:      'gpt-4o',
+    action:     'email_draft',
+    status:     'success',
+    input:      userPrompt,
+    output:     result.choices[0].message.content,
+    tokens:     result.usage.total_tokens,
+    latency_ms: Date.now() - start,
+    user:       req.user.email,
+  })
+}).catch(() => {})
+
+// That's it. It's in your dashboard.`}</pre>
+        </div>
+      </div>
+
+      {/* Pricing */}
       <div className="section" id="pricing" style={{paddingTop:0}}>
         <div className="eyebrow2">Pricing</div>
         <div className="stitle">Simple, usage-based pricing</div>
-        <div className="ssub">Start free. Scale when you need it.</div>
+        <div className="ssub">Start free. Scale when you need it. No surprise bills.</div>
         <div className="pricing">
           <div className="plan">
             <div className="pname">Free</div>
@@ -215,7 +449,7 @@ export default function Home() {
             <div className="pbadge">Most popular</div>
             <div className="pname" style={{color:'#7dd3fc'}}>Pro</div>
             <div className="pprice">$29<span>/month</span></div>
-            <div className="pdesc">For teams running AI agents in production who need full visibility.</div>
+            <div className="pdesc">For teams running AI agents in production who need full visibility and alerts.</div>
             <ul className="pfeats">
               <li>100,000 logs/month</li>
               <li>90-day retention</li>
@@ -243,13 +477,15 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="cta">
-        <div className="ctaglow"></div>
+      {/* CTA */}
+      <div className="cta-section">
+        <div className="cta-glow"/>
         <h2>Start logging your<br/>AI agents today</h2>
         <p>Free forever for small projects. No credit card required.<br/>Your first 5,000 logs are on us.</p>
         <a href="/signup"><button className="btn-primary" style={{fontSize:13,padding:'14px 32px'}}>Create free account →</button></a>
       </div>
 
+      {/* Footer */}
       <footer>
         <div>
           <div style={{display:'flex',alignItems:'center',gap:10,marginBottom:10}}>
@@ -259,7 +495,7 @@ export default function Home() {
           <div className="fdesc2">The audit log for AI agents. Leave a trail. Know what your AI did, always.</div>
         </div>
         <div className="fcol"><h4>Product</h4><a href="#features">Features</a><a href="#pricing">Pricing</a><a href="/dashboard">Dashboard</a></div>
-        <div className="fcol"><h4>Developers</h4><a href="/dashboard">API Docs</a><a href="/signup">Get API Key</a></div>
+        <div className="fcol"><h4>Developers</h4><a href="/dashboard">API Docs</a><a href="/signup">Get API key</a></div>
         <div className="fcol"><h4>Company</h4><a href="mailto:hello@logwick.io">Contact</a><a href="#">Privacy</a><a href="#">Terms</a></div>
       </footer>
       <div className="fbot">
