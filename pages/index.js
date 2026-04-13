@@ -1,15 +1,18 @@
-// pages/index.js
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
-import { getSupabase } from '../lib/supabase'
 
 export default function Index() {
   const router = useRouter()
 
   useEffect(() => {
-    getSupabase().auth.getSession().then(({ data: { session } }) => {
+    const check = async () => {
+      const { getSupabase } = await import('../lib/supabase')
+      const supabase = getSupabase()
+      if (!supabase) { router.replace('/login'); return }
+      const { data: { session } } = await supabase.auth.getSession()
       router.replace(session ? '/dashboard' : '/login')
-    })
+    }
+    check()
   }, [router])
 
   return (
