@@ -1,21 +1,20 @@
-// pages/api/dashboard/logs.js
-import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs'
 import { getSupabaseAdmin } from '../../../lib/supabase'
 import { stringify } from 'csv-stringify/sync'
 
-async function getOrgId(supabaseUser, userId) {
-  const { data } = await supabaseUser
-    .from('org_members').select('org_id').eq('user_id', userId).single()
-  return data?.org_id
+async function getUserOrg(req) {
+  const auth = req.headers.authorization || ''
+  const token = auth.replace('Bearer ', '')
+  if (!token) return null
+  const supabase = getSupabaseAdmin()
+  const { data: { user }, error } = await supabase.auth.getUser(token)
+  if (error || !user) return null
+  const { data } = await supabase.from('org_members').select('org_id').eq('user_id', user.id).single()
+  return data?.org_id || null
 }
 
 export default async function handler(req, res) {
-  const supabaseUser = createServerSupabaseClient({ req, res })
-  const { data: { session } } = await supabaseUser.auth.getSession()
-  if (!session) return res.status(401).json({ error: 'Not authenticated' })
-
-  const orgId = await getOrgId(supabaseUser, session.user.id)
-  if (!orgId) return res.status(403).json({ error: 'No organization found' })
+  const orgId = await getUserOrg(req)
+  if (!orgId) return res.status(401).json({ error: 'Not authenticated' })
 
   const supabase = getSupabaseAdmin()
 
@@ -28,31 +27,19 @@ export default async function handler(req, res) {
 
   if (req.method !== 'GET') return res.status(405).end()
 
-  const {
-    status, agent, action,
-    from, to, search,
-    limit = '50', offset = '0',
-    format = 'json',
-  } = req.query
-
+  const { status, agent, action, from, to, search, limit = '50', offset = '0', format = 'json' } = req.query
   const take = Math.min(parseInt(limit) || 50, 500)
   const skip = parseInt(offset) || 0
 
-  let query = supabase
-    .from('logs')
-    .select('*', { count: 'exact' })
-    .eq('org_id', orgId)
-    .order('created_at', { ascending: false })
-    .range(skip, skip + take - 1)
+  let query = supabase.from('logs').select('*', { count: 'exact' })
+    .eq('org_id', orgId).order('created_at', { ascending: false }).range(skip, skip + take - 1)
 
   if (status) query = query.eq('status', status)
   if (agent)  query = query.eq('agent', agent)
   if (action) query = query.eq('action', action)
   if (from)   query = query.gte('created_at', new Date(from).toISOString())
   if (to)     query = query.lte('created_at', new Date(to + 'T23:59:59').toISOString())
-  if (search) query = query.or(
-    `agent.ilike.%${search}%,action.ilike.%${search}%,input.ilike.%${search}%,output.ilike.%${search}%,user_ref.ilike.%${search}%`
-  )
+  if (search) query = query.or(`agent.ilike.%${search}%,action.ilike.%${search}%,input.ilike.%${search}%,output.ilike.%${search}%`)
 
   const { data, error, count } = await query
   if (error) return res.status(500).json({ error: error.message })
