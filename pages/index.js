@@ -458,7 +458,7 @@ fetch('https://logwick.io/api/v1/logs', {
               <li>Unlimited webhooks</li>
               <li>CSV export</li>
             </ul>
-            <a href="/signup"><button className="pbtn primary">Start free trial</button></a>
+            <a href="/signup"><button className="pbtn primary">Upgrade to Pro</button></a>
           </div>
           <div className="plan">
             <div className="pname">Enterprise</div>
