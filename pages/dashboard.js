@@ -229,6 +229,14 @@ export default function Dashboard() {
     toast('Webhook removed')
   }
 
+  async function handleManageSubscription() {
+    const res = await authFetch('/api/billing/portal', { method: 'POST' })
+    if (!res) return
+    const data = await res.json()
+    if (data.url) window.location.href = data.url
+    else toast('Could not open billing portal', 'error')
+  }
+
   async function handleSignOut() {
     const { getSupabase } = await import('../lib/supabase')
     const supabase = getSupabase()
@@ -585,7 +593,8 @@ export default function Dashboard() {
             </div>
           </div>
           <div style={{ display: 'flex', gap: 8 }}>
-            <button style={btn('danger')} onClick={handleSignOut}>Sign out</button>
+            <button style={btn()} onClick={handleManageSubscription}>Manage subscription</button>
+              <button style={btn('danger')} onClick={handleSignOut}>Sign out</button>
           </div>
         </div>
       </div>
