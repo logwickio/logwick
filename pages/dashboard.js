@@ -378,7 +378,33 @@ export default function Dashboard() {
             </div>
             <div style={S.logList}>
               {logs.length === 0 && !logsLoading ? (
-                <div style={{ padding: 48, textAlign: 'center', color: '#4a7a90', fontSize: 12 }}>No logs yet. Use your API key to start ingesting events.</div>
+                <div style={{ padding: 32, display: 'flex', flexDirection: 'column', alignItems: 'center', maxWidth: 560, margin: '0 auto' }}>
+                  <div style={{ fontSize: 28, marginBottom: 16 }}>▣</div>
+                  <div style={{ fontSize: 17, fontWeight: 700, color: '#d4e8f5', fontFamily: 'var(--font-sans)', marginBottom: 8, textAlign: 'center' }}>Welcome to Logwick</div>
+                  <div style={{ fontSize: 13, color: '#4a7a90', marginBottom: 28, textAlign: 'center', lineHeight: 1.7 }}>You have no logs yet. Add one line of code after your AI call and your dashboard will populate automatically.</div>
+                  <div style={{ width: '100%', background: '#07101a', border: '1px solid #0e1c26', borderRadius: 8, overflow: 'hidden', marginBottom: 20 }}>
+                    <div style={{ padding: '8px 14px', borderBottom: '1px solid #0e1c26', fontSize: 10, color: '#4a7a90', letterSpacing: '0.1em', textTransform: 'uppercase', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <span>Quick start — paste this after your AI call</span>
+                      <button style={{ background: 'none', border: 'none', color: '#4a7a90', cursor: 'pointer', fontSize: 10, fontFamily: 'var(--font-mono)' }} onClick={() => { navigator.clipboard.writeText(`fetch('https://logwick.io/api/v1/logs', { method: 'POST', headers: { 'Authorization': 'Bearer YOUR_API_KEY', 'Content-Type': 'application/json' }, body: JSON.stringify({ agent: 'gpt-4o', action: 'your_action', status: 'success', input: prompt, output: result, tokens: 100 }) }).catch(() => {})`); toast('Copied to clipboard'); }}>Copy</button>
+                    </div>
+                    <pre style={{ padding: '14px', fontSize: 11, color: '#6a9ab5', lineHeight: 1.75, overflowX: 'auto', whiteSpace: 'pre', margin: 0 }}>{`fetch('https://logwick.io/api/v1/logs', {
+  method: 'POST',
+  headers: {
+    'Authorization': 'Bearer YOUR_API_KEY',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    agent:  'gpt-4o',
+    action: 'your_action',
+    status: 'success',
+    input:  prompt,
+    output: result,
+    tokens: usage.total_tokens
+  })
+}).catch(() => {})`}</pre>
+                  </div>
+                  <div style={{ fontSize: 12, color: '#4a7a90', textAlign: 'center' }}>Your API key is in the <span style={{ color: '#38bdf8', cursor: 'pointer' }} onClick={() => setView('api')}>API Docs tab →</span></div>
+                </div>
               ) : logs.map(log => (
                 <div key={log.id} style={S.logRow(selected?.id === log.id)} onClick={() => setSelected(p => p?.id === log.id ? null : log)}>
                   <div style={{ display: 'flex', gap: 8, alignItems: 'flex-start' }}>
