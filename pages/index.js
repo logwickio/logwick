@@ -127,7 +127,7 @@ function LiveDemo() {
         {/* Nav */}
         <div style={s.nav}>
           <div style={s.logo}>
-            <div style={s.mark}>▣</div>
+            <div style={s.mark}><svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',height:'100%'}}><path d="M11 8 L11 24 L25 24" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/><circle cx="25" cy="24" r="3.5" fill="white"/></svg></div>
             <div style={s.brand}>Logwick</div>
             <div style={s.sub}>Leave a trail.</div>
           </div>
@@ -324,7 +324,7 @@ export default function Home() {
 
       <nav id="nav">
         <div className="nlogo">
-          <div className="nmark">▣</div>
+          <div className="nmark"><svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',height:'100%'}}><path d="M11 8 L11 24 L25 24" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/><circle cx="25" cy="24" r="3.5" fill="white"/></svg></div>
           <span className="nbrand">Logwick</span>
         </div>
         <div className="nlinks">
@@ -489,7 +489,7 @@ fetch('https://logwick.io/api/v1/logs', {
       <footer>
         <div>
           <div style={{display:'flex',alignItems:'center',gap:10,marginBottom:10}}>
-            <div className="nmark" style={{width:26,height:26,fontSize:11}}>▣</div>
+            <div className="nmark" style={{width:26,height:26,padding:5}}><svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',height:'100%'}}><path d="M11 8 L11 24 L25 24" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/><circle cx="25" cy="24" r="3.5" fill="white"/></svg></div>
             <div className="fbrand">Logwick</div>
           </div>
           <div className="fdesc2">The audit log for AI agents. Leave a trail. Know what your AI did, always.</div>
