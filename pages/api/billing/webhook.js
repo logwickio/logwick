@@ -23,26 +23,43 @@ export default async function handler(req, res) {
 
   const supabase = getSupabaseAdmin()
 
-  if (event.type === 'checkout.session.completed') {
-    const session = event.data.object
-    const email = session.customer_details?.email
-    if (!email) return res.json({ received: true })
-
+  async function getOrgByEmail(email) {
+    if (!email) return null
     const { data: userId } = await supabase.rpc('get_user_id_by_email', { p_email: email })
-    if (!userId) return res.json({ received: true })
-
+    if (!userId) return null
     const { data: member } = await supabase
       .from('org_members')
       .select('org_id')
       .eq('user_id', userId)
       .single()
+    return member?.org_id || null
+  }
 
-    if (member) {
+  if (event.type === 'checkout.session.completed') {
+    const session = event.data.object
+    const email = session.customer_details?.email
+    const orgId = await getOrgByEmail(email)
+    if (orgId) {
       await supabase.from('organizations').update({
         plan: 'pro',
         log_limit: 100000,
         retention_days: 90
-      }).eq('id', member.org_id)
+      }).eq('id', orgId)
+    }
+  }
+
+  if (event.type === 'customer.subscription.deleted') {
+    const subscription = event.data.object
+    const customerId = subscription.customer
+    const customer = await stripe.customers.retrieve(customerId)
+    const email = customer.email
+    const orgId = await getOrgByEmail(email)
+    if (orgId) {
+      await supabase.from('organizations').update({
+        plan: 'free',
+        log_limit: 5000,
+        retention_days: 7
+      }).eq('id', orgId)
     }
   }
 
