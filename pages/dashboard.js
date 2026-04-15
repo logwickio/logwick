@@ -59,6 +59,7 @@ export default function Dashboard() {
   const [view, setView] = useState('dashboard')
   const [token, setToken] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [showPricing, setShowPricing] = useState(false)
   const [logs, setLogs] = useState([])
   const [total, setTotal] = useState(0)
   const [logsLoading, setLogsLoading] = useState(false)
@@ -589,7 +590,7 @@ export default function Dashboard() {
             <div style={{ padding: 16 }}>
               <div style={{ fontSize: 14, fontWeight: 800, color: '#7dd3fc', fontFamily: 'var(--font-sans)', textTransform: 'uppercase', marginBottom: 8 }}>{stats?.org_plan || 'free'}</div>
               <div style={{ fontSize: 13, color: '#5a8a9f', marginBottom: 12 }}>{stats?.monthly_used?.toLocaleString() ?? 0} / {stats?.monthly_limit?.toLocaleString() ?? 5000} logs this month</div>
-              <a href="https://buy.stripe.com/fZu3co57kgpt1j72xYcIE00" style={{ ...btn('primary'), display: 'inline-flex' }}>Upgrade plan →</a>
+              <button style={{ ...btn('primary'), display: 'inline-flex' }} onClick={() => setShowPricing(true)}>Upgrade plan →</button>
             </div>
           </div>
           <div style={{ display: 'flex', gap: 8 }}>
@@ -605,6 +606,40 @@ export default function Dashboard() {
     <div style={S.shell}>
       <style>{`@keyframes spin{to{transform:rotate(360deg)}} @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}`}</style>
       <Toast toasts={toasts} />
+      {showPricing && (
+        <div style={S.overlay} onClick={e => e.target === e.currentTarget && setShowPricing(false)}>
+          <div style={{...S.modal, maxWidth: 560, gap: 0, padding: 0, overflow: 'hidden'}}>
+            <div style={{padding: '20px 24px', borderBottom: '1px solid #1c2e3a'}}>
+              <div style={{fontSize: 18, fontFamily: 'var(--font-sans)', fontWeight: 800, color: '#d4e8f5', marginBottom: 4}}>Upgrade to Pro</div>
+              <div style={{fontSize: 12, color: '#4a7a90'}}>Everything you need to run AI agents in production with full visibility.</div>
+            </div>
+            <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 1, background: '#1c2e3a'}}>
+              <div style={{background: '#07101a', padding: '20px 24px'}}>
+                <div style={{fontSize: 11, fontWeight: 700, color: '#4a7a90', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 12}}>Free</div>
+                <div style={{fontSize: 28, fontWeight: 800, color: '#d4e8f5', fontFamily: 'var(--font-sans)', marginBottom: 16}}>$0<span style={{fontSize: 13, fontWeight: 400, color: '#4a7a90'}}>/mo</span></div>
+                {['5,000 logs/month','7-day retention','1 API key','Dashboard & search'].map(f => (
+                  <div key={f} style={{fontSize: 12, color: '#4a7a90', marginBottom: 8, display: 'flex', gap: 8}}><span style={{color: '#34d399'}}>✓</span>{f}</div>
+                ))}
+                {['Webhooks','CSV export'].map(f => (
+                  <div key={f} style={{fontSize: 12, color: '#2a4555', marginBottom: 8, display: 'flex', gap: 8}}><span>—</span>{f}</div>
+                ))}
+              </div>
+              <div style={{background: '#08111c', padding: '20px 24px', border: '1px solid #0ea5e9', position: 'relative'}}>
+                <div style={{position: 'absolute', top: -10, left: '50%', transform: 'translateX(-50%)', background: '#0ea5e9', borderRadius: 20, padding: '2px 12px', fontSize: 9, fontWeight: 700, color: '#fff', letterSpacing: '0.08em', textTransform: 'uppercase'}}>Most popular</div>
+                <div style={{fontSize: 11, fontWeight: 700, color: '#7dd3fc', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 12}}>Pro</div>
+                <div style={{fontSize: 28, fontWeight: 800, color: '#d4e8f5', fontFamily: 'var(--font-sans)', marginBottom: 16}}>$29<span style={{fontSize: 13, fontWeight: 400, color: '#4a7a90'}}>/mo</span></div>
+                {['100,000 logs/month','90-day retention','10 API keys','Dashboard & search','Unlimited webhooks','CSV export'].map(f => (
+                  <div key={f} style={{fontSize: 12, color: '#94b8cc', marginBottom: 8, display: 'flex', gap: 8}}><span style={{color: '#34d399'}}>✓</span>{f}</div>
+                ))}
+              </div>
+            </div>
+            <div style={{padding: '20px 24px', display: 'flex', gap: 8, justifyContent: 'flex-end', borderTop: '1px solid #1c2e3a'}}>
+              <button style={btn()} onClick={() => setShowPricing(false)}>Maybe later</button>
+              <a href="https://buy.stripe.com/fZu3co57kgpt1j72xYcIE00"><button style={btn('primary')} onClick={() => setShowPricing(false)}>Upgrade to Pro →</button></a>
+            </div>
+          </div>
+        </div>
+      )}
       <div style={S.nav}>
         <div style={S.navLogo}>
           <div style={S.navMark}>▣</div>
