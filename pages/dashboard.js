@@ -581,7 +581,7 @@ export default function Dashboard() {
             <div style={{ padding: 16 }}>
               <div style={{ fontSize: 14, fontWeight: 800, color: '#7dd3fc', fontFamily: 'var(--font-sans)', textTransform: 'uppercase', marginBottom: 8 }}>{stats?.org_plan || 'free'}</div>
               <div style={{ fontSize: 11, color: '#2a4555', marginBottom: 12 }}>{stats?.monthly_used?.toLocaleString() ?? 0} / {stats?.monthly_limit?.toLocaleString() ?? 5000} logs this month</div>
-              <a href="mailto:hello@logwick.io?subject=Upgrade inquiry" style={{ ...btn('primary'), display: 'inline-flex' }}>Upgrade plan →</a>
+              <a href="https://buy.stripe.com/fZu3co57kgpt1j72xYcIE00" style={{ ...btn('primary'), display: 'inline-flex' }}>Upgrade plan →</a>
             </div>
           </div>
           <div style={{ display: 'flex', gap: 8 }}>
