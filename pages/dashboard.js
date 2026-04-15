@@ -617,10 +617,10 @@ export default function Dashboard() {
               <div style={{background: '#07101a', padding: '20px 24px'}}>
                 <div style={{fontSize: 11, fontWeight: 700, color: '#4a7a90', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 12}}>Free</div>
                 <div style={{fontSize: 28, fontWeight: 800, color: '#d4e8f5', fontFamily: 'var(--font-sans)', marginBottom: 16}}>$0<span style={{fontSize: 13, fontWeight: 400, color: '#4a7a90'}}>/mo</span></div>
-                {['5,000 logs/month','7-day retention','1 API key','Dashboard & search'].map(f => (
+                {['5,000 logs/month','7-day retention','1 API key','Dashboard & search','CSV export'].map(f => (
                   <div key={f} style={{fontSize: 12, color: '#4a7a90', marginBottom: 8, display: 'flex', gap: 8}}><span style={{color: '#34d399'}}>✓</span>{f}</div>
                 ))}
-                {['Webhooks','CSV export'].map(f => (
+                {['Webhooks'].map(f => (
                   <div key={f} style={{fontSize: 12, color: '#2a4555', marginBottom: 8, display: 'flex', gap: 8}}><span>—</span>{f}</div>
                 ))}
               </div>
