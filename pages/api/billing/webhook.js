@@ -26,22 +26,23 @@ export default async function handler(req, res) {
   if (event.type === 'checkout.session.completed') {
     const session = event.data.object
     const email = session.customer_details?.email
+    if (!email) return res.json({ received: true })
 
-    const { data: user } = await supabase.auth.admin.getUserByEmail(email)
-    if (user?.user) {
-      const { data: member } = await supabase
-        .from('org_members')
-        .select('org_id')
-        .eq('user_id', user.user.id)
-        .single()
+    const { data: userId } = await supabase.rpc('get_user_id_by_email', { p_email: email })
+    if (!userId) return res.json({ received: true })
 
-      if (member) {
-        await supabase.from('organizations').update({
-          plan: 'pro',
-          log_limit: 100000,
-          retention_days: 90
-        }).eq('id', member.org_id)
-      }
+    const { data: member } = await supabase
+      .from('org_members')
+      .select('org_id')
+      .eq('user_id', userId)
+      .single()
+
+    if (member) {
+      await supabase.from('organizations').update({
+        plan: 'pro',
+        log_limit: 100000,
+        retention_days: 90
+      }).eq('id', member.org_id)
     }
   }
 
