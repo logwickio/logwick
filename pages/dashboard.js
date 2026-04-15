@@ -668,7 +668,12 @@ export default function Dashboard() {
       )}
       <div style={S.nav}>
         <div style={S.navLogo}>
-          <div style={S.navMark}>▣</div>
+          <div style={S.navMark}>
+            <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',height:'100%'}}>
+              <path d="M11 8 L11 24 L25 24" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+              <circle cx="25" cy="24" r="3.5" fill="white"/>
+            </svg>
+          </div>
           <div style={S.navBrand}>Logwick</div>
           <div style={S.navSub}>Leave a trail.</div>
         </div>
