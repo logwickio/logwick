@@ -158,7 +158,7 @@ export default function Dashboard() {
   }, [fStatus, fAgent, fAction, dateFrom, dateTo, search, offset])
 
   const fetchStats = useCallback(async () => {
-    const res = await fetch('/api/dashboard/stats')
+    const res = await authFetch('/api/dashboard/stats')
     const data = await res.json()
     setStats(data)
   }, [])
