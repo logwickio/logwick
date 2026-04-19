@@ -373,9 +373,9 @@ export default function Dashboard() {
         <div style={S.statsRow}>
           {[
             { label: 'Total Logs', value: (stats?.total ?? 0).toLocaleString(), sub: `${stats?.monthly_used ?? 0} this month` },
-            { label: 'Success Rate', value: stats ? `${stats.success_rate}%` : '—', sub: 'last 30 days' },
-            { label: 'Error Rate', value: stats ? `${stats.error_rate}%` : '—', sub: 'flagged events', accent: stats?.error_rate > 10 ? '#f87171' : undefined },
-            { label: 'Avg Latency', value: stats ? `${stats.avg_latency}ms` : '—', sub: 'response time' },
+            { label: 'Success Rate', value: stats?.success_rate != null ? `${stats.success_rate}%` : '—', sub: 'last 30 days' },
+            { label: 'Error Rate', value: stats?.error_rate != null ? `${stats.error_rate}%` : '—', sub: 'flagged events', accent: stats?.error_rate > 10 ? '#f87171' : undefined },
+            { label: 'Avg Latency', value: stats?.avg_latency != null ? `${stats.avg_latency}ms` : '—', sub: 'response time' },
             { label: 'Token Spend', value: stats ? (stats.total_tokens ?? 0).toLocaleString() : '—', sub: 'tokens processed' },
             { label: 'Total Cost', value: stats ? `$${Number(stats.total_cost ?? 0).toFixed(4)}` : '—', sub: 'estimated spend', accent: '#34d399' },
           ].map((s, i, arr) => (
