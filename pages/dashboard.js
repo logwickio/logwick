@@ -1,7 +1,6 @@
 // pages/dashboard.js
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { useRouter } from 'next/router'
-import { getSupabase } from '../lib/supabase'
 
 const AGENT_COLORS = {
   'gpt-4o': '#10b981', 'gpt-4': '#10b981',
@@ -83,7 +82,7 @@ function Spinner() {
 export default function Dashboard() {
   const router = useRouter()
   const [view, setView] = useState('dashboard')
-  const [session, setSession] = useState(null)
+  const [token, setToken] = useState(null)
   const [loading, setLoading] = useState(true)
 
   // Logs state
@@ -130,15 +129,18 @@ export default function Dashboard() {
 
   // ── Auth ──────────────────────────────────────────────────────────────────
   useEffect(() => {
-    const supabase = getSupabase()
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    const init = async () => {
+      const { getSupabase } = await import('../lib/supabase')
+      const supabase = getSupabase()
+      if (!supabase) { router.push('/login'); return }
+      const { data: { session } } = await supabase.auth.getSession()
       if (!session) { router.push('/login'); return }
-      setSession(session)
+      setToken(session.access_token)
       setLoading(false)
-    })
+    }
+    init()
   }, [router])
 
-  // ── Fetch helpers ─────────────────────────────────────────────────────────
   const authFetch = useCallback(async (url, options = {}) => {
     if (!token) return null
     const res = await fetch(url, {
@@ -148,6 +150,7 @@ export default function Dashboard() {
     return res
   }, [token])
 
+  // ── Fetch helpers ─────────────────────────────────────────────────────────
   const fetchLogs = useCallback(async (reset = false) => {
     setLogsLoading(true)
     const params = new URLSearchParams({ limit: '50', offset: reset ? '0' : String(offset) })
@@ -158,7 +161,8 @@ export default function Dashboard() {
     if (dateTo)   params.set('to', dateTo)
     if (search)   params.set('search', search)
 
-    const res = await fetch(`/api/dashboard/logs?${params}`)
+    const res = await authFetch(`/api/dashboard/logs?${params}`)
+    if (!res) { setLogsLoading(false); return }
     const data = await res.json()
     if (reset) { setLogs(data.logs || []); setOffset(0) }
     else setLogs(p => [...p, ...(data.logs || [])])
@@ -167,47 +171,53 @@ export default function Dashboard() {
   }, [fStatus, fAgent, fAction, dateFrom, dateTo, search, offset])
 
   const fetchStats = useCallback(async () => {
+    if (!token) return
     const res = await authFetch('/api/dashboard/stats')
+    if (!res) return
     const data = await res.json()
     setStats(data)
-  }, [])
+  }, [token, authFetch])
 
   const fetchKeys = useCallback(async () => {
-    const res = await fetch('/api/dashboard/keys')
+    if (!token) return
+    const res = await authFetch('/api/dashboard/keys')
+    if (!res) return
     const data = await res.json()
     setApiKeys(data.keys || [])
-  }, [])
+  }, [token, authFetch])
 
   const fetchWebhooks = useCallback(async () => {
-    const res = await fetch('/api/dashboard/webhooks')
+    if (!token) return
+    const res = await authFetch('/api/dashboard/webhooks')
+    if (!res) return
     const data = await res.json()
     setWebhooks(data.webhooks || [])
-  }, [])
+  }, [token, authFetch])
 
   // Initial load
   useEffect(() => {
-    if (!session) return
+    if (!token) return
     fetchStats()
     fetchLogs(true)
-  }, [session])
+  }, [token])
 
   // Re-fetch on filter change
   useEffect(() => {
-    if (!session) return
+    if (!token) return
     const t = setTimeout(() => fetchLogs(true), 300)
     return () => clearTimeout(t)
-  }, [fStatus, fAgent, fAction, dateFrom, dateTo, search])
+  }, [fStatus, fAgent, fAction, dateFrom, dateTo, search, token])
 
   // Load tab data on demand
   useEffect(() => {
-    if (!session) return
+    if (!token) return
     if (view === 'api') fetchKeys()
     if (view === 'webhooks') fetchWebhooks()
-  }, [view, session])
+  }, [view, token])
 
   // ── Actions ───────────────────────────────────────────────────────────────
   async function handleDeleteLog(id) {
-    await fetch('/api/dashboard/logs', { method: 'DELETE', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id }) })
+    await authFetch('/api/dashboard/logs', { method: 'DELETE', body: JSON.stringify({ id }) })
     setLogs(p => p.filter(l => l.id !== id))
     if (selected?.id === id) setSelected(null)
     setTotal(p => p - 1)
@@ -223,16 +233,21 @@ export default function Dashboard() {
   }
 
   async function handleExportCSV() {
+    if (!token) return
     const params = new URLSearchParams({ format: 'csv', limit: '1000' })
     if (fStatus !== 'all') params.set('status', fStatus)
     if (search) params.set('search', search)
-    window.location.href = `/api/dashboard/logs?${params}`
-    toast(`Exporting ${Math.min(total, 1000)} records…`)
+    const res = await authFetch(`/api/dashboard/logs?${params}`)
+    if (!res) return
+    const blob = await res.blob()
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a'); a.href = url; a.download = 'logwick_logs.csv'; a.click()
+    toast(`Exported records`)
   }
 
   async function handleGenerateKey() {
     if (!newKeyName.trim()) return
-    const res = await fetch('/api/dashboard/keys', {
+    const res = await authFetch('/api/dashboard/keys', {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name: newKeyName.trim() }),
     })
@@ -245,14 +260,14 @@ export default function Dashboard() {
   }
 
   async function handleRevokeKey(id) {
-    await fetch('/api/dashboard/keys', { method: 'DELETE', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id }) })
+    await authFetch('/api/dashboard/keys', { method: 'DELETE', body: JSON.stringify({ id }) })
     fetchKeys()
     toast('Key revoked')
   }
 
   async function handleAddWebhook() {
     if (!newWH.url || !newWH.label) return
-    const res = await fetch('/api/dashboard/webhooks', {
+    const res = await authFetch('/api/dashboard/webhooks', {
       method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(newWH),
     })
     if (!res.ok) { toast('Failed to add webhook', 'error'); return }
@@ -262,20 +277,22 @@ export default function Dashboard() {
   }
 
   async function handleToggleWebhook(id, active) {
-    await fetch('/api/dashboard/webhooks', {
+    await authFetch('/api/dashboard/webhooks', {
       method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id, active }),
     })
     fetchWebhooks()
   }
 
   async function handleDeleteWebhook(id) {
-    await fetch('/api/dashboard/webhooks', { method: 'DELETE', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id }) })
+    await authFetch('/api/dashboard/webhooks', { method: 'DELETE', body: JSON.stringify({ id }) })
     fetchWebhooks()
     toast('Webhook removed')
   }
 
   async function handleSignOut() {
-    await getSupabase().auth.signOut()
+    const { getSupabase } = await import('../lib/supabase')
+    const supabase = getSupabase()
+    if (supabase) await supabase.auth.signOut()
     router.push('/login')
   }
 
