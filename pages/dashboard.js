@@ -168,7 +168,7 @@ export default function Dashboard() {
     else setLogs(p => [...p, ...(data.logs || [])])
     setTotal(data.total || 0)
     setLogsLoading(false)
-  }, [fStatus, fAgent, fAction, dateFrom, dateTo, search, offset, token, authFetch])
+  }, [fStatus, fAgent, fAction, dateFrom, dateTo, search, offset])
 
   const fetchStats = useCallback(async () => {
     if (!token) return
