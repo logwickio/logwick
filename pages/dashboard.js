@@ -139,6 +139,15 @@ export default function Dashboard() {
   }, [router])
 
   // ── Fetch helpers ─────────────────────────────────────────────────────────
+  const authFetch = useCallback(async (url, options = {}) => {
+    if (!token) return null
+    const res = await fetch(url, {
+      ...options,
+      headers: { ...options.headers, 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }
+    })
+    return res
+  }, [token])
+
   const fetchLogs = useCallback(async (reset = false) => {
     setLogsLoading(true)
     const params = new URLSearchParams({ limit: '50', offset: reset ? '0' : String(offset) })
