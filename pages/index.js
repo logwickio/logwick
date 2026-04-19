@@ -88,12 +88,12 @@ function LiveDemo() {
     logo: { padding:'0 12px 12px', borderBottom:'1px solid #1e3040', marginBottom:10 },
     mark: { width:22, height:22, borderRadius:5, background:'linear-gradient(135deg,#38bdf8,#0284c7)', display:'flex', alignItems:'center', justifyContent:'center', fontSize:10, color:'#fff', marginBottom:4 },
     brand: { fontSize:11, fontWeight:700, color:'#f1f5f9', letterSpacing:'0.04em' },
-    sub: { fontSize:8, color:'#b8d4e4', letterSpacing:'0.12em', textTransform:'uppercase' },
-    navItem: (active) => ({ padding:'6px 12px', fontSize:9, color: active ? '#ffffff':'#a8c8dc', background: active ? '#0d1923':'transparent', borderLeft: active ? '2px solid #38bdf8':'2px solid transparent', display:'flex', alignItems:'center', gap:6 }),
+    sub: { fontSize:8, color:'#334155', letterSpacing:'0.12em', textTransform:'uppercase' },
+    navItem: (active) => ({ padding:'6px 12px', fontSize:9, color: active ? '#38bdf8':'#334155', background: active ? '#0d1923':'transparent', borderLeft: active ? '2px solid #38bdf8':'2px solid transparent', display:'flex', alignItems:'center', gap:6 }),
     main: { flex:1, display:'flex', flexDirection:'column', overflow:'hidden' },
     statsRow: { display:'grid', gridTemplateColumns:'repeat(4,1fr)', borderBottom:'1px solid #1e3040', background:'#07100a', flexShrink:0 },
     stat: (last) => ({ padding:'8px 10px', borderRight: last ? 'none':'1px solid #1e3040' }),
-    sl: { fontSize:8, color:'#b8d4e4', letterSpacing:'0.1em', textTransform:'uppercase', marginBottom:2 },
+    sl: { fontSize:8, color:'#334155', letterSpacing:'0.1em', textTransform:'uppercase', marginBottom:2 },
     sv: { fontSize:15, fontWeight:700, color:'#f1f5f9' },
     toolbar: { padding:'6px 10px', borderBottom:'1px solid #1e3040', background:'#07100a', display:'flex', gap:5, alignItems:'center', flexShrink:0 },
     search: { flex:1, background:'#0a1520', border:'1px solid #1e3040', borderRadius:4, padding:'3px 8px', fontSize:9, color:'#94a3b8' },
@@ -101,13 +101,13 @@ function LiveDemo() {
     logList: { flex:1, overflow:'hidden' },
     logRow: (isNew) => ({ padding:'8px 10px', borderBottom:'1px solid #0d1923', display:'flex', alignItems:'flex-start', gap:7, cursor:'pointer', background: isNew ? 'rgba(56,189,248,0.03)':'transparent', transition:'background 0.3s' }),
     action: { fontSize:10, fontWeight:600, color:'#cbd5e1', marginBottom:2 },
-    meta: { fontSize:8, color:'#b8d4e4' },
+    meta: { fontSize:8, color:'#334155' },
     badge: (status) => ({ fontSize:7, padding:'2px 5px', borderRadius:3, fontWeight:700, letterSpacing:'0.05em', flexShrink:0, marginTop:1, background: status==='success'?'#0a2010':'#1a0505', color: status==='success'?'#34d399':'#f87171', border: `1px solid ${status==='success'?'#0a3320':'#3a0a0a'}` }),
     agentBadge: (color) => ({ fontSize:7, padding:'2px 5px', borderRadius:3, fontWeight:700, flexShrink:0, marginTop:1, background:`${color}18`, color, border:`1px solid ${color}33` }),
     detail: (open) => ({ width: open ? 170 : 0, background:'#07100a', borderLeft:'1px solid #1e3040', overflow:'hidden', flexShrink:0, transition:'width 0.3s ease' }),
     detailInner: { padding:12, width:170 },
     detailTitle: { fontSize:10, fontWeight:600, color:'#f1f5f9', marginBottom:8, borderBottom:'1px solid #1e3040', paddingBottom:6 },
-    dk: { fontSize:7, color:'#b8d4e4', letterSpacing:'0.1em', textTransform:'uppercase', marginBottom:2 },
+    dk: { fontSize:7, color:'#334155', letterSpacing:'0.1em', textTransform:'uppercase', marginBottom:2 },
     dv: { fontSize:9, color:'#94a3b8', marginBottom:6 },
     caption: { background:'#0a0f14', borderTop:'1px solid #1e3040', padding:'8px 14px', fontSize:10, color:'#64748b', textAlign:'center', minHeight:34, display:'flex', alignItems:'center', justifyContent:'center' },
     liveDot: { width:5, height:5, borderRadius:'50%', background:'#34d399', boxShadow:'0 0 4px #34d399', display:'inline-block', marginRight:5, animation:'pulse 2s infinite' },
@@ -163,7 +163,7 @@ function LiveDemo() {
             <div style={s.search}>Search logs…</div>
             <div style={s.filter}>All status ▾</div>
             <div style={s.filter}>All agents ▾</div>
-            <div style={{marginLeft:'auto',display:'flex',alignItems:'center',fontSize:8,color:'#b8d4e4'}}>
+            <div style={{marginLeft:'auto',display:'flex',alignItems:'center',fontSize:8,color:'#334155'}}>
               <span style={s.liveDot}/>Live
             </div>
           </div>
@@ -339,6 +339,7 @@ export default function Home() {
         </div>
         <div className="nlinks">
           <a href="#features">Features</a>
+          <a href="/docs">Docs</a>
           <a href="#how-it-works">How it works</a>
           <a href="#pricing">Pricing</a>
           <a href="/login">Sign in</a>
@@ -353,14 +354,6 @@ export default function Home() {
         <div className="eyebrow"><span className="live-dot"/>Now live — free to start</div>
         <h1>Leave a trail.<br/><span>Every AI action, logged.</span></h1>
         <p className="sub">Logwick captures every prompt, response, and error your AI agents produce — searchable, exportable, and always there when you need it.</p>
-        <div style={{display:'flex',alignItems:'center',gap:10,background:'rgba(14,165,233,0.08)',border:'1px solid rgba(14,165,233,0.25)',borderRadius:40,padding:'10px 20px',marginBottom:16,marginTop:-8}}>
-          <svg width="18" height="18" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" style={{flexShrink:0}}>
-            <rect width="36" height="36" rx="8" fill="#0ea5e9"/>
-            <path d="M11 8 L11 24 L25 24" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
-            <circle cx="25" cy="24" r="3.5" fill="white"/>
-          </svg>
-          <span style={{fontSize:13,color:'#7dd3fc',fontFamily:"'JetBrains Mono',monospace",letterSpacing:'0.02em'}}>Ask Claude what your AI agents did yesterday. Logwick makes it possible.</span>
-        </div>
         <div className="actions">
           <a href="/signup"><button className="btn-primary">Start for free →</button></a>
           <a href="#how-it-works"><button className="btn-ghost">See how it works</button></a>
@@ -573,7 +566,8 @@ fetch('https://logwick.io/api/v1/logs', {
           </div>
           <div className="fdesc2">The audit log for AI agents. Leave a trail. Know what your AI did, always.</div>
         </div>
-        <div className="fcol"><h4>Product</h4><a href="#features">Features</a><a href="#pricing">Pricing</a><a href="/dashboard">Dashboard</a></div>
+        <div className="fcol"><h4>Product</h4><a href="#features">Features</a>
+          <a href="/docs">Docs</a><a href="#pricing">Pricing</a><a href="/dashboard">Dashboard</a></div>
         <div className="fcol"><h4>Developers</h4><a href="/dashboard">API Docs</a><a href="/signup">Get API key</a></div>
         <div className="fcol"><h4>Company</h4><a href="mailto:hello@logwick.io">Contact</a><a href="#">Privacy</a><a href="#">Terms</a></div>
       </footer>
