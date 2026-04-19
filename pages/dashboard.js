@@ -335,7 +335,7 @@ export default function Dashboard() {
     statsRow: { display: 'flex', borderBottom: '1px solid #0e1c26', background: '#070d12', flexShrink: 0 },
     statCell: (last) => ({ padding: '16px 20px', borderRight: last ? 'none' : '1px solid #0e1c26', flex: 1, minWidth: 0 }),
     statLabel: { fontSize: 9, color: '#1a3040', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 5 },
-    statVal: { fontSize: 22, fontWeight: 800, fontFamily: 'var(--font-sans)', color: '#d4e8f5', letterSpacing: '-0.02em', lineHeight: 1 },
+    statVal: { fontSize: 22, fontWeight: 800, fontFamily: 'var(--font-sans)', color: '#d4e8f5', letterSpacing: '-0.02em', lineHeight: 1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' },
     statSub: { fontSize: 9, color: '#1a3040', marginTop: 3 },
     content: { flex: 1, overflow: 'hidden', display: 'flex' },
     logPanel: { flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', borderRight: selected ? '1px solid #0e1c26' : 'none' },
