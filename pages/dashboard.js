@@ -325,23 +325,23 @@ export default function Dashboard() {
     nav: { width: 200, background: '#06090c', borderRight: '1px solid #0e1c26', display: 'flex', flexDirection: 'column', padding: '20px 0', flexShrink: 0 },
     navLogo: { padding: '0 18px 20px', borderBottom: '1px solid #0e1c26', marginBottom: 16 },
     navMark: { width: 32, height: 32, borderRadius: 8, background: 'linear-gradient(135deg,#0ea5e9,#0284c7)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 8, overflow: 'hidden', padding: 6 },
-    navBrand: { fontSize: 15, fontFamily: 'var(--font-sans)', fontWeight: 800, color: '#d4e8f5', letterSpacing: '0.04em' },
+    navBrand: { fontSize: 15, fontFamily: 'var(--font-sans)', fontWeight: 800, color: '#e8f4fb', letterSpacing: '0.04em' },
     navSub: { fontSize: 9, color: '#1a3040', letterSpacing: '0.14em', textTransform: 'uppercase' },
     navItem: (active) => ({ display: 'flex', alignItems: 'center', gap: 10, padding: '9px 18px', cursor: 'pointer', background: active ? '#0d1f2c' : 'transparent', borderLeft: active ? '2px solid #0ea5e9' : '2px solid transparent', color: active ? '#7dd3fc' : '#2a4555', fontSize: 11, transition: 'all 0.15s', userSelect: 'none' }),
     navBottom: { marginTop: 'auto', padding: '16px 18px', borderTop: '1px solid #0e1c26', display: 'flex', flexDirection: 'column', gap: 8 },
     main: { flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' },
     topbar: { borderBottom: '1px solid #0e1c26', padding: '13px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexShrink: 0 },
-    pageTitle: { fontSize: 17, fontFamily: 'var(--font-sans)', fontWeight: 700, color: '#d4e8f5' },
+    pageTitle: { fontSize: 17, fontFamily: 'var(--font-sans)', fontWeight: 700, color: '#e8f4fb' },
     statsRow: { display: 'flex', borderBottom: '1px solid #0e1c26', background: '#070d12', flexShrink: 0 },
     statCell: (last) => ({ padding: '16px 20px', borderRight: last ? 'none' : '1px solid #0e1c26', flex: 1, minWidth: 0 }),
     statLabel: { fontSize: 9, color: '#1a3040', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 5 },
-    statVal: { fontSize: 22, fontWeight: 800, fontFamily: 'var(--font-sans)', color: '#d4e8f5', letterSpacing: '-0.02em', lineHeight: 1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' },
+    statVal: { fontSize: 22, fontWeight: 800, fontFamily: 'var(--font-sans)', color: '#e8f4fb', letterSpacing: '-0.02em', lineHeight: 1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' },
     statSub: { fontSize: 9, color: '#1a3040', marginTop: 3 },
     content: { flex: 1, overflow: 'hidden', display: 'flex' },
     logPanel: { flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', borderRight: selected ? '1px solid #0e1c26' : 'none' },
     toolbar: { padding: '10px 14px', display: 'flex', gap: 7, borderBottom: '1px solid #0e1c26', background: '#070d12', flexWrap: 'wrap', flexShrink: 0 },
-    searchBox: { flex: 1, minWidth: 140, background: '#0a1820', border: '1px solid #0e1c26', borderRadius: 6, padding: '7px 12px', color: '#b8cdd8', fontSize: 11, outline: 'none' },
-    sel: { background: '#0a1820', border: '1px solid #0e1c26', borderRadius: 6, padding: '7px 10px', color: '#b8cdd8', fontSize: 11, outline: 'none', cursor: 'pointer' },
+    searchBox: { flex: 1, minWidth: 140, background: '#0a1820', border: '1px solid #0e1c26', borderRadius: 6, padding: '7px 12px', color: '#e8f4fb', fontSize: 11, outline: 'none' },
+    sel: { background: '#0a1820', border: '1px solid #0e1c26', borderRadius: 6, padding: '7px 10px', color: '#e8f4fb', fontSize: 11, outline: 'none', cursor: 'pointer' },
     countBar: { padding: '6px 16px', fontSize: 9, color: '#1a3040', borderBottom: '1px solid #080f14', display: 'flex', justifyContent: 'space-between', background: '#06090c', flexShrink: 0 },
     logList: { overflowY: 'auto', flex: 1 },
     logRow: (sel) => ({ padding: '11px 16px', borderBottom: '1px solid #080f14', cursor: 'pointer', background: sel ? '#0a1820' : 'transparent', borderLeft: sel ? '3px solid #0ea5e9' : '3px solid transparent', transition: 'background 0.1s' }),
@@ -349,11 +349,11 @@ export default function Dashboard() {
     detailScroll: { overflowY: 'auto', flex: 1, padding: 18 },
     block: { background: '#07101a', border: '1px solid #0e1c26', borderRadius: 8, overflow: 'hidden', marginBottom: 10 },
     blockHead: { padding: '8px 14px', borderBottom: '1px solid #0a1820', display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: 9, color: '#1a3040', letterSpacing: '0.12em', textTransform: 'uppercase' },
-    blockBody: { padding: '12px 14px', fontSize: 11, color: '#6a9ab5', lineHeight: 1.75, whiteSpace: 'pre-wrap', wordBreak: 'break-word' },
+    blockBody: { padding: '12px 14px', fontSize: 11, color: '#c8dde8', lineHeight: 1.75, whiteSpace: 'pre-wrap', wordBreak: 'break-word' },
     metaGrid: { display: 'grid', gridTemplateColumns: '1fr 1fr' },
     metaCell: { padding: '9px 14px', borderBottom: '1px solid #0a1820' },
     metaK: { fontSize: 9, color: '#1a3040', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 3 },
-    metaV: { fontSize: 11, color: '#6a9ab5' },
+    metaV: { fontSize: 11, color: '#c8dde8' },
     sidebar: { width: 240, borderLeft: '1px solid #0e1c26', padding: 16, overflowY: 'auto', flexShrink: 0 },
     sideLabel: { fontSize: 9, color: '#1a3040', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 10 },
     scrollContent: { flex: 1, overflowY: 'auto', padding: 24 },
@@ -361,9 +361,9 @@ export default function Dashboard() {
     overlay: { position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.75)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 999, backdropFilter: 'blur(6px)' },
     modal: { background: '#0a1218', border: '1px solid #1c2e3a', borderRadius: 12, padding: 24, width: 460, maxWidth: '92vw', display: 'flex', flexDirection: 'column', gap: 12, maxHeight: '85vh', overflowY: 'auto' },
     fLabel: { fontSize: 9, color: '#1a3040', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 4 },
-    fInput: { width: '100%', background: '#07101a', border: '1px solid #0e1c26', borderRadius: 6, padding: '8px 12px', color: '#b8cdd8', fontSize: 11, outline: 'none' },
-    fSel: { width: '100%', background: '#07101a', border: '1px solid #0e1c26', borderRadius: 6, padding: '8px 12px', color: '#b8cdd8', fontSize: 11, outline: 'none', cursor: 'pointer' },
-    fTA: { width: '100%', background: '#07101a', border: '1px solid #0e1c26', borderRadius: 6, padding: '8px 12px', color: '#b8cdd8', fontSize: 11, outline: 'none', minHeight: 70, resize: 'vertical' },
+    fInput: { width: '100%', background: '#07101a', border: '1px solid #0e1c26', borderRadius: 6, padding: '8px 12px', color: '#e8f4fb', fontSize: 11, outline: 'none' },
+    fSel: { width: '100%', background: '#07101a', border: '1px solid #0e1c26', borderRadius: 6, padding: '8px 12px', color: '#e8f4fb', fontSize: 11, outline: 'none', cursor: 'pointer' },
+    fTA: { width: '100%', background: '#07101a', border: '1px solid #0e1c26', borderRadius: 6, padding: '8px 12px', color: '#e8f4fb', fontSize: 11, outline: 'none', minHeight: 70, resize: 'vertical' },
   }
 
   function btn(variant = 'default', extra = {}) {
@@ -489,7 +489,7 @@ export default function Dashboard() {
           {selected ? (
             <div style={S.detail}>
               <div style={{ padding: '11px 14px', borderBottom: '1px solid #0e1c26', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#07101a', flexShrink: 0 }}>
-                <span style={{ fontSize: 12, fontWeight: 700, color: '#d4e8f5', fontFamily: 'var(--font-sans)' }}>{selected.action}</span>
+                <span style={{ fontSize: 12, fontWeight: 700, color: '#e8f4fb', fontFamily: 'var(--font-sans)' }}>{selected.action}</span>
                 <div style={{ display: 'flex', gap: 6 }}>
                   <button style={btn('danger')} onClick={() => handleDeleteLog(selected.id)}>Delete</button>
                   <button style={btn()} onClick={() => setSelected(null)}>✕</button>
@@ -592,16 +592,16 @@ export default function Dashboard() {
     return (
       <div style={S.scrollContent}>
         <div style={{ maxWidth: 680 }}>
-          <div style={{ fontSize: 20, fontFamily: 'var(--font-sans)', fontWeight: 800, color: '#d4e8f5', marginBottom: 6 }}>API Reference</div>
+          <div style={{ fontSize: 20, fontFamily: 'var(--font-sans)', fontWeight: 800, color: '#e8f4fb', marginBottom: 6 }}>API Reference</div>
           <div style={{ fontSize: 11, color: '#2a4555', marginBottom: 24, lineHeight: 1.7 }}>
             Base URL: <span style={{ color: '#0ea5e9' }}>{typeof window !== 'undefined' ? window.location.origin : 'https://yourapp.vercel.app'}/api/v1</span><br />
-            Auth: <code style={{ color: '#6a9ab5' }}>Authorization: Bearer sk-lw-...</code>
+            Auth: <code style={{ color: '#c8dde8' }}>Authorization: Bearer sk-lw-...</code>
           </div>
 
           {/* Keys */}
           <div style={{ ...S.block2 }}>
             <div style={{ padding: '12px 16px', borderBottom: '1px solid #0a1820', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span style={{ fontSize: 13, fontWeight: 700, color: '#d4e8f5', fontFamily: 'var(--font-sans)' }}>API Keys</span>
+              <span style={{ fontSize: 13, fontWeight: 700, color: '#e8f4fb', fontFamily: 'var(--font-sans)' }}>API Keys</span>
               <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
                 <input style={{ ...S.fInput, width: 140, padding: '5px 10px' }} placeholder="Key name…" value={newKeyName} onChange={e => setNewKeyName(e.target.value)} />
                 <button style={btn('primary')} onClick={handleGenerateKey}>Generate</button>
@@ -618,7 +618,7 @@ export default function Dashboard() {
             {apiKeys.map(k => (
               <div key={k.id} style={{ padding: '12px 16px', borderBottom: '1px solid #0a1820', display: 'flex', gap: 12, alignItems: 'center' }}>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: 12, fontWeight: 600, color: '#b8cdd8', fontFamily: 'var(--font-sans)', marginBottom: 3 }}>{k.name}</div>
+                  <div style={{ fontSize: 12, fontWeight: 600, color: '#e8f4fb', fontFamily: 'var(--font-sans)', marginBottom: 3 }}>{k.name}</div>
                   <div style={{ fontSize: 10, color: '#1a3040' }}>{k.key_prefix}… · Created {k.created_at?.slice(0, 10)} · {k.call_count?.toLocaleString() ?? 0} calls · Last used {k.last_used_at ? timeAgo(k.last_used_at) : 'never'}</div>
                 </div>
                 <button style={btn('danger')} onClick={() => handleRevokeKey(k.id)}>Revoke</button>
@@ -631,7 +631,7 @@ export default function Dashboard() {
             <div style={{ padding: '12px 16px', borderBottom: '1px solid #0a1820', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div>
                 <div style={{ fontSize: 9, color: '#38bdf8', letterSpacing: '0.12em', textTransform: 'uppercase', fontFamily: 'var(--font-mono)', marginBottom: 4 }}>Claude MCP Integration</div>
-                <span style={{ fontSize: 13, fontWeight: 700, color: '#d4e8f5', fontFamily: 'var(--font-sans)' }}>Connect to Claude Desktop</span>
+                <span style={{ fontSize: 13, fontWeight: 700, color: '#e8f4fb', fontFamily: 'var(--font-sans)' }}>Connect to Claude Desktop</span>
               </div>
               <button style={btn()} onClick={() => { navigator.clipboard.writeText(`{
   "mcpServers": {
@@ -643,7 +643,7 @@ export default function Dashboard() {
   }
 }`); toast('Copied MCP config') }}>Copy config</button>
             </div>
-            <pre style={{ padding: '16px', fontSize: 11, color: '#6a9ab5', lineHeight: 1.75, overflowX: 'auto', whiteSpace: 'pre' }}>{`{
+            <pre style={{ padding: '16px', fontSize: 11, color: '#c8dde8', lineHeight: 1.75, overflowX: 'auto', whiteSpace: 'pre' }}>{`{
   "mcpServers": {
     "logwick": {
       "command": "npx",
@@ -695,12 +695,12 @@ curl ".../api/v1/logs?format=csv" -H "Authorization: Bearer sk-lw-..."` },
               <div style={{ padding: '10px 16px', borderBottom: '1px solid #0a1820', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
                   <span style={{ fontSize: 10, padding: '2px 8px', borderRadius: 4, fontWeight: 700, background: ep.method === 'POST' ? '#0a2010' : '#0a1a30', color: ep.method === 'POST' ? '#34d399' : '#60a5fa' }}>{ep.method}</span>
-                  <code style={{ fontSize: 11, color: '#6a9ab5' }}>{ep.path}</code>
-                  <span style={{ fontSize: 11, fontWeight: 700, color: '#b8cdd8', fontFamily: 'var(--font-sans)' }}>{ep.title}</span>
+                  <code style={{ fontSize: 11, color: '#c8dde8' }}>{ep.path}</code>
+                  <span style={{ fontSize: 11, fontWeight: 700, color: '#e8f4fb', fontFamily: 'var(--font-sans)' }}>{ep.title}</span>
                 </div>
                 <button style={btn()} onClick={() => { navigator.clipboard.writeText(ep.code); toast('Copied') }}>Copy</button>
               </div>
-              <pre style={{ padding: '16px', fontSize: 10, color: '#6a9ab5', lineHeight: 1.7, overflowX: 'auto', whiteSpace: 'pre' }}>{ep.code}</pre>
+              <pre style={{ padding: '16px', fontSize: 10, color: '#c8dde8', lineHeight: 1.7, overflowX: 'auto', whiteSpace: 'pre' }}>{ep.code}</pre>
             </div>
           ))}
         </div>
@@ -712,11 +712,11 @@ curl ".../api/v1/logs?format=csv" -H "Authorization: Bearer sk-lw-..."` },
     return (
       <div style={S.scrollContent}>
         <div style={{ maxWidth: 600 }}>
-          <div style={{ fontSize: 20, fontFamily: 'var(--font-sans)', fontWeight: 800, color: '#d4e8f5', marginBottom: 6 }}>Webhooks</div>
+          <div style={{ fontSize: 20, fontFamily: 'var(--font-sans)', fontWeight: 800, color: '#e8f4fb', marginBottom: 6 }}>Webhooks</div>
           <div style={{ fontSize: 11, color: '#2a4555', marginBottom: 24, lineHeight: 1.7 }}>Logwick POSTs to your URL when matching events are ingested. HMAC signed with your secret.</div>
 
           <div style={{ ...S.block2, padding: 16, marginBottom: 20 }}>
-            <div style={{ fontSize: 12, fontWeight: 700, color: '#b8cdd8', fontFamily: 'var(--font-sans)', marginBottom: 12 }}>Add Webhook</div>
+            <div style={{ fontSize: 12, fontWeight: 700, color: '#e8f4fb', fontFamily: 'var(--font-sans)', marginBottom: 12 }}>Add Webhook</div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 10 }}>
               <div><div style={S.fLabel}>Label</div><input style={S.fInput} placeholder="Slack alerts" value={newWH.label} onChange={e => setNewWH(p => ({ ...p, label: e.target.value }))} /></div>
               <div>
@@ -738,9 +738,9 @@ curl ".../api/v1/logs?format=csv" -H "Authorization: Bearer sk-lw-..."` },
               <div style={{ padding: '12px 16px', display: 'flex', alignItems: 'center', gap: 12 }}>
                 <div style={{ flex: 1 }}>
                   <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginBottom: 4 }}>
-                    <span style={{ fontSize: 12, fontWeight: 600, color: '#b8cdd8', fontFamily: 'var(--font-sans)' }}>{w.label}</span>
+                    <span style={{ fontSize: 12, fontWeight: 600, color: '#e8f4fb', fontFamily: 'var(--font-sans)' }}>{w.label}</span>
                     <span style={{ fontSize: 9, padding: '2px 6px', borderRadius: 4, background: w.active ? '#051a0e' : '#0d0d0d', color: w.active ? '#34d399' : '#2a4555', border: `1px solid ${w.active ? '#0a3320' : '#1c2e3a'}`, letterSpacing: '0.06em', textTransform: 'uppercase' }}>{w.active ? 'active' : 'paused'}</span>
-                    {(w.events || []).map(ev => <span key={ev} style={{ fontSize: 9, padding: '2px 6px', borderRadius: 4, background: '#0a1820', color: '#4a7a90', border: '1px solid #1c2e3a' }}>on:{ev}</span>)}
+                    {(w.events || []).map(ev => <span key={ev} style={{ fontSize: 9, padding: '2px 6px', borderRadius: 4, background: '#0a1820', color: '#a0c4d8', border: '1px solid #1c2e3a' }}>on:{ev}</span>)}
                   </div>
                   <div style={{ fontSize: 10, color: '#1a3040', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{w.url}</div>
                 </div>
@@ -753,7 +753,7 @@ curl ".../api/v1/logs?format=csv" -H "Authorization: Bearer sk-lw-..."` },
 
           <div style={{ ...S.block2, marginTop: 20 }}>
             <div style={{ padding: '10px 16px', borderBottom: '1px solid #0a1820', fontSize: 10, color: '#1a3040', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Payload Format</div>
-            <pre style={{ padding: 16, fontSize: 10, color: '#6a9ab5', lineHeight: 1.7 }}>{`{
+            <pre style={{ padding: 16, fontSize: 10, color: '#c8dde8', lineHeight: 1.7 }}>{`{
   "event":     "log.error",
   "timestamp": "2026-04-12T14:30:00Z",
   "log": {
@@ -777,7 +777,7 @@ curl ".../api/v1/logs?format=csv" -H "Authorization: Bearer sk-lw-..."` },
     return (
       <div style={S.scrollContent}>
         <div style={{ maxWidth: 520 }}>
-          <div style={{ fontSize: 20, fontFamily: 'var(--font-sans)', fontWeight: 800, color: '#d4e8f5', marginBottom: 24 }}>Settings</div>
+          <div style={{ fontSize: 20, fontFamily: 'var(--font-sans)', fontWeight: 800, color: '#e8f4fb', marginBottom: 24 }}>Settings</div>
           {[
             { section: 'Organization', fields: [{ label: 'Org Name', key: 'orgName', type: 'text' }, { label: 'Admin Email', key: 'email', type: 'email' }] },
             { section: 'Alerts', fields: [{ label: 'Error Threshold %', key: 'alertThreshold', type: 'number' }, { label: 'Slack Webhook URL', key: 'slackWebhook', type: 'text', placeholder: 'https://hooks.slack.com/…' }] },
@@ -798,7 +798,7 @@ curl ".../api/v1/logs?format=csv" -H "Authorization: Bearer sk-lw-..."` },
             <div style={{ padding: '9px 16px', borderBottom: '1px solid #0a1820', fontSize: 9, color: '#1a3040', letterSpacing: '0.12em', textTransform: 'uppercase' }}>Current Plan</div>
             <div style={{ padding: 16 }}>
               <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginBottom: 8 }}>
-                <span style={{ fontSize: 14, fontWeight: 800, color: '#7dd3fc', fontFamily: 'var(--font-sans)', textTransform: 'uppercase' }}>{stats?.org_plan || 'free'}</span>
+                <span style={{ fontSize: 14, fontWeight: 800, color: '#bae6fd', fontFamily: 'var(--font-sans)', textTransform: 'uppercase' }}>{stats?.org_plan || 'free'}</span>
                 <span style={{ fontSize: 11, color: '#2a4555' }}>· {stats?.monthly_used?.toLocaleString() ?? 0} / {stats?.monthly_limit?.toLocaleString() ?? 5000} logs this month</span>
               </div>
               <a href="mailto:hello@logwick.io?subject=Upgrade inquiry" style={{ ...btn('primary'), display: 'inline-flex' }}>Upgrade plan →</a>
