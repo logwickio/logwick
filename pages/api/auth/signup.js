@@ -113,6 +113,33 @@ export default async function handler(req, res) {
               `).join('')}
             </div>
 
+            <!-- MCP Section -->
+            <div style="background:#07101a;border:1px solid rgba(14,165,233,0.3);border-radius:8px;overflow:hidden;margin-bottom:28px;">
+              <div style="padding:10px 16px;border-bottom:1px solid #1e3040;font-size:10px;color:#38bdf8;letter-spacing:0.1em;text-transform:uppercase;">
+                ✦ Claude MCP Integration — Ask Claude about your logs
+              </div>
+              <div style="padding:14px 16px;">
+                <p style="font-size:13px;color:#7a9db5;line-height:1.7;margin:0 0 12px;">Connect Logwick to Claude Desktop and ask questions in plain English:</p>
+                <div style="font-size:12px;color:#38bdf8;font-family:'JetBrains Mono',monospace;line-height:2;margin-bottom:12px;">
+                  "Show me my last 10 error logs"<br/>
+                  "What was my success rate this week?"<br/>
+                  "How many tokens did I spend yesterday?"
+                </div>
+                <div style="background:#060c14;border-radius:6px;padding:12px;font-size:11px;color:#6a9ab5;font-family:'JetBrains Mono',monospace;line-height:1.75;">
+                  // Add to claude_desktop_config.json<br/>
+                  {<br/>
+                  &nbsp;&nbsp;"mcpServers": {<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;"logwick": {<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"command": "npx",<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"args": ["-y", "@logwick/mcp"],<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"env": { "LOGWICK_API_KEY": "${key}" }<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+                  &nbsp;&nbsp;}<br/>
+                  }
+                </div>
+              </div>
+            </div>
+
             <!-- CTA -->
             <a href="https://logwick.io/dashboard" style="display:inline-block;padding:12px 24px;background:linear-gradient(135deg,#38bdf8,#0284c7);border-radius:7px;font-size:12px;font-weight:700;color:#fff;text-decoration:none;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:32px;">
               Go to your dashboard →
