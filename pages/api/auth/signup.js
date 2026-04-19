@@ -56,7 +56,7 @@ export default async function handler(req, res) {
 
             <!-- Logo -->
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:32px;">
-              <div style="width:36px;height:36px;flex-shrink:0;"><svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="36" height="36" rx="8" fill="#0ea5e9"/><path d="M11 8 L11 24 L25 24" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="25" cy="24" r="3.5" fill="white"/></svg></div>
+              <img src="https://logwick.io/favicon.svg" width="36" height="36" alt="Logwick" style="border-radius:8px;"/>
               <span style="font-size:18px;font-weight:800;color:#f1f5f9;letter-spacing:0.04em;">Logwick</span>
             </div>
 
