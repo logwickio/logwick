@@ -127,7 +127,12 @@ function LiveDemo() {
         {/* Nav */}
         <div style={s.nav}>
           <div style={s.logo}>
-            <div style={s.mark}><svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',height:'100%'}}><path d="M11 8 L11 24 L25 24" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/><circle cx="25" cy="24" r="3.5" fill="white"/></svg></div>
+            <div style={s.mark}>
+            <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',height:'100%'}}>
+              <path d="M11 8 L11 24 L25 24" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+              <circle cx="25" cy="24" r="3.5" fill="white"/>
+            </svg>
+          </div>
             <div style={s.brand}>Logwick</div>
             <div style={s.sub}>Leave a trail.</div>
           </div>
@@ -230,8 +235,8 @@ export default function Home() {
         *{box-sizing:border-box;margin:0;padding:0;}
         :root{
           --bg:#0a0f14;--surface:#0f1923;--border:#1e3040;
-          --accent:#38bdf8;--text:#e2edf5;--muted:#7a9db5;
-          --bright:#f4f8fb;--success:#34d399;
+          --accent:#38bdf8;--text:#cbd5e1;--muted:#64748b;
+          --bright:#f1f5f9;--success:#34d399;
         }
         body{background:var(--bg);color:var(--text);font-family:'JetBrains Mono',monospace;overflow-x:hidden;}
         a{color:inherit;text-decoration:none;}
@@ -240,7 +245,7 @@ export default function Home() {
         nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:16px 40px;transition:all 0.3s;}
         nav.scrolled{background:rgba(10,15,20,0.92);border-bottom:1px solid var(--border);backdrop-filter:blur(12px);}
         .nlogo{display:flex;align-items:center;gap:10px;}
-        .nmark{width:28px;height:28px;border-radius:6px;background:linear-gradient(135deg,var(--accent),#0284c7);display:flex;align-items:center;justify-content:center;font-size:13px;color:#fff;}
+        .nmark{width:32px;height:32px;border-radius:7px;background:linear-gradient(135deg,var(--accent),#0284c7);display:flex;align-items:center;justify-content:center;padding:6px;overflow:hidden;}
         .nbrand{font-family:'Syne',sans-serif;font-weight:800;font-size:15px;color:var(--bright);}
         .nlinks{display:flex;gap:24px;align-items:center;}
         .nlinks a{font-size:11px;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;transition:color 0.2s;}
@@ -260,9 +265,9 @@ export default function Home() {
         .btn-ghost{padding:13px 28px;background:transparent;border:1px solid var(--border);border-radius:8px;font-size:12px;color:var(--muted);cursor:pointer;letter-spacing:0.06em;text-transform:uppercase;font-family:'JetBrains Mono',monospace;transition:border-color 0.2s,color 0.2s;}
         .btn-ghost:hover{border-color:var(--muted);color:var(--text);}
         .demo-wrap-outer{width:100%;max-width:820px;animation:fadeUp 0.6s 0.4s ease both;}
-        .demo-label{font-size:11px;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;text-align:center;margin-bottom:10px;}
+        .demo-label{font-size:9px;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;text-align:center;margin-bottom:10px;}
         .logos{padding:28px 40px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:center;gap:40px;flex-wrap:wrap;background:rgba(15,25,35,0.5);}
-        .ll{font-size:11px;color:var(--muted);letter-spacing:0.14em;text-transform:uppercase;}
+        .ll{font-size:9px;color:var(--muted);letter-spacing:0.14em;text-transform:uppercase;}
         .li{font-size:11px;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;font-family:'Syne',sans-serif;font-weight:700;opacity:0.4;}
         .section{padding:80px 24px;max-width:960px;margin:0 auto;}
         .eyebrow2{font-size:9px;color:var(--accent);letter-spacing:0.16em;text-transform:uppercase;margin-bottom:14px;}
@@ -273,16 +278,16 @@ export default function Home() {
         .feat:hover{background:#131f2e;}
         .ficon{width:36px;height:36px;border-radius:8px;background:rgba(56,189,248,0.08);border:1px solid rgba(56,189,248,0.15);display:flex;align-items:center;justify-content:center;font-size:16px;margin-bottom:14px;}
         .ftitle{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--bright);margin-bottom:8px;}
-        .fdesc{font-size:13px;color:var(--muted);line-height:1.8;}
+        .fdesc{font-size:11px;color:var(--muted);line-height:1.75;}
         .how{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;position:relative;}
         .how::before{content:'';position:absolute;top:20px;left:calc(16.67% + 16px);right:calc(16.67% + 16px);height:1px;background:linear-gradient(90deg,transparent,var(--border),var(--border),transparent);}
         .step{text-align:center;}
         .step-num{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#0284c7);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;margin:0 auto 16px;position:relative;z-index:1;}
         .step-title{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--bright);margin-bottom:8px;}
-        .step-desc{font-size:13px;color:var(--muted);line-height:1.8;}
+        .step-desc{font-size:11px;color:var(--muted);line-height:1.75;}
         .code-block{background:#040810;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-top:40px;}
-        .code-head{padding:10px 16px;background:#060b0f;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;}
-        pre{padding:20px;font-size:13px;color:#94b8cc;line-height:1.8;overflow-x:auto;white-space:pre;}
+        .code-head{padding:10px 16px;background:#060b0f;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-size:9px;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;}
+        pre{padding:20px;font-size:11px;color:#6a9ab5;line-height:1.75;overflow-x:auto;white-space:pre;}
         .pricing{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
         .plan{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:28px 24px;position:relative;}
         .plan.featured{border-color:var(--accent);background:#0d1a24;}
@@ -292,7 +297,7 @@ export default function Home() {
         .pprice span{font-size:13px;font-weight:400;color:var(--muted);}
         .pdesc{font-size:11px;color:var(--muted);margin-bottom:18px;line-height:1.6;}
         .pfeats{list-style:none;display:flex;flex-direction:column;gap:7px;margin-bottom:22px;}
-        .pfeats li{font-size:13px;color:var(--text);display:flex;gap:8px;align-items:flex-start;}
+        .pfeats li{font-size:11px;color:var(--text);display:flex;gap:8px;align-items:flex-start;}
         .pfeats li::before{content:'✓';color:var(--success);flex-shrink:0;}
         .pfeats li.off{color:var(--muted);}
         .pfeats li.off::before{content:'—';color:var(--muted);}
@@ -306,8 +311,8 @@ export default function Home() {
         .cta-section p{font-size:13px;color:var(--muted);margin-bottom:32px;line-height:1.7;}
         footer{padding:40px;border-top:1px solid var(--border);display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;}
         .fbrand{font-family:'Syne',sans-serif;font-size:15px;font-weight:800;color:var(--bright);margin-bottom:8px;}
-        .fdesc2{font-size:13px;color:var(--muted);line-height:1.8;max-width:220px;}
-        .fcol h4{font-size:11px;color:var(--muted);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:12px;}
+        .fdesc2{font-size:11px;color:var(--muted);line-height:1.75;max-width:220px;}
+        .fcol h4{font-size:9px;color:var(--muted);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:12px;}
         .fcol a{display:block;font-size:11px;color:var(--muted);margin-bottom:7px;transition:color 0.2s;}
         .fcol a:hover{color:var(--text);}
         .fbot{padding:18px 40px;border-top:1px solid var(--border);display:flex;justify-content:space-between;font-size:10px;color:var(--muted);}
@@ -324,7 +329,12 @@ export default function Home() {
 
       <nav id="nav">
         <div className="nlogo">
-          <div className="nmark"><svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',height:'100%'}}><path d="M11 8 L11 24 L25 24" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/><circle cx="25" cy="24" r="3.5" fill="white"/></svg></div>
+          <div className="nmark">
+          <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',height:'100%'}}>
+            <path d="M11 8 L11 24 L25 24" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+            <circle cx="25" cy="24" r="3.5" fill="white"/>
+          </svg>
+        </div>
           <span className="nbrand">Logwick</span>
         </div>
         <div className="nlinks">
@@ -356,14 +366,14 @@ export default function Home() {
       {/* Logos */}
       <div className="logos">
         <span className="ll">Works with</span>
-        {['GPT-4o','Claude','Gemini','Mistral','LangChain','CrewAI','Any LLM'].map(l => <span key={l} className="li">{l}</span>)}
+        {['GPT-4o','Claude','Gemini','Mistral','LangChain','CrewAI','MCP','Any LLM'].map(l => <span key={l} className="li">{l}</span>)}
       </div>
 
       {/* Features */}
       <div className="section" id="features">
         <div className="eyebrow2">Features</div>
         <div className="stitle">Everything you need to trust your AI stack</div>
-        <div className="ssub">One API endpoint. Instant visibility across every agent, model, and workflow your team runs.</div>
+        <div className="ssub">One API endpoint. Instant visibility across every agent, model, and workflow — including native Claude MCP integration.</div>
         <div className="features">
           {[
             ['⬛','Universal log ingestion','One REST endpoint accepts logs from any AI agent or model. POST and forget — storage, indexing, and retention handled automatically.'],
@@ -372,6 +382,7 @@ export default function Home() {
             ['↓','CSV export','Export filtered logs anytime for compliance audits, legal review, or your own data pipelines.'],
             ['📊','Analytics dashboard','Track success rates, error trends, token spend, latency, and cost over time. Know your AI bill before it surprises you.'],
             ['🔑','API key management','Issue scoped API keys per team or integration. Revoke instantly. Full audit of who logged what and when.'],
+            ['🤖','Claude MCP integration','Ask Claude what your AI agents did in plain English. Connect Logwick to Claude Desktop in 2 minutes via MCP.'],
           ].map(([icon,title,desc]) => (
             <div key={title} className="feat">
               <div className="ficon">{icon}</div>
@@ -400,14 +411,6 @@ export default function Home() {
             </div>
           ))}
         </div>
-        <div style={{marginBottom:16,background:"#07101a",border:"1px solid #1e3040",borderRadius:8,overflow:"hidden"}}>
-          <div style={{padding:"8px 16px",borderBottom:"1px solid #1e3040",fontSize:10,color:"#4a7a90",letterSpacing:"0.1em",textTransform:"uppercase"}}>Install</div>
-          <pre style={{padding:"14px 16px",fontSize:13,color:"#38bdf8",margin:0}}>npm install logwick</pre>
-          <div style={{borderTop:"1px solid #1e3040",padding:"14px 16px",display:"flex",alignItems:"center",gap:10}}>
-            <span style={{fontSize:10,color:"#4a7a90",letterSpacing:"0.1em",textTransform:"uppercase"}}>Python</span>
-            <pre style={{fontSize:13,color:"#38bdf8",margin:0}}>pip install logwick</pre>
-          </div>
-        </div>
         <div className="code-block">
           <div className="code-head"><span>Node.js — add one call after your AI request</span></div>
           <pre>{`const start = Date.now()
@@ -433,6 +436,61 @@ fetch('https://logwick.io/api/v1/logs', {
         </div>
       </div>
 
+      {/* MCP Section */}
+      <div className="section" style={{paddingTop:0}}>
+        <div style={{background:"#07101a",border:"1px solid #0ea5e9",borderRadius:12,overflow:"hidden",maxWidth:860,margin:"0 auto"}}>
+          <div style={{padding:"28px 32px",borderBottom:"1px solid #1e3040",display:"flex",alignItems:"center",gap:16,flexWrap:"wrap"}}>
+            <div style={{width:44,height:44,borderRadius:10,background:"linear-gradient(135deg,#38bdf8,#0284c7)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:22,flexShrink:0}}>
+              <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" style={{width:26,height:26}}>
+                <path d="M11 8 L11 24 L25 24" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+                <circle cx="25" cy="24" r="3.5" fill="white"/>
+              </svg>
+            </div>
+            <div style={{flex:1}}>
+              <div style={{fontSize:9,color:"#38bdf8",letterSpacing:"0.14em",textTransform:"uppercase",fontFamily:"'JetBrains Mono',monospace",marginBottom:6}}>New — Claude MCP Integration</div>
+              <div style={{fontFamily:"'Syne',sans-serif",fontSize:22,fontWeight:800,color:"#f1f5f9",lineHeight:1.1,marginBottom:6}}>Ask Claude what your AI agents did</div>
+              <div style={{fontSize:13,color:"#7a9db5",lineHeight:1.7}}>Connect Logwick to Claude Desktop in 2 minutes. Query your logs, investigate errors, and log actions — all through natural language.</div>
+            </div>
+          </div>
+          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:1,background:"#1e3040"}}>
+            <div style={{background:"#07101a",padding:"20px 24px"}}>
+              <div style={{fontSize:11,color:"#4a7a90",letterSpacing:"0.1em",textTransform:"uppercase",fontFamily:"'JetBrains Mono',monospace",marginBottom:12}}>Without Logwick MCP</div>
+              {["Open dashboard","Filter by date","Search for errors","Copy log IDs","Cross-reference manually"].map(t => (
+                <div key={t} style={{display:"flex",gap:8,alignItems:"center",marginBottom:8,fontSize:13,color:"#4a7a90"}}>
+                  <span style={{color:"#ef4444"}}>✕</span>{t}
+                </div>
+              ))}
+            </div>
+            <div style={{background:"#060e16",padding:"20px 24px"}}>
+              <div style={{fontSize:11,color:"#38bdf8",letterSpacing:"0.1em",textTransform:"uppercase",fontFamily:"'JetBrains Mono',monospace",marginBottom:12}}>With Logwick MCP</div>
+              {[
+                '"Show me errors from yesterday"',
+                '"How much did we spend on tokens?"',
+                '"Find all failed email_draft actions"',
+                '"Log this GPT-4o call for me"',
+                '"What was our success rate this week?"',
+              ].map(t => (
+                <div key={t} style={{display:"flex",gap:8,alignItems:"flex-start",marginBottom:8,fontSize:12,color:"#94b8cc",fontFamily:"'JetBrains Mono',monospace",lineHeight:1.5}}>
+                  <span style={{color:"#34d399",flexShrink:0}}>✓</span>{t}
+                </div>
+              ))}
+            </div>
+          </div>
+          <div style={{padding:"20px 24px",background:"#07101a",borderTop:"1px solid #1e3040"}}>
+            <div style={{fontSize:11,color:"#4a7a90",letterSpacing:"0.1em",textTransform:"uppercase",fontFamily:"'JetBrains Mono',monospace",marginBottom:10}}>Add to claude_desktop_config.json</div>
+            <pre style={{fontSize:12,color:"#6a9ab5",lineHeight:1.75,margin:0,overflowX:"auto",whiteSpace:"pre"}}>{`{
+  "mcpServers": {
+    "logwick": {
+      "command": "npx",
+      "args": ["-y", "@logwick/mcp"],
+      "env": { "LOGWICK_API_KEY": "sk-lw-your-key" }
+    }
+  }
+}`}</pre>
+          </div>
+        </div>
+      </div>
+
       {/* Pricing */}
       <div className="section" id="pricing" style={{paddingTop:0}}>
         <div className="eyebrow2">Pricing</div>
@@ -449,7 +507,7 @@ fetch('https://logwick.io/api/v1/logs', {
               <li>1 API key</li>
               <li>Dashboard & search</li>
               <li className="off">Webhooks</li>
-              <li>CSV export</li>
+              <li className="off">CSV export</li>
             </ul>
             <a href="/signup"><button className="pbtn ghost">Get started free</button></a>
           </div>
@@ -466,7 +524,7 @@ fetch('https://logwick.io/api/v1/logs', {
               <li>Unlimited webhooks</li>
               <li>CSV export</li>
             </ul>
-            <a href="/signup"><button className="pbtn primary">Upgrade to Pro</button></a>
+            <a href="/signup"><button className="pbtn primary">Start free trial</button></a>
           </div>
           <div className="plan">
             <div className="pname">Enterprise</div>
@@ -489,7 +547,7 @@ fetch('https://logwick.io/api/v1/logs', {
       <div className="cta-section">
         <div className="cta-glow"/>
         <h2>Start logging your<br/>AI agents today</h2>
-        <p>Free forever for small projects. No credit card required.<br/>Your first 5,000 logs are on us.</p>
+        <p>Free forever for small projects. No credit card required.<br/>Your first 5,000 logs are on us. Claude MCP integration included.</p>
         <a href="/signup"><button className="btn-primary" style={{fontSize:13,padding:'14px 32px'}}>Create free account →</button></a>
       </div>
 
@@ -497,7 +555,12 @@ fetch('https://logwick.io/api/v1/logs', {
       <footer>
         <div>
           <div style={{display:'flex',alignItems:'center',gap:10,marginBottom:10}}>
-            <div className="nmark" style={{width:26,height:26,padding:5}}><svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',height:'100%'}}><path d="M11 8 L11 24 L25 24" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/><circle cx="25" cy="24" r="3.5" fill="white"/></svg></div>
+            <div className="nmark" style={{width:26,height:26,padding:5}}>
+              <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',height:'100%'}}>
+                <path d="M11 8 L11 24 L25 24" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+                <circle cx="25" cy="24" r="3.5" fill="white"/>
+              </svg>
+            </div>
             <div className="fbrand">Logwick</div>
           </div>
           <div className="fdesc2">The audit log for AI agents. Leave a trail. Know what your AI did, always.</div>
