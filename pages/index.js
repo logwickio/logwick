@@ -403,6 +403,10 @@ export default function Home() {
         <div style={{marginBottom:16,background:"#07101a",border:"1px solid #1e3040",borderRadius:8,overflow:"hidden"}}>
           <div style={{padding:"8px 16px",borderBottom:"1px solid #1e3040",fontSize:10,color:"#4a7a90",letterSpacing:"0.1em",textTransform:"uppercase"}}>Install</div>
           <pre style={{padding:"14px 16px",fontSize:13,color:"#38bdf8",margin:0}}>npm install logwick</pre>
+          <div style={{borderTop:"1px solid #1e3040",padding:"14px 16px",display:"flex",alignItems:"center",gap:10}}>
+            <span style={{fontSize:10,color:"#4a7a90",letterSpacing:"0.1em",textTransform:"uppercase"}}>Python</span>
+            <pre style={{fontSize:13,color:"#38bdf8",margin:0}}>pip install logwick</pre>
+          </div>
         </div>
         <div className="code-block">
           <div className="code-head"><span>Node.js — add one call after your AI request</span></div>
