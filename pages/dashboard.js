@@ -459,7 +459,7 @@ export default function Dashboard() {
                     <div>
                       <div style={{ fontSize: 13, fontWeight: 700, color: '#7dd3fc', marginBottom: 6 }}>Set up Logwick with Claude</div>
                       <div style={{ fontSize: 12, color: '#a8c8dc', lineHeight: 1.7, marginBottom: 8 }}>Ask Claude to add Logwick to your project automatically — it reads the docs and wires everything up for you:</div>
-                      <div style={{ fontSize: 12, color: '#38bdf8', fontFamily: 'var(--font-mono)', background: '#060e16', borderRadius: 6, padding: '8px 12px', marginBottom: 8 }}>"Go to logwick.io/docs and add Logwick to my project. My API key is sk-lw-..."</div>
+                      <div style={{ fontSize: 12, color: '#38bdf8', fontFamily: 'var(--font-mono)', background: '#060e16', borderRadius: 6, padding: '8px 12px', marginBottom: 8 }}>"Here are the Logwick docs: [paste from logwick.io/docs]. Add Logwick to my project. My API key is sk-lw-..."</div>
                       <div style={{ fontSize: 12, color: '#a8c8dc', lineHeight: 1.7 }}>Or connect Claude Desktop via MCP to query your logs in plain English. See the <span style={{ color: '#38bdf8', cursor: 'pointer' }} onClick={() => setView('api')}>API Docs tab →</span></div>
                     </div>
                   </div>
