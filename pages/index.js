@@ -89,7 +89,7 @@ function LiveDemo() {
     mark: { width:22, height:22, borderRadius:5, background:'linear-gradient(135deg,#38bdf8,#0284c7)', display:'flex', alignItems:'center', justifyContent:'center', fontSize:10, color:'#fff', marginBottom:4 },
     brand: { fontSize:11, fontWeight:700, color:'#f1f5f9', letterSpacing:'0.04em' },
     sub: { fontSize:8, color:'#a8c8dc', letterSpacing:'0.12em', textTransform:'uppercase' },
-    navItem: (active) => ({ padding:'6px 12px', fontSize:9, color: active ? '#38bdf8':'#334155', background: active ? '#0d1923':'transparent', borderLeft: active ? '2px solid #38bdf8':'2px solid transparent', display:'flex', alignItems:'center', gap:6 }),
+    navItem: (active) => ({ padding:'6px 12px', fontSize:9, color: active ? '#ffffff':'#a8c8dc', background: active ? '#0d1923':'transparent', borderLeft: active ? '2px solid #38bdf8':'2px solid transparent', display:'flex', alignItems:'center', gap:6 }),
     main: { flex:1, display:'flex', flexDirection:'column', overflow:'hidden' },
     statsRow: { display:'grid', gridTemplateColumns:'repeat(4,1fr)', borderBottom:'1px solid #1e3040', background:'#07100a', flexShrink:0 },
     stat: (last) => ({ padding:'8px 10px', borderRight: last ? 'none':'1px solid #1e3040' }),
