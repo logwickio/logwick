@@ -669,10 +669,10 @@ export default function Dashboard() {
     "logwick": {
       "command": "npx",
       "args": ["-y", "@logwick/mcp"],
-      "env": { "LOGWICK_API_KEY": "${apiKeys[0]?.key_prefix || 'sk-lw-your-key'}..." }
+      "env": { "LOGWICK_API_KEY": "YOUR_FULL_API_KEY_HERE" }
     }
   }
-}`); toast('Copied MCP config') }}>Copy config</button>
+}`); toast('Copied — replace YOUR_FULL_API_KEY_HERE with your real key') }}>Copy config</button>
             </div>
             <pre style={{ padding: '16px', fontSize: 11, color: '#c8dce8', lineHeight: 1.75, overflowX: 'auto', whiteSpace: 'pre' }}>{`{
   "mcpServers": {
