@@ -457,9 +457,26 @@ export default function Dashboard() {
                       <circle cx="25" cy="24" r="3.5" fill="white"/>
                     </svg>
                     <div>
-                      <div style={{ fontSize: 13, fontWeight: 700, color: '#7dd3fc', marginBottom: 6 }}>Set up Logwick with Claude</div>
+                      <div style={{ fontSize: 13, fontWeight: 700, color: '#7dd3fc', marginBottom: 6 }}>Set up Logwick with Claude — one click</div>
                       <div style={{ fontSize: 12, color: '#a8c8dc', lineHeight: 1.7, marginBottom: 8 }}>Ask Claude to add Logwick to your project automatically — it reads the docs and wires everything up for you:</div>
-                      <div style={{ fontSize: 12, color: '#38bdf8', fontFamily: 'var(--font-mono)', background: '#060e16', borderRadius: 6, padding: '8px 12px', marginBottom: 8 }}>"Here are the Logwick docs: [paste from logwick.io/docs]. Add Logwick to my project. My API key is sk-lw-..."</div>
+                      <div style={{ fontSize: 12, color: '#a8c8dc', lineHeight: 1.7, marginBottom: 12 }}>Click below — it copies everything Claude needs and opens claude.ai. Just paste and hit send.</div>
+                      <button
+                        onClick={() => {
+                          const key = apiKeys[0]?.key_prefix ? apiKeys[0].key_prefix + '...' : 'sk-lw-your-key'
+                          const msg = 'Here are the Logwick docs:\n\nINSTALL\nnpm install logwick\n\nQUICK START\nimport { LogwickClient } from \'logwick\'\nconst logwick = new LogwickClient({ apiKey: process.env.LOGWICK_API_KEY })\nlogwick.fire({ agent: \'gpt-4o\', action: \'my_action\', status: \'success\', input: userPrompt, output: result, tokens: 312 })\n\nOPENAI WRAPPER\nconst result = await logwick.openai(() => openai.chat.completions.create({ model: \'gpt-4o\', messages }), { action: \'email_draft\', user: req.user.email })\n\nANTHROPIC WRAPPER\nconst result = await logwick.anthropic(() => anthropic.messages.create({ model: \'claude-3-5-sonnet-20241022\', messages, max_tokens: 1024 }), { action: \'document_review\' })\n\nPYTHON\nimport logwick\nlogwick.init(api_key=\'your-key\')\nlogwick.fire({ \'agent\': \'gpt-4o\', \'action\': \'my_action\', \'status\': \'success\', \'input\': prompt, \'output\': result })\n\nNow add Logwick to my project. My API key is ' + key
+                          navigator.clipboard.writeText(msg).then(() => {
+                            window.open('https://claude.ai/new', '_blank')
+                            toast('Copied! Paste into Claude and hit send')
+                          })
+                        }}
+                        style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 18px', background: 'linear-gradient(135deg,#0ea5e9,#0284c7)', border: 'none', borderRadius: 8, color: '#fff', fontSize: 12, fontFamily: 'var(--font-mono)', cursor: 'pointer', fontWeight: 600 }}>
+                        <svg width="16" height="16" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <rect width="36" height="36" rx="8" fill="rgba(255,255,255,0.2)"/>
+                          <path d="M11 8 L11 24 L25 24" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+                          <circle cx="25" cy="24" r="3.5" fill="white"/>
+                        </svg>
+                        Copy &amp; Open Claude →
+                      </button>
                       <div style={{ fontSize: 12, color: '#a8c8dc', lineHeight: 1.7 }}>Or connect Claude Desktop via MCP to query your logs in plain English. See the <span style={{ color: '#38bdf8', cursor: 'pointer' }} onClick={() => setView('api')}>API Docs tab →</span></div>
                     </div>
                   </div>
