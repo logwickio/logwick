@@ -590,6 +590,31 @@ fetch('https://logwick.io/api/v1/logs', {
       </div>
 
       {/* CTA */}
+      {/* FAQ */}
+      <div className="section" style={{paddingTop:0}}>
+        <div className="eyebrow2">FAQ</div>
+        <div className="stitle">Common questions</div>
+        <div className="ssub">Everything developers ask before adding Logwick to a project.</div>
+        <div style={{maxWidth:720,margin:'0 auto',display:'flex',flexDirection:'column',gap:2}}>
+          {[
+            ['Will this slow down my app?','No. Every log call is fire and forget — your AI response returns to your user first, the log sends in the background. Zero latency impact.'],
+            ['Is my data safe?','Yes. Every account is fully isolated with row-level security enforced at the database level. Your logs are never accessible to other accounts, ever.'],
+            ['What if I want to leave?','Export everything as CSV anytime from your dashboard. No lock-in, no exit fees, no questions asked.'],
+            ['Do I need to change how I write AI calls?','No. You add one line after your existing AI call. Nothing about how you call GPT, Claude, or Gemini changes.'],
+            ['What happens when I hit the free limit?','Your dashboard shows you how close you are. When you hit 5,000 logs, new logs stop recording until you upgrade or the month resets. Nothing in your app breaks.'],
+            ['Does it work with my stack?','Yes. Any language, any framework, any AI model. Node.js, Python, LangChain, Next.js, FastAPI — if you can make an HTTP request you can use Logwick.'],
+          ].map(([q, a], i) => (
+            <details key={i} style={{background:'#07101a',border:'1px solid #1e3040',borderRadius:8,overflow:'hidden'}}>
+              <summary style={{padding:'16px 20px',fontSize:14,fontWeight:700,color:'#e8f4fb',cursor:'pointer',listStyle:'none',display:'flex',justifyContent:'space-between',alignItems:'center',fontFamily:"'Syne',sans-serif"}}>
+                {q}
+                <span style={{color:'#38bdf8',fontSize:18,flexShrink:0,marginLeft:16}}>+</span>
+              </summary>
+              <div style={{padding:'0 20px 16px',fontSize:13,color:'#c8dce8',lineHeight:1.8,borderTop:'1px solid #1e3040',paddingTop:14}}>{a}</div>
+            </details>
+          ))}
+        </div>
+      </div>
+
       <div className="cta-section">
         <div className="cta-glow"/>
         <h2>Start logging your<br/>AI agents today</h2>
