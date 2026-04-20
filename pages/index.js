@@ -354,6 +354,24 @@ export default function Home() {
         <div className="eyebrow"><span className="live-dot"/>Now live — free to start</div>
         <h1>Leave a trail.<br/><span>Every AI action, logged.</span></h1>
         <p className="sub">Logwick captures every prompt, response, and error your AI agents produce — searchable, exportable, and always there when you need it.</p>
+        <div style={{display:'flex',flexDirection:'column',gap:8,marginBottom:16,marginTop:-8}}>
+          <div style={{display:'flex',alignItems:'center',gap:10,background:'rgba(14,165,233,0.08)',border:'1px solid rgba(14,165,233,0.25)',borderRadius:40,padding:'10px 20px'}}>
+            <svg width="18" height="18" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" style={{flexShrink:0}}>
+              <rect width="36" height="36" rx="8" fill="#0ea5e9"/>
+              <path d="M11 8 L11 24 L25 24" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+              <circle cx="25" cy="24" r="3.5" fill="white"/>
+            </svg>
+            <span style={{fontSize:13,color:'#7dd3fc',fontFamily:"'JetBrains Mono',monospace",letterSpacing:'0.02em'}}>Ask Claude what your AI agents did yesterday. Logwick makes it possible.</span>
+          </div>
+          <div style={{display:'flex',alignItems:'center',gap:10,background:'rgba(14,165,233,0.05)',border:'1px solid rgba(14,165,233,0.15)',borderRadius:40,padding:'10px 20px'}}>
+            <svg width="18" height="18" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" style={{flexShrink:0}}>
+              <rect width="36" height="36" rx="8" fill="#0284c7"/>
+              <path d="M11 8 L11 24 L25 24" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+              <circle cx="25" cy="24" r="3.5" fill="white"/>
+            </svg>
+            <span style={{fontSize:13,color:'#38bdf8',fontFamily:"'JetBrains Mono',monospace",letterSpacing:'0.02em'}}>Ask Claude to add Logwick to your project. It reads the docs and wires it up automatically.</span>
+          </div>
+        </div>
         <div className="actions">
           <a href="/signup"><button className="btn-primary">Start for free →</button></a>
           <a href="#how-it-works"><button className="btn-ghost">See how it works</button></a>

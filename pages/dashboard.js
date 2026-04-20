@@ -450,6 +450,19 @@ export default function Dashboard() {
               {logs.length === 0 && !logsLoading ? (
                 <div style={{ padding: 48, textAlign: 'center', color: '#a8c8dc', fontSize: 12 }}>
                   No logs yet. Use your API key to start ingesting events.
+                  <div style={{ width: '100%', background: 'rgba(14,165,233,0.06)', border: '1px solid rgba(14,165,233,0.2)', borderRadius: 8, padding: '16px 20px', marginTop: 16, display: 'flex', alignItems: 'flex-start', gap: 12 }}>
+                    <svg width="20" height="20" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ flexShrink: 0, marginTop: 2 }}>
+                      <rect width="36" height="36" rx="8" fill="#0ea5e9"/>
+                      <path d="M11 8 L11 24 L25 24" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+                      <circle cx="25" cy="24" r="3.5" fill="white"/>
+                    </svg>
+                    <div>
+                      <div style={{ fontSize: 13, fontWeight: 700, color: '#7dd3fc', marginBottom: 6 }}>Set up Logwick with Claude</div>
+                      <div style={{ fontSize: 12, color: '#a8c8dc', lineHeight: 1.7, marginBottom: 8 }}>Ask Claude to add Logwick to your project automatically — it reads the docs and wires everything up for you:</div>
+                      <div style={{ fontSize: 12, color: '#38bdf8', fontFamily: 'var(--font-mono)', background: '#060e16', borderRadius: 6, padding: '8px 12px', marginBottom: 8 }}>"Go to logwick.io/docs and add Logwick to my project. My API key is sk-lw-..."</div>
+                      <div style={{ fontSize: 12, color: '#a8c8dc', lineHeight: 1.7 }}>Or connect Claude Desktop via MCP to query your logs in plain English. See the <span style={{ color: '#38bdf8', cursor: 'pointer' }} onClick={() => setView('api')}>API Docs tab →</span></div>
+                    </div>
+                  </div>
                 </div>
               ) : logs.map(log => (
                 <div key={log.id} style={S.logRow(selected?.id === log.id)}

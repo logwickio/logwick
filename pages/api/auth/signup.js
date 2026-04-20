@@ -123,7 +123,8 @@ export default async function handler(req, res) {
                 <div style="font-size:12px;color:#38bdf8;font-family:'JetBrains Mono',monospace;line-height:2;margin-bottom:12px;">
                   "Show me my last 10 error logs"<br/>
                   "What was my success rate this week?"<br/>
-                  "How many tokens did I spend yesterday?"
+                  "How many tokens did I spend yesterday?"<br/>
+                  "Add Logwick to my project at logwick.io/docs"
                 </div>
                 <div style="background:#060c14;border-radius:6px;padding:12px;font-size:11px;color:#6a9ab5;font-family:'JetBrains Mono',monospace;line-height:1.75;">
                   // Add to claude_desktop_config.json<br/>
