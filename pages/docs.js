@@ -105,7 +105,119 @@ export default function Docs() {
             <div style={{ marginBottom: 48 }}>
               <div style={{ fontSize: 11, color: '#4a7a90', letterSpacing: '0.12em', textTransform: 'uppercase', fontFamily: 'var(--font-mono)', marginBottom: 12 }}>Logwick Documentation</div>
               <h1 style={{ fontFamily: 'var(--font-sans)', fontSize: 36, fontWeight: 800, color: '#f1f5f9', marginBottom: 12, lineHeight: 1.1 }}>Audit logging for AI agents</h1>
-              <p style={{ fontSize: 15, color: '#c8dce8', lineHeight: 1.8, maxWidth: 600 }}>Everything you need to log, search, and understand what your AI agents are doing in production. One line of code. Full visibility.</p>
+              <p style={{ fontSize: 15, color: '#c8dce8', lineHeight: 1.8, maxWidth: 600, marginBottom: 24 }}>Everything you need to log, search, and understand what your AI agents are doing in production. One line of code. Full visibility.</p>
+              <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+                <button
+                  onClick={() => {
+                    const docs = `LOGWICK DOCUMENTATION — Audit logging for AI agents
+
+OVERVIEW
+Logwick is an audit log for AI agents. After each AI call, POST the input, output, agent, and status to Logwick. It stores, indexes, and makes everything searchable from your dashboard.
+
+INSTALL
+npm install logwick
+# or
+pip install logwick
+
+QUICK START (JavaScript)
+import { LogwickClient } from 'logwick'
+const logwick = new LogwickClient({ apiKey: process.env.LOGWICK_API_KEY })
+
+// Add after any AI call — fire and forget
+logwick.fire({
+  agent:      'gpt-4o',
+  action:     'email_draft',
+  status:     'success',
+  input:      userPrompt,
+  output:     result.choices[0].message.content,
+  tokens:     result.usage.total_tokens,
+  latency_ms: Date.now() - start,
+  user:       currentUser.email,
+})
+
+QUICK START (Python)
+import logwick
+logwick.init(api_key=os.environ['LOGWICK_API_KEY'])
+
+logwick.fire({
+    'agent':  'gpt-4o',
+    'action': 'email_draft',
+    'status': 'success',
+    'input':  user_prompt,
+    'output': result,
+    'tokens': 312,
+    'user':   user_email,
+})
+
+OPENAI WRAPPER (JavaScript)
+const result = await logwick.openai(
+  () => openai.chat.completions.create({ model: 'gpt-4o', messages }),
+  { action: 'email_draft', user: req.user.email }
+)
+
+ANTHROPIC WRAPPER (JavaScript)
+const result = await logwick.anthropic(
+  () => anthropic.messages.create({ model: 'claude-3-5-sonnet-20241022', messages, max_tokens: 1024 }),
+  { action: 'document_review', user: req.user.email }
+)
+
+GEMINI WRAPPER (JavaScript)
+const result = await logwick.gemini(
+  () => model.generateContent(prompt),
+  { action: 'data_analysis', user: req.user.email }
+)
+
+LANGCHAIN (JavaScript)
+import { LogwickCallbackHandler } from 'logwick'
+const handler = new LogwickCallbackHandler(logwick, { user: 'ops@acme.com' })
+const chain = new LLMChain({ llm, prompt, callbacks: [handler] })
+
+CLAUDE MCP SETUP
+Add to claude_desktop_config.json:
+{
+  "mcpServers": {
+    "logwick": {
+      "command": "npx",
+      "args": ["-y", "@logwick/mcp"],
+      "env": { "LOGWICK_API_KEY": "sk-lw-your-key" }
+    }
+  }
+}
+
+REST API
+POST https://logwick.io/api/v1/logs
+Authorization: Bearer sk-lw-your-key
+Body: { agent, action, status, input, output, tokens, latency_ms, user, cost_usd, tags, metadata }
+
+GET https://logwick.io/api/v1/logs?status=error&agent=gpt-4o&search=email&limit=50
+GET https://logwick.io/api/v1/stats?days=30
+
+LOG FIELDS
+agent (required) — AI model name e.g. gpt-4o, claude-3-5-sonnet
+action (required) — task type e.g. email_draft, data_analysis
+status — success, error, or pending (default: success)
+input — prompt sent to the AI
+output — response from the AI
+user — user or system that triggered the action
+tokens — total tokens used
+latency_ms — response time in milliseconds
+cost_usd — estimated cost in USD
+tags — array of strings for categorization
+metadata — any additional key-value data
+
+Get your API key at logwick.io — 5,000 logs/month free.`
+                    navigator.clipboard.writeText(docs)
+                    const btn = document.getElementById('copy-docs-btn')
+                    if (btn) { btn.textContent = '✓ Copied — paste into Claude'; btn.style.background = 'rgba(52,211,153,0.1)'; btn.style.borderColor = '#34d399'; btn.style.color = '#34d399'; setTimeout(() => { btn.textContent = '⊕ Copy docs for Claude'; btn.style.background = 'rgba(14,165,233,0.08)'; btn.style.borderColor = 'rgba(14,165,233,0.3)'; btn.style.color = '#38bdf8' }, 3000) }
+                  }}
+                  id="copy-docs-btn"
+                  style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 20px', background: 'rgba(14,165,233,0.08)', border: '1px solid rgba(14,165,233,0.3)', borderRadius: 8, color: '#38bdf8', fontSize: 13, fontFamily: 'var(--font-mono)', cursor: 'pointer', transition: 'all 0.2s' }}>
+                  ⊕ Copy docs for Claude
+                </button>
+                <a href="https://logwick.io/dashboard" style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 20px', background: '#0ea5e9', borderRadius: 8, color: '#fff', fontSize: 13, fontFamily: 'var(--font-mono)', textDecoration: 'none', fontWeight: 600 }}>
+                  Get your API key →
+                </a>
+              </div>
             </div>
 
             {/* Overview */}
