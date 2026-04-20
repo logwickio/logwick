@@ -362,7 +362,7 @@ export default function Home() {
               <path d="M11 8 L11 24 L25 24" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
               <circle cx="25" cy="24" r="3.5" fill="white"/>
             </svg>
-            <span style={{fontSize:13,color:'#7dd3fc',fontFamily:"'JetBrains Mono',monospace",letterSpacing:'0.02em'}}>Ask Claude to add Logwick to your project. It reads the docs and wires it up automatically.</span>
+            <span style={{fontSize:13,color:'#7dd3fc',fontFamily:"'JetBrains Mono',monospace",letterSpacing:'0.02em'}}>Copy docs for Claude at logwick.io/docs — paste and say: add Logwick to my project.</span>
           </div>
           <div style={{display:'flex',alignItems:'center',gap:10,background:'rgba(14,165,233,0.05)',border:'1px solid rgba(14,165,233,0.15)',borderRadius:40,padding:'10px 20px'}}>
             <svg width="18" height="18" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" style={{flexShrink:0}}>
@@ -370,7 +370,7 @@ export default function Home() {
               <path d="M11 8 L11 24 L25 24" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
               <circle cx="25" cy="24" r="3.5" fill="white"/>
             </svg>
-            <span style={{fontSize:13,color:'#38bdf8',fontFamily:"'JetBrains Mono',monospace",letterSpacing:'0.02em'}}>Ask Claude what your AI agents did yesterday. Logwick makes it possible.</span>
+            <span style={{fontSize:13,color:'#38bdf8',fontFamily:"'JetBrains Mono',monospace",letterSpacing:'0.02em'}}>Once set up, ask Claude what your AI agents did yesterday. Logwick makes it possible.</span>
           </div>
         </div>
         <div className="actions">
@@ -426,7 +426,7 @@ export default function Home() {
               {[
                 ['1','Sign up and get your key','Create a free account at logwick.io and copy your API key from the dashboard.'],
                 ['2','Open Claude Desktop','Make sure you have Claude Desktop installed and open a new conversation.'],
-                ['3','Say this to Claude','"Go to logwick.io/docs and add Logwick to my project. My API key is sk-lw-..."'],
+                ['3','Say this to Claude','"Here are the Logwick docs: [paste from logwick.io/docs]. Add Logwick to my project. My API key is sk-lw-..."'],
               ].map(([num,title,desc]) => (
                 <div key={num} style={{display:'flex',gap:14,alignItems:'flex-start'}}>
                   <div style={{width:28,height:28,borderRadius:'50%',background:'linear-gradient(135deg,#0ea5e9,#0284c7)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:12,fontWeight:700,color:'#fff',flexShrink:0}}>{num}</div>
