@@ -339,6 +339,9 @@ export default function Home() {
         </div>
         <div className="nlinks">
           <a href="#features">Features</a>
+          <a href="#how-it-works">How it works</a>
+          <a href="#pricing">Pricing</a>
+          <a href="#faq">FAQ</a>
           <a href="/docs">Docs</a>
           <a href="#how-it-works">How it works</a>
           <a href="#pricing">Pricing</a>
@@ -591,7 +594,7 @@ fetch('https://logwick.io/api/v1/logs', {
 
       {/* CTA */}
       {/* FAQ */}
-      <div className="section" style={{paddingTop:0}}>
+      <div className="section" id="faq" style={{paddingTop:0}}>
         <div className="eyebrow2">FAQ</div>
         <div className="stitle">Common questions</div>
         <div className="ssub">Everything developers ask before adding Logwick to a project.</div>
