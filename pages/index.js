@@ -88,12 +88,12 @@ function LiveDemo() {
     logo: { padding:'0 12px 12px', borderBottom:'1px solid #1e3040', marginBottom:10 },
     mark: { width:22, height:22, borderRadius:5, background:'linear-gradient(135deg,#38bdf8,#0284c7)', display:'flex', alignItems:'center', justifyContent:'center', fontSize:10, color:'#fff', marginBottom:4 },
     brand: { fontSize:11, fontWeight:700, color:'#f1f5f9', letterSpacing:'0.04em' },
-    sub: { fontSize:8, color:'#334155', letterSpacing:'0.12em', textTransform:'uppercase' },
+    sub: { fontSize:8, color:'#a8c8dc', letterSpacing:'0.12em', textTransform:'uppercase' },
     navItem: (active) => ({ padding:'6px 12px', fontSize:9, color: active ? '#38bdf8':'#334155', background: active ? '#0d1923':'transparent', borderLeft: active ? '2px solid #38bdf8':'2px solid transparent', display:'flex', alignItems:'center', gap:6 }),
     main: { flex:1, display:'flex', flexDirection:'column', overflow:'hidden' },
     statsRow: { display:'grid', gridTemplateColumns:'repeat(4,1fr)', borderBottom:'1px solid #1e3040', background:'#07100a', flexShrink:0 },
     stat: (last) => ({ padding:'8px 10px', borderRight: last ? 'none':'1px solid #1e3040' }),
-    sl: { fontSize:8, color:'#334155', letterSpacing:'0.1em', textTransform:'uppercase', marginBottom:2 },
+    sl: { fontSize:8, color:'#a8c8dc', letterSpacing:'0.1em', textTransform:'uppercase', marginBottom:2 },
     sv: { fontSize:15, fontWeight:700, color:'#f1f5f9' },
     toolbar: { padding:'6px 10px', borderBottom:'1px solid #1e3040', background:'#07100a', display:'flex', gap:5, alignItems:'center', flexShrink:0 },
     search: { flex:1, background:'#0a1520', border:'1px solid #1e3040', borderRadius:4, padding:'3px 8px', fontSize:9, color:'#94a3b8' },
@@ -101,13 +101,13 @@ function LiveDemo() {
     logList: { flex:1, overflow:'hidden' },
     logRow: (isNew) => ({ padding:'8px 10px', borderBottom:'1px solid #0d1923', display:'flex', alignItems:'flex-start', gap:7, cursor:'pointer', background: isNew ? 'rgba(56,189,248,0.03)':'transparent', transition:'background 0.3s' }),
     action: { fontSize:10, fontWeight:600, color:'#cbd5e1', marginBottom:2 },
-    meta: { fontSize:8, color:'#334155' },
+    meta: { fontSize:8, color:'#a8c8dc' },
     badge: (status) => ({ fontSize:7, padding:'2px 5px', borderRadius:3, fontWeight:700, letterSpacing:'0.05em', flexShrink:0, marginTop:1, background: status==='success'?'#0a2010':'#1a0505', color: status==='success'?'#34d399':'#f87171', border: `1px solid ${status==='success'?'#0a3320':'#3a0a0a'}` }),
     agentBadge: (color) => ({ fontSize:7, padding:'2px 5px', borderRadius:3, fontWeight:700, flexShrink:0, marginTop:1, background:`${color}18`, color, border:`1px solid ${color}33` }),
     detail: (open) => ({ width: open ? 170 : 0, background:'#07100a', borderLeft:'1px solid #1e3040', overflow:'hidden', flexShrink:0, transition:'width 0.3s ease' }),
     detailInner: { padding:12, width:170 },
     detailTitle: { fontSize:10, fontWeight:600, color:'#f1f5f9', marginBottom:8, borderBottom:'1px solid #1e3040', paddingBottom:6 },
-    dk: { fontSize:7, color:'#334155', letterSpacing:'0.1em', textTransform:'uppercase', marginBottom:2 },
+    dk: { fontSize:7, color:'#a8c8dc', letterSpacing:'0.1em', textTransform:'uppercase', marginBottom:2 },
     dv: { fontSize:9, color:'#94a3b8', marginBottom:6 },
     caption: { background:'#0a0f14', borderTop:'1px solid #1e3040', padding:'8px 14px', fontSize:10, color:'#64748b', textAlign:'center', minHeight:34, display:'flex', alignItems:'center', justifyContent:'center' },
     liveDot: { width:5, height:5, borderRadius:'50%', background:'#34d399', boxShadow:'0 0 4px #34d399', display:'inline-block', marginRight:5, animation:'pulse 2s infinite' },
@@ -163,7 +163,7 @@ function LiveDemo() {
             <div style={s.search}>Search logs…</div>
             <div style={s.filter}>All status ▾</div>
             <div style={s.filter}>All agents ▾</div>
-            <div style={{marginLeft:'auto',display:'flex',alignItems:'center',fontSize:8,color:'#334155'}}>
+            <div style={{marginLeft:'auto',display:'flex',alignItems:'center',fontSize:8,color:'#a8c8dc'}}>
               <span style={s.liveDot}/>Live
             </div>
           </div>
@@ -439,7 +439,7 @@ export default function Home() {
             </div>
           </div>
           <div style={{background:'#06090c',padding:'28px 28px 32px'}}>
-            <div style={{fontSize:10,color:'#4a7a90',letterSpacing:'0.14em',textTransform:'uppercase',fontFamily:"'JetBrains Mono',monospace",marginBottom:14}}>Option 2 — Add it yourself</div>
+            <div style={{fontSize:10,color:'#a8c8dc',letterSpacing:'0.14em',textTransform:'uppercase',fontFamily:"'JetBrains Mono',monospace",marginBottom:14}}>Option 2 — Add it yourself</div>
             <div style={{display:'flex',flexDirection:'column',gap:20}}>
               {[
                 ['1','Create an account','Sign up free, generate your API key, and get your ingestion endpoint. No credit card required.'],
@@ -447,7 +447,7 @@ export default function Home() {
                 ['3','Get instant visibility','Your dashboard populates in real time. Set up webhook alerts, export reports, and always have a full audit trail.'],
               ].map(([num,title,desc]) => (
                 <div key={num} style={{display:'flex',gap:14,alignItems:'flex-start'}}>
-                  <div style={{width:28,height:28,borderRadius:'50%',background:'#0a1a28',border:'1px solid #1e3040',display:'flex',alignItems:'center',justifyContent:'center',fontSize:12,fontWeight:700,color:'#4a7a90',flexShrink:0}}>{num}</div>
+                  <div style={{width:28,height:28,borderRadius:'50%',background:'#0a1a28',border:'1px solid #1e3040',display:'flex',alignItems:'center',justifyContent:'center',fontSize:12,fontWeight:700,color:'#a8c8dc',flexShrink:0}}>{num}</div>
                   <div>
                     <div style={{fontFamily:"'Syne',sans-serif",fontSize:13,fontWeight:700,color:'#c8dce8',marginBottom:4}}>{title}</div>
                     <div style={{fontSize:12,color:'#7a9db5',lineHeight:1.7}}>{desc}</div>
@@ -500,9 +500,9 @@ fetch('https://logwick.io/api/v1/logs', {
           </div>
           <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:1,background:"#1e3040"}}>
             <div style={{background:"#07101a",padding:"20px 24px"}}>
-              <div style={{fontSize:11,color:"#4a7a90",letterSpacing:"0.1em",textTransform:"uppercase",fontFamily:"'JetBrains Mono',monospace",marginBottom:12}}>Without Logwick MCP</div>
+              <div style={{fontSize:11,color:"#a8c8dc",letterSpacing:"0.1em",textTransform:"uppercase",fontFamily:"'JetBrains Mono',monospace",marginBottom:12}}>Without Logwick MCP</div>
               {["Open dashboard","Filter by date","Search for errors","Copy log IDs","Cross-reference manually"].map(t => (
-                <div key={t} style={{display:"flex",gap:8,alignItems:"center",marginBottom:8,fontSize:13,color:"#4a7a90"}}>
+                <div key={t} style={{display:"flex",gap:8,alignItems:"center",marginBottom:8,fontSize:13,color:"#a8c8dc"}}>
                   <span style={{color:"#ef4444"}}>✕</span>{t}
                 </div>
               ))}
@@ -523,8 +523,8 @@ fetch('https://logwick.io/api/v1/logs', {
             </div>
           </div>
           <div style={{padding:"20px 24px",background:"#07101a",borderTop:"1px solid #1e3040"}}>
-            <div style={{fontSize:11,color:"#4a7a90",letterSpacing:"0.1em",textTransform:"uppercase",fontFamily:"'JetBrains Mono',monospace",marginBottom:10}}>Add to claude_desktop_config.json</div>
-            <pre style={{fontSize:12,color:"#6a9ab5",lineHeight:1.75,margin:0,overflowX:"auto",whiteSpace:"pre"}}>{`{
+            <div style={{fontSize:11,color:"#a8c8dc",letterSpacing:"0.1em",textTransform:"uppercase",fontFamily:"'JetBrains Mono',monospace",marginBottom:10}}>Add to claude_desktop_config.json</div>
+            <pre style={{fontSize:12,color:"#c8dce8",lineHeight:1.75,margin:0,overflowX:"auto",whiteSpace:"pre"}}>{`{
   "mcpServers": {
     "logwick": {
       "command": "npx",
