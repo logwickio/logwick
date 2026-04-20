@@ -417,19 +417,45 @@ export default function Home() {
       <div className="section" id="how-it-works" style={{paddingTop:0}}>
         <div className="eyebrow2">How it works</div>
         <div className="stitle">Up and running in minutes</div>
-        <div className="ssub">Add one line of code after your AI call. That's the hardest part.</div>
-        <div className="how">
-          {[
-            ['1','Create an account','Sign up free, generate your API key, and get your ingestion endpoint. No credit card required.'],
-            ['2','Instrument your agents','After each AI call in your code, POST the input, output, agent, and status to Logwick. Takes about 3 minutes.'],
-            ['3','Get instant visibility','Your dashboard populates in real time. Set up webhook alerts, export reports, and always have a full audit trail.'],
-          ].map(([num,title,desc]) => (
-            <div key={num} className="step">
-              <div className="step-num">{num}</div>
-              <div className="step-title">{title}</div>
-              <div className="step-desc">{desc}</div>
+        <div className="ssub">Two ways to get started — let Claude do it for you, or add one line of code yourself.</div>
+
+        <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:1,background:'#1e3040',borderRadius:12,overflow:'hidden',marginBottom:40}}>
+          <div style={{background:'#07101a',padding:'28px 28px 32px'}}>
+            <div style={{fontSize:10,color:'#38bdf8',letterSpacing:'0.14em',textTransform:'uppercase',fontFamily:"'JetBrains Mono',monospace",marginBottom:14}}>Option 1 — Let Claude do it</div>
+            <div style={{display:'flex',flexDirection:'column',gap:20}}>
+              {[
+                ['1','Sign up and get your key','Create a free account at logwick.io and copy your API key from the dashboard.'],
+                ['2','Open Claude Desktop','Make sure you have Claude Desktop installed and open a new conversation.'],
+                ['3','Say this to Claude','"Go to logwick.io/docs and add Logwick to my project. My API key is sk-lw-..."'],
+              ].map(([num,title,desc]) => (
+                <div key={num} style={{display:'flex',gap:14,alignItems:'flex-start'}}>
+                  <div style={{width:28,height:28,borderRadius:'50%',background:'linear-gradient(135deg,#0ea5e9,#0284c7)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:12,fontWeight:700,color:'#fff',flexShrink:0}}>{num}</div>
+                  <div>
+                    <div style={{fontFamily:"'Syne',sans-serif",fontSize:13,fontWeight:700,color:'#e8f4fb',marginBottom:4}}>{title}</div>
+                    <div style={{fontSize:12,color:'#a8c8dc',lineHeight:1.7,fontStyle:num==='3'?'italic':undefined}}>{desc}</div>
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
+          </div>
+          <div style={{background:'#06090c',padding:'28px 28px 32px'}}>
+            <div style={{fontSize:10,color:'#4a7a90',letterSpacing:'0.14em',textTransform:'uppercase',fontFamily:"'JetBrains Mono',monospace",marginBottom:14}}>Option 2 — Add it yourself</div>
+            <div style={{display:'flex',flexDirection:'column',gap:20}}>
+              {[
+                ['1','Create an account','Sign up free, generate your API key, and get your ingestion endpoint. No credit card required.'],
+                ['2','Instrument your agents','After each AI call in your code, POST the input, output, agent, and status to Logwick. Takes about 3 minutes.'],
+                ['3','Get instant visibility','Your dashboard populates in real time. Set up webhook alerts, export reports, and always have a full audit trail.'],
+              ].map(([num,title,desc]) => (
+                <div key={num} style={{display:'flex',gap:14,alignItems:'flex-start'}}>
+                  <div style={{width:28,height:28,borderRadius:'50%',background:'#0a1a28',border:'1px solid #1e3040',display:'flex',alignItems:'center',justifyContent:'center',fontSize:12,fontWeight:700,color:'#4a7a90',flexShrink:0}}>{num}</div>
+                  <div>
+                    <div style={{fontFamily:"'Syne',sans-serif",fontSize:13,fontWeight:700,color:'#c8dce8',marginBottom:4}}>{title}</div>
+                    <div style={{fontSize:12,color:'#7a9db5',lineHeight:1.7}}>{desc}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
         <div className="code-block">
           <div className="code-head"><span>Node.js — add one call after your AI request</span></div>
