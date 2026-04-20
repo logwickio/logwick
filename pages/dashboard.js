@@ -459,7 +459,8 @@ export default function Dashboard() {
                     <div>
                       <div style={{ fontSize: 13, fontWeight: 700, color: '#7dd3fc', marginBottom: 6 }}>Set up Logwick with Claude — one click</div>
                       <div style={{ fontSize: 12, color: '#a8c8dc', lineHeight: 1.7, marginBottom: 8 }}>Ask Claude to add Logwick to your project automatically — it reads the docs and wires everything up for you:</div>
-                      <div style={{ fontSize: 12, color: '#a8c8dc', lineHeight: 1.7, marginBottom: 12 }}>Click below — it copies everything Claude needs and opens claude.ai. Just paste and hit send.</div>
+                      <div style={{ fontSize: 12, color: '#a8c8dc', lineHeight: 1.7, marginBottom: 8 }}>Click below — it copies everything Claude needs and opens claude.ai. Just paste and hit send.</div>
+                      <div style={{ fontSize: 12, color: '#a8c8dc', lineHeight: 1.7, marginBottom: 12 }}>Your full API key is in the <span style={{ color: '#38bdf8', cursor: 'pointer' }} onClick={() => setView('api')}>API Docs tab →</span> — copy it and replace <code style={{ color: '#f87171', fontFamily: 'var(--font-mono)' }}>sk-lw-your-key</code> in the message before sending to Claude.</div>
                       <button
                         onClick={() => {
                           const key = apiKeys[0]?.key_prefix ? apiKeys[0].key_prefix + '...' : 'sk-lw-your-key'
