@@ -13,6 +13,7 @@ const SECTIONS = [
   { id: 'langchain', label: 'LangChain' },
   { id: 'mcp', label: 'Claude MCP' },
   { id: 'api', label: 'REST API' },
+  { id: 'x402', label: 'x402 — Pay per log' },
   { id: 'reference', label: 'Log fields' },
 ]
 
@@ -519,6 +520,75 @@ curl "https://logwick.io/api/v1/logs?format=csv" \\
   "total_cost": 4.27,
   "period_days": 30
 }`}</Code>
+            </Section>
+
+            {/* x402 */}
+            <Section id="x402" title="x402 — Pay per log">
+              <P>Logwick supports <a href="https://x402.org" style={{ color: '#38bdf8' }}>x402</a> — an open payment protocol that lets AI agents pay per log with USDC on Base. No account, no API key, no signup required. The agent pays and logs in a single request.</P>
+              <div style={{ background: 'rgba(14,165,233,0.06)', border: '1px solid rgba(14,165,233,0.2)', borderRadius: 8, padding: '16px 20px', marginBottom: 24 }}>
+                <div style={{ fontSize: 12, color: '#38bdf8', fontFamily: 'var(--font-mono)', marginBottom: 8, fontWeight: 700 }}>Endpoint</div>
+                <div style={{ fontSize: 13, color: '#c8dce8', fontFamily: 'var(--font-mono)' }}>POST https://logwick.io/api/v1/agent-log</div>
+                <div style={{ fontSize: 12, color: '#a8c8dc', marginTop: 8 }}>Price: $0.001 USDC per log · Network: Base (eip155:8453) · No API key required</div>
+              </div>
+              <H3>How it works</H3>
+              <P>The agent calls the endpoint. Logwick responds with HTTP 402 and payment requirements. The agent pays $0.001 USDC, includes the payment proof in the request header, and Logwick stores the log.</P>
+              <Code lang="Discover pricing — GET request">{`curl https://logwick.io/api/v1/agent-log
+
+# Returns:
+# {
+#   "x402Version": 1,
+#   "accepts": [{
+#     "scheme": "exact",
+#     "network": "eip155:8453",
+#     "maxAmountRequired": "1000",
+#     "payTo": "0x...",
+#     "description": "Ingest one AI agent audit log entry"
+#   }]
+# }`}</Code>
+              <H3>Log a paid entry</H3>
+              <Code lang="POST with x402 payment header">{`curl -X POST https://logwick.io/api/v1/agent-log \
+  -H "Content-Type: application/json" \
+  -H "X-Payment: <signed-payment-proof>" \
+  -d '{
+    "agent":      "gpt-4o",
+    "action":     "email_draft",
+    "status":     "success",
+    "input":      "Draft a follow-up email",
+    "output":     "Subject: Following up...",
+    "tokens":     312,
+    "latency_ms": 1842
+  }'`}</Code>
+              <H3>Using the Coinbase AgentKit</H3>
+              <P>If your agent uses <a href="https://docs.cdp.coinbase.com/agentkit" style={{ color: '#38bdf8' }}>Coinbase AgentKit</a>, x402 payments are handled automatically — the agent discovers the price, pays, and logs in one step.</P>
+              <Code lang="JavaScript — AgentKit with x402">{`import { CdpWalletProvider } from '@coinbase/agentkit'
+import { x402Fetch } from '@coinbase/x402-fetch'
+
+const wallet = await CdpWalletProvider.configureWithWallet({ /* config */ })
+
+// x402Fetch automatically handles payment — no manual signing needed
+const response = await x402Fetch('https://logwick.io/api/v1/agent-log', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    agent:      'gpt-4o',
+    action:     'email_draft',
+    status:     'success',
+    input:      prompt,
+    output:     result,
+    tokens:     312,
+  }),
+  wallet,
+})`}</Code>
+              <H3>Log fields</H3>
+              <P>Same fields as the standard REST API — see <a href="#reference" style={{ color: '#38bdf8' }}>Log fields reference</a> below. The only difference is authentication — payment via x402 instead of an API key.</P>
+              <div style={{ background: '#0a1520', border: '1px solid #1e3040', borderRadius: 8, padding: '16px 20px' }}>
+                <div style={{ fontSize: 13, color: '#c8dce8', lineHeight: 1.8 }}>
+                  <div style={{ marginBottom: 8 }}>✓ <strong style={{ color: '#e8f4fb' }}>No account required</strong> — payment is authentication</div>
+                  <div style={{ marginBottom: 8 }}>✓ <strong style={{ color: '#e8f4fb' }}>$0.001 per log</strong> — fractions of a cent, agent-friendly pricing</div>
+                  <div style={{ marginBottom: 8 }}>✓ <strong style={{ color: '#e8f4fb' }}>Base mainnet</strong> — real USDC, instant settlement</div>
+                  <div>✓ <strong style={{ color: '#e8f4fb' }}>Listed on agentic.market</strong> — discoverable by any x402-compatible agent</div>
+                </div>
+              </div>
             </Section>
 
             {/* Reference */}
