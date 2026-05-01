@@ -3,6 +3,8 @@ import { getSupabaseAdmin } from '../../../lib/supabase'
 import { validateApiKey, extractBearerToken } from '../../../lib/apiKeys'
 
 export default async function handler(req, res) {
+  res.setHeader('Content-Type', 'application/json')
+  res.setHeader('Access-Control-Allow-Origin', '*')
   if (req.method !== 'GET') return res.status(405).json({ error: 'GET only' })
 
   const rawKey = extractBearerToken(req)
