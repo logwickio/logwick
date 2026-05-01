@@ -19,6 +19,11 @@ function checkRateLimit(orgId, limit = 1000) {
 }
 
 export default async function handler(req, res) {
+  res.setHeader('X-RateLimit-Limit', '1000')
+  res.setHeader('X-RateLimit-Window', '60')
+  res.setHeader('Retry-After', '60')
+  res.setHeader('X-Payment-Accepted', 'x402')
+  res.setHeader('X-Payment-Network', 'eip155:8453')
   // ── Auth ──────────────────────────────────────────────────────────────────
   const rawKey = extractBearerToken(req)
   if (!rawKey) return res.status(401).json({ error: 'Missing API key. Use: Authorization: Bearer sk-lw-...' })

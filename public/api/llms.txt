@@ -1,0 +1,32 @@
+# Logwick API
+
+Base URL: https://logwick.io/api/v1
+Auth: Authorization: Bearer sk-lw-your-key
+
+## Endpoints
+
+POST /logs — Ingest a log entry
+GET /logs — Query logs (params: status, agent, action, search, from, to, limit, offset, format)
+GET /logs/stream — Stream logs via SSE
+GET /stats — Usage statistics (params: days)
+GET / — Public API discovery (no auth)
+
+## x402 Endpoints (no account required)
+
+POST /agent-log — Pay $0.001 USDC per log on Base (eip155:8453)
+GET /agent-log — Returns HTTP 402 with payment requirements
+GET /agent-logs — Query logs by wallet (params: wallet, signature, message)
+GET /agent-stats — Stats by wallet (params: wallet, signature, message)
+
+## Required fields
+
+agent (string) — AI model name e.g. gpt-4o
+action (string) — Task type e.g. email_draft
+
+## Optional fields
+
+status, input, output, user, tokens, latency_ms, cost_usd, tags, metadata
+
+## OpenAPI spec
+
+https://logwick.io/openapi.json

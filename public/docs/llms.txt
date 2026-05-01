@@ -1,0 +1,34 @@
+# Logwick Documentation
+
+## Quick start
+
+1. Sign up at https://logwick.io — get your API key
+2. npm install logwick (or pip install logwick)
+3. Add one line after your AI call
+
+## SDKs
+
+Node.js: npm install logwick
+Python: pip install logwick
+MCP: npx @logwick/mcp
+
+## Code examples
+
+JavaScript:
+logwick.fire({ agent: 'gpt-4o', action: 'email_draft', status: 'success', input: prompt, output: result, tokens: 312 })
+
+Python:
+logwick.fire({ 'agent': 'gpt-4o', 'action': 'email_draft', 'status': 'success', 'input': prompt, 'output': result })
+
+## Wrappers
+
+logwick.openai(() => openai.chat.completions.create(...), { action: 'email_draft' })
+logwick.anthropic(() => anthropic.messages.create(...), { action: 'review' })
+logwick.gemini(() => model.generateContent(prompt), { action: 'analysis' })
+
+## MCP
+
+Add to claude_desktop_config.json:
+{ "mcpServers": { "logwick": { "command": "npx", "args": ["-y", "@logwick/mcp"], "env": { "LOGWICK_API_KEY": "sk-lw-..." } } } }
+
+Full docs: https://logwick.io/docs
