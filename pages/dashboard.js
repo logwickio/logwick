@@ -71,6 +71,40 @@ function Toast({ toasts }) {
           {t.type === 'error' ? '⚠ ' : '✓ '}{t.msg}
         </div>
       ))}
+    {showPricing && (
+        <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.7)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, padding: 24 }} onClick={e => e.target === e.currentTarget && setShowPricing(false)}>
+          <div style={{ background: '#07101a', border: '1px solid #1e3040', borderRadius: 12, overflow: 'hidden', maxWidth: 560, width: '100%' }}>
+            <div style={{ padding: '20px 24px', borderBottom: '1px solid #1e3040' }}>
+              <div style={{ fontSize: 18, fontFamily: 'var(--font-sans)', fontWeight: 800, color: '#d4e8f5', marginBottom: 4 }}>Upgrade to Pro</div>
+              <div style={{ fontSize: 12, color: '#4a7a90' }}>Everything you need to run AI agents in production with full visibility.</div>
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 1, background: '#1c2e3a' }}>
+              <div style={{ background: '#07101a', padding: '20px 24px' }}>
+                <div style={{ fontSize: 11, fontWeight: 700, color: '#4a7a90', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 12 }}>Free</div>
+                <div style={{ fontSize: 28, fontWeight: 800, color: '#d4e8f5', fontFamily: 'var(--font-sans)', marginBottom: 16 }}>$0<span style={{ fontSize: 13, fontWeight: 400, color: '#4a7a90' }}>/mo</span></div>
+                {['5,000 logs/month', '7-day retention', '1 API key', 'Dashboard & search', 'CSV export'].map(f => (
+                  <div key={f} style={{ fontSize: 12, color: '#4a7a90', marginBottom: 8, display: 'flex', gap: 8 }}><span style={{ color: '#34d399' }}>✓</span>{f}</div>
+                ))}
+                {['Webhooks'].map(f => (
+                  <div key={f} style={{ fontSize: 12, color: '#2a4555', marginBottom: 8, display: 'flex', gap: 8 }}><span>—</span>{f}</div>
+                ))}
+              </div>
+              <div style={{ background: '#08111c', padding: '20px 24px', border: '1px solid #0ea5e9', position: 'relative' }}>
+                <div style={{ position: 'absolute', top: -10, left: '50%', transform: 'translateX(-50%)', background: '#0ea5e9', borderRadius: 20, padding: '2px 12px', fontSize: 9, fontWeight: 700, color: '#fff', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Most popular</div>
+                <div style={{ fontSize: 11, fontWeight: 700, color: '#7dd3fc', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 12 }}>Pro</div>
+                <div style={{ fontSize: 28, fontWeight: 800, color: '#d4e8f5', fontFamily: 'var(--font-sans)', marginBottom: 16 }}>$29<span style={{ fontSize: 13, fontWeight: 400, color: '#4a7a90' }}>/mo</span></div>
+                {['100,000 logs/month', '90-day retention', '10 API keys', 'Dashboard & search', 'CSV export', 'Unlimited webhooks'].map(f => (
+                  <div key={f} style={{ fontSize: 12, color: '#94b8cc', marginBottom: 8, display: 'flex', gap: 8 }}><span style={{ color: '#34d399' }}>✓</span>{f}</div>
+                ))}
+              </div>
+            </div>
+            <div style={{ padding: '20px 24px', display: 'flex', gap: 8, justifyContent: 'flex-end', borderTop: '1px solid #1e3040' }}>
+              <button style={btn()} onClick={() => setShowPricing(false)}>Maybe later</button>
+              <a href="https://buy.stripe.com/fZu3co57kgpt1j72xYcIE00" target="_blank" rel="noreferrer"><button style={btn('primary')} onClick={() => setShowPricing(false)}>Upgrade to Pro →</button></a>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
@@ -83,6 +117,8 @@ export default function Dashboard() {
   const router = useRouter()
   const [view, setView] = useState('dashboard')
   const [token, setToken] = useState(null)
+  const [showPricing, setShowPricing] = useState(false)
+  const [showPricing, setShowPricing] = useState(false)
   const [loading, setLoading] = useState(true)
 
   // Logs state
@@ -890,6 +926,40 @@ curl ".../api/v1/logs?format=csv" -H "Authorization: Bearer sk-lw-..."` },
         {view === 'webhooks'  && <div style={{ flex: 1, overflow: 'hidden', display: 'flex' }}>{renderWebhooks()}</div>}
         {view === 'settings'  && <div style={{ flex: 1, overflow: 'hidden', display: 'flex' }}>{renderSettings()}</div>}
       </div>
+    {showPricing && (
+        <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.7)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, padding: 24 }} onClick={e => e.target === e.currentTarget && setShowPricing(false)}>
+          <div style={{ background: '#07101a', border: '1px solid #1e3040', borderRadius: 12, overflow: 'hidden', maxWidth: 560, width: '100%' }}>
+            <div style={{ padding: '20px 24px', borderBottom: '1px solid #1e3040' }}>
+              <div style={{ fontSize: 18, fontFamily: 'var(--font-sans)', fontWeight: 800, color: '#d4e8f5', marginBottom: 4 }}>Upgrade to Pro</div>
+              <div style={{ fontSize: 12, color: '#4a7a90' }}>Everything you need to run AI agents in production with full visibility.</div>
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 1, background: '#1c2e3a' }}>
+              <div style={{ background: '#07101a', padding: '20px 24px' }}>
+                <div style={{ fontSize: 11, fontWeight: 700, color: '#4a7a90', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 12 }}>Free</div>
+                <div style={{ fontSize: 28, fontWeight: 800, color: '#d4e8f5', fontFamily: 'var(--font-sans)', marginBottom: 16 }}>$0<span style={{ fontSize: 13, fontWeight: 400, color: '#4a7a90' }}>/mo</span></div>
+                {['5,000 logs/month', '7-day retention', '1 API key', 'Dashboard & search', 'CSV export'].map(f => (
+                  <div key={f} style={{ fontSize: 12, color: '#4a7a90', marginBottom: 8, display: 'flex', gap: 8 }}><span style={{ color: '#34d399' }}>✓</span>{f}</div>
+                ))}
+                {['Webhooks'].map(f => (
+                  <div key={f} style={{ fontSize: 12, color: '#2a4555', marginBottom: 8, display: 'flex', gap: 8 }}><span>—</span>{f}</div>
+                ))}
+              </div>
+              <div style={{ background: '#08111c', padding: '20px 24px', border: '1px solid #0ea5e9', position: 'relative' }}>
+                <div style={{ position: 'absolute', top: -10, left: '50%', transform: 'translateX(-50%)', background: '#0ea5e9', borderRadius: 20, padding: '2px 12px', fontSize: 9, fontWeight: 700, color: '#fff', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Most popular</div>
+                <div style={{ fontSize: 11, fontWeight: 700, color: '#7dd3fc', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 12 }}>Pro</div>
+                <div style={{ fontSize: 28, fontWeight: 800, color: '#d4e8f5', fontFamily: 'var(--font-sans)', marginBottom: 16 }}>$29<span style={{ fontSize: 13, fontWeight: 400, color: '#4a7a90' }}>/mo</span></div>
+                {['100,000 logs/month', '90-day retention', '10 API keys', 'Dashboard & search', 'CSV export', 'Unlimited webhooks'].map(f => (
+                  <div key={f} style={{ fontSize: 12, color: '#94b8cc', marginBottom: 8, display: 'flex', gap: 8 }}><span style={{ color: '#34d399' }}>✓</span>{f}</div>
+                ))}
+              </div>
+            </div>
+            <div style={{ padding: '20px 24px', display: 'flex', gap: 8, justifyContent: 'flex-end', borderTop: '1px solid #1e3040' }}>
+              <button style={btn()} onClick={() => setShowPricing(false)}>Maybe later</button>
+              <a href="https://buy.stripe.com/fZu3co57kgpt1j72xYcIE00" target="_blank" rel="noreferrer"><button style={btn('primary')} onClick={() => setShowPricing(false)}>Upgrade to Pro →</button></a>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
