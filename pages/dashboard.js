@@ -383,7 +383,7 @@ export default function Dashboard() {
   const navItems = [
     { id: 'dashboard', icon: '⬛', label: 'Dashboard' },
     { id: 'api',       icon: '⟨/⟩', label: 'API Docs'  },
-    ...(isPro ? [{ id: 'webhooks', icon: '⚡', label: 'Webhooks' }] : []),
+    { id: 'webhooks', icon: '⚡', label: isPro ? 'Webhooks' : 'Webhooks ✦' },
     { id: 'settings',  icon: '⚙',    label: 'Settings'  },
   ]
 
@@ -874,9 +874,30 @@ curl -X POST https://logwick.io/api/v1/agent-log \\
             <div style={{ padding: 16 }}>
               <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginBottom: 8 }}>
                 <span style={{ fontSize: 14, fontWeight: 800, color: '#7dd3fc', fontFamily: 'var(--font-sans)', textTransform: 'uppercase' }}>{stats?.org_plan || 'free'}</span>
-                <span style={{ fontSize: 11, color: '#b8d4e4' }}>· {stats?.monthly_used?.toLocaleString() ?? 0} / {stats?.monthly_limit?.toLocaleString() ?? 5000} logs this month</span>
+                {!isPro && <span style={{ fontSize: 10, background: '#0a1a2a', color: '#38bdf8', border: '1px solid #1e3040', borderRadius: 4, padding: '2px 8px' }}>7-day retention</span>}
               </div>
-              <button style={{ ...btn('primary'), display: 'inline-flex' }} onClick={() => setShowPricing(true)}>Upgrade plan →</button>
+              {(() => {
+                const used = stats?.monthly_used ?? 0
+                const limit = stats?.monthly_limit ?? 5000
+                const pct = Math.min(100, Math.round((used / limit) * 100))
+                const color = pct >= 90 ? '#f87171' : pct >= 70 ? '#fbbf24' : '#34d399'
+                return (
+                  <div style={{ marginBottom: 12 }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
+                      <span style={{ fontSize: 11, color: '#a8c8dc' }}>Logs this month</span>
+                      <span style={{ fontSize: 11, color: pct >= 90 ? '#f87171' : '#a8c8dc', fontWeight: pct >= 90 ? 700 : 400 }}>{used.toLocaleString()} / {limit.toLocaleString()}</span>
+                    </div>
+                    <div style={{ height: 6, background: '#0a1520', borderRadius: 3, overflow: 'hidden' }}>
+                      <div style={{ height: '100%', width: pct + '%', background: color, borderRadius: 3, transition: 'width 0.3s' }} />
+                    </div>
+                    {pct >= 80 && !isPro && <div style={{ fontSize: 11, color: pct >= 90 ? '#f87171' : '#fbbf24', marginTop: 6 }}>{pct >= 90 ? '⚠ Almost at your limit — upgrade to keep logging' : '↑ ' + (100-pct) + '% of free limit remaining this month'}</div>}
+                  </div>
+                )
+              })()}
+              {!isPro && <div style={{ fontSize: 11, color: '#4a7a90', marginBottom: 12 }}>⚠ Logs older than 7 days are automatically deleted. <span style={{ color: '#38bdf8', cursor: 'pointer' }} onClick={() => setShowPricing(true)}>Upgrade for 90-day retention →</span></div>}
+              {isPro
+                ? <div style={{ fontSize: 11, color: '#34d399' }}>✓ Pro plan active</div>
+                : <button style={{ ...btn('primary'), display: 'inline-flex' }} onClick={() => setShowPricing(true)}>Upgrade to Pro →</button>}
             </div>
           </div>
 
@@ -931,7 +952,17 @@ curl -X POST https://logwick.io/api/v1/agent-log \\
 
         {view === 'dashboard' && renderDashboard()}
         {view === 'api'       && <div style={{ flex: 1, overflow: 'hidden', display: 'flex' }}>{renderAPI()}</div>}
-        {view === 'webhooks'  && <div style={{ flex: 1, overflow: 'hidden', display: 'flex' }}>{renderWebhooks()}</div>}
+        {view === 'webhooks' && !isPro && (
+          <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 40 }}>
+            <div style={{ maxWidth: 400, textAlign: 'center' }}>
+              <div style={{ fontSize: 32, marginBottom: 16 }}>⚡</div>
+              <div style={{ fontFamily: 'var(--font-sans)', fontSize: 20, fontWeight: 800, color: '#f1f5f9', marginBottom: 8 }}>Webhooks — Pro feature</div>
+              <div style={{ fontSize: 13, color: '#94b8cc', lineHeight: 1.8, marginBottom: 24 }}>Get notified instantly when your AI agents hit errors. Send alerts to Slack, PagerDuty, or any endpoint. Available on Pro.</div>
+              <button style={{ ...btn('primary'), fontSize: 13, padding: '10px 24px' }} onClick={() => setShowPricing(true)}>Upgrade to Pro →</button>
+            </div>
+          </div>
+        )}
+        {view === 'webhooks' && isPro && <div style={{ flex: 1, overflow: 'hidden', display: 'flex' }}>{renderWebhooks()}</div>}
         {view === 'settings'  && <div style={{ flex: 1, overflow: 'hidden', display: 'flex' }}>{renderSettings()}</div>}
       </div>
     {showPricing && (
