@@ -52,6 +52,8 @@ pip install logwick
 - GET https://logwick.io/api/v1/stats — Get usage statistics (requires API key)
 - POST https://logwick.io/api/v1/agent-log — Ingest a log entry via x402 payment (no API key required)
 - GET https://logwick.io/api/v1/agent-log — Discover x402 pricing (returns HTTP 402 with payment requirements)
+- GET https://logwick.io/api/v1/agent-logs — Query logs by wallet address (requires wallet signature proof)
+- GET https://logwick.io/api/v1/agent-stats — Get stats by wallet address (requires wallet signature proof)
 
 ## Authentication
 
