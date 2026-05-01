@@ -39,6 +39,10 @@ export default async function handler(req, res) {
 
   if (!payment.valid) {
     res.setHeader('Content-Type', 'application/json')
+    res.setHeader('PAYMENT-REQUIRED', 'true')
+    res.setHeader('X-Payment-Network', 'eip155:8453')
+    res.setHeader('X-Payment-Price', '0.001')
+    res.setHeader('X-Payment-Asset', 'USDC')
     return res.status(402).json(payment.paymentRequired)
   }
 

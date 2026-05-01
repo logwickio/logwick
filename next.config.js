@@ -15,6 +15,13 @@ nextConfig.headers = async () => [
     ],
   },
   {
+    source: '/.well-known/mcp',
+    headers: [
+      { key: 'Content-Type', value: 'application/json' },
+      { key: 'Access-Control-Allow-Origin', value: '*' },
+    ],
+  },
+  {
     source: '/.well-known/mcp/server-card.json',
     headers: [
       { key: 'Content-Type', value: 'application/json' },
