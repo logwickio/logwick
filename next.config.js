@@ -6,6 +6,14 @@ const nextConfig = {
   },
 }
 
+nextConfig.redirects = async () => [
+  {
+    source: '/.well-known/mcp',
+    destination: '/.well-known/mcp.json',
+    permanent: false,
+  },
+]
+
 nextConfig.headers = async () => [
   {
     source: '/.well-known/api-catalog',

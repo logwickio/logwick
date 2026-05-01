@@ -14,6 +14,10 @@ export default async function handler(req, res) {
 
   // GET returns 402 so agents can discover pricing
   if (req.method === 'GET') {
+    res.setHeader('PAYMENT-REQUIRED', 'true')
+    res.setHeader('X-Payment-Network', 'eip155:8453')
+    res.setHeader('X-Payment-Price', '0.001')
+    res.setHeader('X-Payment-Asset', 'USDC')
     return res.status(402).json({
       x402Version: 1,
       accepts: [{
