@@ -77,6 +77,7 @@ export default async function handler(req, res) {
       latency_ms: latency_ms || null,
       cost_usd: cost_usd || null,
       user_ref: user || null,
+      wallet_ref: payment.walletAddress || null,
       tags: tags || [],
       metadata: metadata || {},
     })
