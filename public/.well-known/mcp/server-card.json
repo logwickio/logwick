@@ -2,6 +2,8 @@
   "schema_version": "v1",
   "name": "Logwick",
   "description": "The audit log for AI agents. Query logs, get stats, and ingest log entries via natural language.",
+  "version": "1.0.1",
+  "serverUrl": "https://logwick.io/api/mcp",
   "url": "https://logwick.io",
   "install": {
     "type": "npx",
@@ -17,13 +19,13 @@
   "tools": [
     {
       "name": "ingest_log",
-      "description": "Log an AI agent action to Logwick. Use after every AI call to maintain a full audit trail.",
+      "description": "Log an AI agent action to Logwick.",
       "inputSchema": {
         "type": "object",
         "required": ["agent", "action"],
         "properties": {
-          "agent": { "type": "string", "description": "AI model name e.g. gpt-4o, claude-3-5-sonnet" },
-          "action": { "type": "string", "description": "Action type e.g. email_draft, data_analysis" },
+          "agent": { "type": "string" },
+          "action": { "type": "string" },
           "status": { "type": "string", "enum": ["success", "error", "pending"] },
           "input": { "type": "string" },
           "output": { "type": "string" },
@@ -35,27 +37,25 @@
     },
     {
       "name": "query_logs",
-      "description": "Search and retrieve logs. Find errors, filter by agent or action, search by keyword.",
+      "description": "Search and retrieve logs.",
       "inputSchema": {
         "type": "object",
         "properties": {
-          "status": { "type": "string", "enum": ["success", "error", "pending"] },
+          "status": { "type": "string" },
           "agent": { "type": "string" },
           "action": { "type": "string" },
           "search": { "type": "string" },
-          "limit": { "type": "number" },
-          "from": { "type": "string" },
-          "to": { "type": "string" }
+          "limit": { "type": "number" }
         }
       }
     },
     {
       "name": "get_stats",
-      "description": "Get usage statistics — total logs, success rate, error rate, token spend, and cost.",
+      "description": "Get usage stats — success rate, tokens, cost.",
       "inputSchema": {
         "type": "object",
         "properties": {
-          "days": { "type": "number", "description": "Number of days to include (default 30)" }
+          "days": { "type": "number" }
         }
       }
     },
@@ -66,7 +66,7 @@
         "type": "object",
         "required": ["id"],
         "properties": {
-          "id": { "type": "string", "description": "Log entry UUID" }
+          "id": { "type": "string" }
         }
       }
     },

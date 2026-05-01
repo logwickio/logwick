@@ -1,0 +1,9 @@
+{
+  "resource": "https://logwick.io",
+  "authorization_servers": ["https://logwick.io/.well-known/oauth-authorization-server"],
+  "scopes_supported": ["logs:read", "logs:write", "stats:read"],
+  "bearer_methods_supported": ["header"],
+  "resource_documentation": "https://logwick.io/docs",
+  "resource_name": "Logwick API",
+  "resource_description": "The audit log for AI agents. Log and query AI agent actions."
+}

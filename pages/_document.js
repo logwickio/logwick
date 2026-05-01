@@ -4,6 +4,10 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
+        <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+        <link rel="alternate" type="text/markdown" href="/index.md" />
+        <link rel="alternate" type="application/json" href="/openapi.json" title="OpenAPI specification" />
+        <link rel="service.desc" type="application/openapi+json" href="/openapi.json" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <meta name="description" content="Logwick — the audit log for AI agents. Every prompt, response, and error your AI agents produce, logged and searchable." />
 

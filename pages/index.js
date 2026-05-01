@@ -656,3 +656,40 @@ fetch('https://logwick.io/api/v1/logs', {
     </>
   )
 }
+
+export async function getServerSideProps({ req, res, query }) {
+  if (query.mode === 'agent') {
+    const data = {
+      name: 'Logwick',
+      description: 'The audit log for AI agents',
+      version: '1.0.0',
+      capabilities: ['logging', 'querying', 'streaming', 'webhooks', 'mcp', 'x402'],
+      endpoints: {
+        ingest: 'POST https://logwick.io/api/v1/logs',
+        query: 'GET https://logwick.io/api/v1/logs',
+        stream: 'GET https://logwick.io/api/v1/logs/stream',
+        stats: 'GET https://logwick.io/api/v1/stats',
+        agentLog: 'POST https://logwick.io/api/v1/agent-log',
+        discovery: 'GET https://logwick.io/api/v1',
+      },
+      authentication: {
+        apiKey: 'Authorization: Bearer sk-lw-your-key',
+        x402: 'X-Payment header with USDC payment on Base mainnet',
+      },
+      pricing: {
+        free: '$0/month — 5000 logs',
+        pro: '$29/month — 100000 logs',
+        payPerLog: '$0.001 USDC via x402',
+      },
+      docs: 'https://logwick.io/docs',
+      openapi: 'https://logwick.io/openapi.json',
+      llmsTxt: 'https://logwick.io/llms.txt',
+      llmsFullTxt: 'https://logwick.io/llms-full.txt',
+      mcp: 'npx @logwick/mcp',
+    }
+    res.setHeader('Content-Type', 'application/json')
+    res.end(JSON.stringify(data, null, 2))
+    return { props: {} }
+  }
+  return { props: {} }
+}

@@ -1,14 +1,54 @@
 User-agent: *
 Allow: /
 
+# AI search agents — full access
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+# Training crawlers — disallow
+User-agent: CCBot
+Disallow: /
+
+User-agent: ByteSpider
+Disallow: /
+
+User-agent: Diffbot
+Disallow: /
+
+# Content signals
+Content-Signal: search=yes, ai-input=yes, ai-train=no
+
 # AI agent discovery files
 Allow: /llms.txt
+Allow: /llms-full.txt
 Allow: /openapi.json
+Allow: /pricing.md
+Allow: /index.md
 
 Sitemap: https://logwick.io/sitemap.xml
 
 # Logwick - The audit log for AI agents
-# API documentation: https://logwick.io/docs
-# OpenAPI spec: https://logwick.io/openapi.json
+# API: https://logwick.io/api/v1
+# Docs: https://logwick.io/docs
+# OpenAPI: https://logwick.io/openapi.json
 # llms.txt: https://logwick.io/llms.txt
-# MCP server: npx @logwick/mcp
+# llms-full.txt: https://logwick.io/llms-full.txt
+# MCP: npx @logwick/mcp

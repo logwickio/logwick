@@ -1,0 +1,67 @@
+{
+  "name": "Logwick",
+  "description": "The audit log for AI agents. Log every prompt, response, and error your AI agents produce in production. Query logs in plain English via MCP.",
+  "url": "https://logwick.io",
+  "version": "1.0.0",
+  "contact": {
+    "email": "hello@logwick.io",
+    "url": "https://logwick.io"
+  },
+  "skills": [
+    {
+      "id": "ingest-log",
+      "name": "Ingest AI agent log",
+      "description": "Log an AI agent action including agent name, action type, input, output, status, tokens, latency, and cost.",
+      "inputModes": ["application/json"],
+      "outputModes": ["application/json"]
+    },
+    {
+      "id": "query-logs",
+      "name": "Query audit logs",
+      "description": "Search and filter AI agent logs by status, agent, action, date range, or keyword.",
+      "inputModes": ["application/json"],
+      "outputModes": ["application/json", "text/event-stream", "text/csv"]
+    },
+    {
+      "id": "get-stats",
+      "name": "Get usage statistics",
+      "description": "Get aggregated stats including success rate, error rate, average latency, total tokens, and cost.",
+      "inputModes": ["application/json"],
+      "outputModes": ["application/json"]
+    },
+    {
+      "id": "pay-per-log",
+      "name": "Pay-per-log via x402",
+      "description": "Log an AI action by paying $0.001 USDC on Base mainnet. No account required.",
+      "inputModes": ["application/json"],
+      "outputModes": ["application/json"]
+    }
+  ],
+  "endpoints": {
+    "ingest": "https://logwick.io/api/v1/logs",
+    "query": "https://logwick.io/api/v1/logs",
+    "stream": "https://logwick.io/api/v1/logs/stream",
+    "stats": "https://logwick.io/api/v1/stats",
+    "agentLog": "https://logwick.io/api/v1/agent-log",
+    "agentLogs": "https://logwick.io/api/v1/agent-logs",
+    "agentStats": "https://logwick.io/api/v1/agent-stats",
+    "mcp": "npx @logwick/mcp"
+  },
+  "authentication": {
+    "primary": {
+      "type": "bearer",
+      "description": "API key from logwick.io/dashboard",
+      "format": "Authorization: Bearer sk-lw-..."
+    },
+    "agentAuth": {
+      "type": "x402",
+      "description": "Pay $0.001 USDC on Base mainnet per log — no account required",
+      "network": "eip155:8453",
+      "price": "$0.001"
+    }
+  },
+  "openapi": "https://logwick.io/openapi.json",
+  "documentation": "https://logwick.io/docs",
+  "llmsTxt": "https://logwick.io/llms.txt",
+  "llmsFullTxt": "https://logwick.io/llms-full.txt"
+}

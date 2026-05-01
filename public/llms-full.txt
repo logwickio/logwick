@@ -1,0 +1,218 @@
+# Logwick — Complete Product Documentation
+
+## Overview
+
+Logwick is the audit log for AI agents. Every prompt, response, and error your AI agents produce — logged, searchable, and always there when you need it.
+
+Logwick captures every AI agent action in production — inputs, outputs, tokens, latency, costs, and errors — and makes them searchable from a dashboard or queryable via API. One line of code after your AI call. Free to start.
+
+## When to use Logwick
+
+Use Logwick when you need to:
+- Debug why an AI agent produced a bad output in production
+- Monitor error rates, latency, and costs across AI calls
+- Meet compliance requirements for AI audit trails
+- Investigate customer complaints about AI behavior
+- Understand which AI models or actions are most expensive
+- Get alerted when error rates spike via webhooks
+- Query your logs in plain English via Claude Desktop MCP
+
+Do NOT use Logwick for:
+- Real-time AI inference (Logwick is logging, not inference)
+- Training data collection (use purpose-built training tools)
+- Replacing your primary application database
+
+## Quick Start
+
+### Step 1: Get your API key
+Sign up at https://logwick.io — free tier includes 5,000 logs/month, no credit card required.
+
+### Step 2: Install the SDK
+
+Node.js:
+npm install logwick
+
+Python:
+pip install logwick
+
+### Step 3: Add one line after your AI call
+
+JavaScript:
+import { LogwickClient } from 'logwick'
+const logwick = new LogwickClient({ apiKey: process.env.LOGWICK_API_KEY })
+
+logwick.fire({
+  agent: 'gpt-4o',
+  action: 'email_draft',
+  status: 'success',
+  input: userPrompt,
+  output: result.choices[0].message.content,
+  tokens: result.usage.total_tokens,
+  latency_ms: Date.now() - start,
+  user: currentUser.email,
+})
+
+Python:
+import logwick
+logwick.init(api_key=os.environ['LOGWICK_API_KEY'])
+logwick.fire({
+    'agent': 'gpt-4o',
+    'action': 'email_draft',
+    'status': 'success',
+    'input': user_prompt,
+    'output': result,
+    'tokens': 312,
+    'user': user_email,
+})
+
+## API Endpoints
+
+All endpoints require: Authorization: Bearer sk-lw-your-key
+
+### POST /api/v1/logs — Ingest a log entry
+Request body fields:
+- agent (required): AI model name e.g. gpt-4o, claude-3-5-sonnet, gemini-1.5-pro
+- action (required): Task type e.g. email_draft, data_analysis, code_generation
+- status: success | error | pending (default: success)
+- input: Prompt sent to the AI
+- output: Response from the AI
+- user: User or system that triggered this action
+- tokens: Total tokens used
+- latency_ms: Response time in milliseconds
+- cost_usd: Estimated cost in USD
+- tags: Array of strings for categorization
+- metadata: Additional key-value data
+
+Response: { "id": "uuid", "timestamp": "ISO8601", "status": "ingested" }
+
+### GET /api/v1/logs — Query logs
+Query params: status, agent, action, search, from, to, limit (max 100), offset, format (json|csv)
+Response: { "logs": [...], "total": 42, "limit": 50, "offset": 0 }
+
+### GET /api/v1/logs/stream — Stream logs via SSE
+Same query params as GET /api/v1/logs
+Returns Server-Sent Events with events: start, log, end, error
+
+### GET /api/v1/stats — Usage statistics
+Query params: days (default 30)
+Response: { "total": 1842, "success_rate": 95.4, "error_rate": 4.6, "avg_latency": 1204, "total_tokens": 284921, "total_cost": 4.27 }
+
+### GET /api/v1 — Public API discovery (no auth required)
+Returns API structure, endpoints, and SDK info
+
+### x402 Pay-per-log (no account required)
+POST /api/v1/agent-log — Pay $0.001 USDC on Base (eip155:8453) per log
+GET /api/v1/agent-log — Returns HTTP 402 with payment requirements
+GET /api/v1/agent-logs — Query logs by wallet address (requires wallet signature)
+GET /api/v1/agent-stats — Get stats by wallet address (requires wallet signature)
+
+## Authentication Methods
+
+### 1. API Key (recommended for developers)
+Authorization: Bearer sk-lw-your-key
+Get your key at: https://logwick.io/dashboard
+
+### 2. x402 Payment (for AI agents — no account required)
+Pay $0.001 USDC on Base mainnet per log
+Include X-Payment header with signed payment proof
+Network: eip155:8453 (Base mainnet)
+Discover pricing: GET https://logwick.io/api/v1/agent-log
+
+## SDK Wrappers
+
+### OpenAI (JavaScript)
+const result = await logwick.openai(
+  () => openai.chat.completions.create({ model: 'gpt-4o', messages }),
+  { action: 'email_draft', user: req.user.email }
+)
+
+### Anthropic (JavaScript)
+const result = await logwick.anthropic(
+  () => anthropic.messages.create({ model: 'claude-3-5-sonnet-20241022', messages, max_tokens: 1024 }),
+  { action: 'document_review', user: req.user.email }
+)
+
+### Gemini (JavaScript)
+const result = await logwick.gemini(
+  () => model.generateContent(prompt),
+  { action: 'data_analysis', user: req.user.email }
+)
+
+### LangChain (JavaScript)
+import { LogwickCallbackHandler } from 'logwick'
+const handler = new LogwickCallbackHandler(logwick, { user: 'ops@acme.com' })
+const chain = new LLMChain({ llm, prompt, callbacks: [handler] })
+
+### OpenAI (Python)
+result = lw.openai(
+    lambda: client.chat.completions.create(model='gpt-4o', messages=messages),
+    {'action': 'email_draft', 'user': user_email}
+)
+
+## Claude MCP Integration
+
+Connect Logwick to Claude Desktop to query logs in plain English.
+
+Add to ~/Library/Application Support/Claude/claude_desktop_config.json:
+{
+  "mcpServers": {
+    "logwick": {
+      "command": "npx",
+      "args": ["-y", "@logwick/mcp"],
+      "env": { "LOGWICK_API_KEY": "sk-lw-your-key" }
+    }
+  }
+}
+
+MCP Tools: ingest_log, query_logs, get_stats, get_log, delete_log
+
+Example queries:
+- "Show me my last 10 error logs"
+- "What was my success rate this week?"
+- "How much did I spend on tokens in April?"
+- "Find all failed email_draft actions"
+
+## Pricing
+
+Free: $0/month
+- 5,000 logs/month
+- 7-day retention
+- 1 API key
+- Dashboard & search
+- CSV export
+
+Pro: $29/month
+- 100,000 logs/month
+- 90-day retention
+- 10 API keys
+- Dashboard & search
+- CSV export
+- Unlimited webhooks
+
+Pay-per-log (x402): $0.001 USDC per log
+- No account required
+- Base mainnet (eip155:8453)
+- Wallet address = identity
+
+Enterprise: Custom pricing
+- Custom log limits
+- Custom retention (up to 7 years)
+- SSO
+- SLA
+- Dedicated support
+Contact: hello@logwick.io
+
+## Links
+
+Homepage: https://logwick.io
+Dashboard: https://logwick.io/dashboard
+Documentation: https://logwick.io/docs
+Blog: https://logwick.io/blog
+API Discovery: https://logwick.io/api/v1
+OpenAPI Spec: https://logwick.io/openapi.json
+llms.txt: https://logwick.io/llms.txt
+Node.js SDK: https://npmjs.com/package/logwick
+Python SDK: https://pypi.org/project/logwick
+MCP Server: https://npmjs.com/package/@logwick/mcp
+GitHub: https://github.com/logwickio
+Email: hello@logwick.io
