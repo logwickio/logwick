@@ -641,7 +641,7 @@ fetch('https://logwick.io/api/v1/logs', {
         <div className="fcol"><h4>Product</h4><a href="#features">Features</a>
           <a href="/docs">Docs</a><a href="#pricing">Pricing</a><a href="/dashboard">Dashboard</a></div>
         <div className="fcol"><h4>Developers</h4><a href="/dashboard">API Docs</a><a href="/signup">Get API key</a></div>
-        <div className="fcol"><h4>Company</h4><a href="mailto:hello@logwick.io">Contact</a><a href="#">Privacy</a><a href="#">Terms</a></div>
+        <div className="fcol"><h4>Company</h4><a href="/about">About</a><a href="/compare">Compare</a><a href="/contact">Contact</a><a href="#">Privacy</a><a href="#">Terms</a></div>
       </footer>
       <div className="fbot">
         <span>© 2026 Logwick. All rights reserved.</span>
