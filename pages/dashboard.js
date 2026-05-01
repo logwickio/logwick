@@ -460,17 +460,16 @@ export default function Dashboard() {
                       <circle cx="25" cy="24" r="3.5" fill="white"/>
                     </svg>
                     <div>
-                      <div style={{ fontSize: 13, fontWeight: 700, color: '#7dd3fc', marginBottom: 6 }}>Set up Logwick with Claude — one click</div>
-                      <div style={{ fontSize: 12, color: '#a8c8dc', lineHeight: 1.7, marginBottom: 8 }}>Ask Claude to add Logwick to your project automatically — it reads the docs and wires everything up for you:</div>
-                      <div style={{ fontSize: 12, color: '#a8c8dc', lineHeight: 1.7, marginBottom: 8 }}>Click below — it copies everything Claude needs and opens claude.ai. Just paste and hit send.</div>
-                      <div style={{ fontSize: 12, color: '#a8c8dc', lineHeight: 1.7, marginBottom: 12 }}>Your full API key is in the <span style={{ color: '#38bdf8', cursor: 'pointer' }} onClick={() => setView('api')}>API Docs tab →</span> — copy it and replace <code style={{ color: '#f87171', fontFamily: 'var(--font-mono)' }}>sk-lw-your-key</code> in the message before sending to Claude.</div>
+                      <div style={{ fontSize: 13, fontWeight: 700, color: '#7dd3fc', marginBottom: 6 }}>Set up Logwick with your AI assistant — one click</div>
+                      <div style={{ fontSize: 12, color: '#a8c8dc', lineHeight: 1.7, marginBottom: 8 }}>Ask your AI assistant to add Logwick to your project automatically — it reads the docs and wires everything up for you:</div>
+                      <div style={{ fontSize: 12, color: '#a8c8dc', lineHeight: 1.7, marginBottom: 8 }}>Click below — it copies everything your AI needs. Paste it into Claude, ChatGPT, Gemini, or any AI assistant and hit send.</div>
+                      <div style={{ fontSize: 12, color: '#a8c8dc', lineHeight: 1.7, marginBottom: 12 }}>Your full API key is in the <span style={{ color: '#38bdf8', cursor: 'pointer' }} onClick={() => setView('api')}>API Docs tab →</span> — copy it and replace <code style={{ color: '#f87171', fontFamily: 'var(--font-mono)' }}>sk-lw-your-key</code> in the message before sending to your AI.</div>
                       <button
                         onClick={() => {
                           const key = apiKeys[0]?.key_prefix ? apiKeys[0].key_prefix + '...' : 'sk-lw-your-key'
                           const msg = 'Here are the Logwick docs:\n\nINSTALL\nnpm install logwick\n\nQUICK START\nimport { LogwickClient } from \'logwick\'\nconst logwick = new LogwickClient({ apiKey: process.env.LOGWICK_API_KEY })\nlogwick.fire({ agent: \'gpt-4o\', action: \'my_action\', status: \'success\', input: userPrompt, output: result, tokens: 312 })\n\nOPENAI WRAPPER\nconst result = await logwick.openai(() => openai.chat.completions.create({ model: \'gpt-4o\', messages }), { action: \'email_draft\', user: req.user.email })\n\nANTHROPIC WRAPPER\nconst result = await logwick.anthropic(() => anthropic.messages.create({ model: \'claude-3-5-sonnet-20241022\', messages, max_tokens: 1024 }), { action: \'document_review\' })\n\nPYTHON\nimport logwick\nlogwick.init(api_key=\'your-key\')\nlogwick.fire({ \'agent\': \'gpt-4o\', \'action\': \'my_action\', \'status\': \'success\', \'input\': prompt, \'output\': result })\n\nNow add Logwick to my project. My API key is ' + key
                           navigator.clipboard.writeText(msg).then(() => {
-                            window.open('https://claude.ai/new', '_blank')
-                            toast('Copied! Paste into Claude and hit send')
+                            toast('Copied! Paste into your AI assistant and hit send')
                           })
                         }}
                         style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 18px', background: 'linear-gradient(135deg,#0ea5e9,#0284c7)', border: 'none', borderRadius: 8, color: '#fff', fontSize: 12, fontFamily: 'var(--font-mono)', cursor: 'pointer', fontWeight: 600 }}>
@@ -479,9 +478,9 @@ export default function Dashboard() {
                           <path d="M11 8 L11 24 L25 24" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
                           <circle cx="25" cy="24" r="3.5" fill="white"/>
                         </svg>
-                        Copy &amp; Open Claude →
+                        Copy setup docs →
                       </button>
-                      <div style={{ fontSize: 12, color: '#a8c8dc', lineHeight: 1.7 }}>Or connect Claude Desktop via MCP to query your logs in plain English. See the <span style={{ color: '#38bdf8', cursor: 'pointer' }} onClick={() => setView('api')}>API Docs tab →</span></div>
+                      <div style={{ fontSize: 12, color: '#a8c8dc', lineHeight: 1.7 }}>Or connect Claude Desktop via MCP to query your logs in plain English — Claude-exclusive feature. See the <span style={{ color: '#38bdf8', cursor: 'pointer' }} onClick={() => setView('api')}>API Docs tab →</span></div>
                     </div>
                   </div>
                 </div>
