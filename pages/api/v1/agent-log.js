@@ -9,6 +9,10 @@ export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*')
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS, GET')
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, X-Payment, Payment')
+  res.setHeader('PAYMENT-REQUIRED', 'true')
+  res.setHeader('X-Payment-Network', 'eip155:8453')
+  res.setHeader('X-Payment-Price', '0.001')
+  res.setHeader('X-Payment-Asset', 'USDC')
 
   if (req.method === 'OPTIONS') return res.status(200).end()
 
