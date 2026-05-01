@@ -378,10 +378,12 @@ export default function Dashboard() {
     }
   }
 
+  const isPro = stats?.org_plan === 'pro' || stats?.org_plan === 'enterprise'
+
   const navItems = [
     { id: 'dashboard', icon: '⬛', label: 'Dashboard' },
     { id: 'api',       icon: '⟨/⟩', label: 'API Docs'  },
-    { id: 'webhooks',  icon: '⚡',   label: 'Webhooks'  },
+    ...(isPro ? [{ id: 'webhooks', icon: '⚡', label: 'Webhooks' }] : []),
     { id: 'settings',  icon: '⚙',    label: 'Settings'  },
   ]
 
@@ -813,7 +815,7 @@ curl ".../api/v1/logs?format=csv" -H "Authorization: Bearer sk-lw-..."` },
           {[
             { section: 'Organization', fields: [{ label: 'Org Name', key: 'orgName', type: 'text' }, { label: 'Admin Email', key: 'email', type: 'email' }] },
             { section: 'Alerts', fields: [{ label: 'Error Threshold %', key: 'alertThreshold', type: 'number' }, { label: 'Slack Webhook URL', key: 'slackWebhook', type: 'text', placeholder: 'https://hooks.slack.com/…' }] },
-            { section: 'Data Retention', fields: [{ label: 'Retention Days', key: 'retentionDays', type: 'number' }] },
+            
           ].map(sec => (
             <div key={sec.section} style={{ ...S.block2, marginBottom: 14 }}>
               <div style={{ padding: '9px 16px', borderBottom: '1px solid #0a1820', fontSize: 9, color: '#a8c8dc', letterSpacing: '0.12em', textTransform: 'uppercase' }}>{sec.section}</div>
