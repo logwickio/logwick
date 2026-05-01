@@ -354,8 +354,8 @@ export default function Home() {
         <div className="grid"/>
         <div className="glow"/>
         <div className="eyebrow"><span className="live-dot"/>Now live — free to start</div>
-        <div style={{fontSize:12,color:'#38bdf8',letterSpacing:'0.16em',textTransform:'uppercase',fontFamily:"'JetBrains Mono',monospace",marginBottom:16,opacity:0.9}}>The audit log for AI agents</div>
-        <h1>Leave a trail.<br/><span>Every AI action, logged.</span></h1>
+        <h1 style={{marginBottom:16}}>The audit log<br/><span>for AI agents.</span></h1>
+        <div style={{fontSize:'clamp(18px,3vw,28px)',color:'#94b8cc',fontFamily:"'Syne',sans-serif",fontWeight:600,marginBottom:8,letterSpacing:'-0.01em'}}>Leave a trail. Know what your AI did, always.</div>
         <p className="sub">Logwick captures every prompt, response, and error your AI agents produce — searchable, exportable, and always there when you need it.</p>
         <div style={{display:'flex',flexDirection:'column',gap:8,marginBottom:16,marginTop:-8}}>
           <div style={{display:'flex',alignItems:'center',gap:10,background:'rgba(14,165,233,0.08)',border:'1px solid rgba(14,165,233,0.25)',borderRadius:40,padding:'10px 20px'}}>
