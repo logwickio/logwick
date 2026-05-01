@@ -1,0 +1,83 @@
+{
+  "name": "Logwick",
+  "description": "The audit log for AI agents. Log every prompt, response, and error your AI agents produce in production.",
+  "url": "https://logwick.io",
+  "version": "1.0.0",
+  "contact": {
+    "email": "hello@logwick.io",
+    "url": "https://logwick.io"
+  },
+  "capabilities": [
+    "logging",
+    "observability",
+    "audit-trail",
+    "search",
+    "webhooks",
+    "csv-export",
+    "mcp",
+    "x402"
+  ],
+  "integrations": {
+    "mcp": {
+      "package": "@logwick/mcp",
+      "registry": "npm",
+      "install": "npx @logwick/mcp",
+      "config": {
+        "mcpServers": {
+          "logwick": {
+            "command": "npx",
+            "args": ["-y", "@logwick/mcp"],
+            "env": {
+              "LOGWICK_API_KEY": "your-api-key"
+            }
+          }
+        }
+      }
+    },
+    "x402": {
+      "endpoint": "https://logwick.io/api/v1/agent-log",
+      "network": "eip155:8453",
+      "price": "$0.001",
+      "description": "Pay per log with USDC on Base. No account required."
+    },
+    "sdk": {
+      "nodejs": {
+        "package": "logwick",
+        "registry": "npm",
+        "install": "npm install logwick"
+      },
+      "python": {
+        "package": "logwick",
+        "registry": "pypi",
+        "install": "pip install logwick"
+      }
+    }
+  },
+  "api": {
+    "openapi": "https://logwick.io/openapi.json",
+    "docs": "https://logwick.io/docs",
+    "llms_txt": "https://logwick.io/llms.txt"
+  },
+  "auth": {
+    "type": "bearer",
+    "description": "API key from logwick.io/dashboard. Format: Bearer sk-lw-..."
+  },
+  "pricing": {
+    "free": {
+      "logs_per_month": 5000,
+      "retention_days": 7,
+      "price_usd": 0
+    },
+    "pro": {
+      "logs_per_month": 100000,
+      "retention_days": 90,
+      "price_usd": 29,
+      "billing": "monthly"
+    },
+    "pay_per_log": {
+      "price_usd": 0.001,
+      "network": "Base (eip155:8453)",
+      "protocol": "x402"
+    }
+  }
+}

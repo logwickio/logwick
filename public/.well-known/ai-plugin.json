@@ -1,0 +1,20 @@
+{
+  "schema_version": "v1",
+  "name_for_human": "Logwick",
+  "name_for_model": "logwick",
+  "description_for_human": "The audit log for AI agents. Log every prompt, response, and error your AI agents produce. Free to start.",
+  "description_for_model": "Logwick is an audit logging service for AI agents. Use it to log AI agent actions including inputs, outputs, tokens used, latency, costs, and errors. Logs are searchable and exportable. Supports API key auth and x402 pay-per-log payments. Use the ingest endpoint to store logs and the query endpoint to retrieve them. The MCP server provides natural language access to logs via Claude Desktop.",
+  "auth": {
+    "type": "service_http",
+    "authorization_type": "bearer",
+    "verification_tokens": {}
+  },
+  "api": {
+    "type": "openapi",
+    "url": "https://logwick.io/openapi.json",
+    "is_user_authenticated": false
+  },
+  "logo_url": "https://logwick.io/favicon.svg",
+  "contact_email": "hello@logwick.io",
+  "legal_info_url": "https://logwick.io"
+}
