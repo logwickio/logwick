@@ -372,7 +372,7 @@ export default function Home() {
               <path d="M11 8 L11 24 L25 24" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
               <circle cx="25" cy="24" r="3.5" fill="white"/>
             </svg>
-            <span style={{fontSize:13,color:'#38bdf8',fontFamily:"'JetBrains Mono',monospace",letterSpacing:'0.02em'}}>Once set up, ask Claude what your AI agents did yesterday. Logwick makes it possible.</span>
+            <span style={{fontSize:13,color:'#38bdf8',fontFamily:"'JetBrains Mono',monospace",letterSpacing:'0.02em'}}>AI agents can now log themselves. No account needed — pay $0.001 USDC per log.</span>
           </div>
         </div>
         <div className="actions">
@@ -396,6 +396,15 @@ export default function Home() {
         <div className="eyebrow2">Features</div>
         <div className="stitle">Everything you need to trust your AI stack</div>
         <div className="ssub">One API endpoint. Instant visibility across every agent, model, and workflow — including native Claude MCP integration.</div>
+        <div style={{display:'flex',gap:12,justifyContent:'center',flexWrap:'wrap',marginTop:16}}>
+          {[
+            'Unlike Braintrust — no $249/mo platform required',
+            'Unlike LangSmith — works without LangChain',
+            'Unlike Helicone — any model, not just OpenAI',
+          ].map(t => (
+            <span key={t} style={{fontSize:11,color:'#4a7a90',background:'#07101a',border:'1px solid #1e3040',borderRadius:20,padding:'4px 12px'}}>{t}</span>
+          ))}
+        </div>
         <div className="features">
           {[
             ['⬛','Universal log ingestion','One REST endpoint accepts logs from any AI agent or model. POST and forget — storage, indexing, and retention handled automatically.'],
@@ -620,7 +629,7 @@ fetch('https://logwick.io/api/v1/logs', {
       <div className="cta-section">
         <div className="cta-glow"/>
         <h2>Start logging your<br/>AI agents today</h2>
-        <p>Free forever for small projects. No credit card required.<br/>Your first 5,000 logs are on us. Claude MCP integration included.</p>
+        <p>Free forever for small projects. No credit card required.<br/>Your first 5,000 logs are on us. MCP integration included.</p>
         <a href="/signup"><button className="btn-primary" style={{fontSize:13,padding:'14px 32px'}}>Create free account →</button></a>
       </div>
 
