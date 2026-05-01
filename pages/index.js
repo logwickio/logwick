@@ -342,6 +342,7 @@ export default function Home() {
           <a href="#how-it-works">How it works</a>
           <a href="#pricing">Pricing</a>
           <a href="#faq">FAQ</a>
+          <a href="/blog">Blog</a>
           <a href="/docs">Docs</a>
           <a href="/login">Sign in</a>
           <a href="/signup" className="ncta">Get started free</a>
