@@ -655,8 +655,9 @@ export default function Dashboard() {
             <div style={{ padding: '12px 16px', borderBottom: '1px solid #0a1820', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <span style={{ fontSize: 13, fontWeight: 700, color: '#d4e8f5', fontFamily: 'var(--font-sans)' }}>API Keys</span>
               <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+                <span style={{ fontSize: 10, color: '#4a7a90' }}>{apiKeys.length}/{isPro ? 10 : 1} keys</span>
                 <input style={{ ...S.fInput, width: 140, padding: '5px 10px' }} placeholder="Key name…" value={newKeyName} onChange={e => setNewKeyName(e.target.value)} />
-                <button style={btn('primary')} onClick={handleGenerateKey}>Generate</button>
+                <button style={btn('primary')} onClick={handleGenerateKey} disabled={!isPro && apiKeys.length >= 1}>{!isPro && apiKeys.length >= 1 ? 'Upgrade for more' : 'Generate'}</button>
               </div>
             </div>
             {newKeyResult && (

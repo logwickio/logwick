@@ -29,6 +29,32 @@ export default async function handler(req, res) {
   if (req.method === 'POST') {
     const { name } = req.body
     if (!name) return res.status(400).json({ error: 'Key name required' })
+
+    // Get org plan and enforce key limits
+    const { data: org } = await supabase
+      .from('organizations')
+      .select('plan')
+      .eq('id', orgId)
+      .single()
+
+    const plan = org?.plan || 'free'
+    const keyLimit = plan === 'pro' || plan === 'enterprise' ? 10 : 1
+
+    // Count existing keys
+    const { count } = await supabase
+      .from('api_keys')
+      .select('id', { count: 'exact', head: true })
+      .eq('org_id', orgId)
+      .eq('revoked', false)
+
+    if (count >= keyLimit) {
+      return res.status(403).json({
+        error: `API key limit reached. ${plan === 'free' ? 'Free plan allows 1 key. Upgrade to Pro for 10 keys.' : 'Pro plan allows 10 keys.'}`,
+        limit: keyLimit,
+        plan,
+      })
+    }
+
     const { key, keyHash, keyPrefix } = generateApiKey()
     const { data, error } = await supabase.from('api_keys')
       .insert({ org_id: orgId, name, key_hash: keyHash, key_prefix: keyPrefix, created_by: userId })
