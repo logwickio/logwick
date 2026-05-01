@@ -580,7 +580,7 @@ fetch('https://logwick.io/api/v1/logs', {
               <li>1 API key</li>
               <li>Dashboard & search</li>
               <li className="off">Webhooks</li>
-              <li className="off">CSV export</li>
+              <li>CSV export</li>
             </ul>
             <a href="/signup"><button className="pbtn ghost">Get started free</button></a>
           </div>
