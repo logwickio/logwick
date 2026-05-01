@@ -118,7 +118,6 @@ export default function Dashboard() {
   const [view, setView] = useState('dashboard')
   const [token, setToken] = useState(null)
   const [showPricing, setShowPricing] = useState(false)
-  const [showPricing, setShowPricing] = useState(false)
   const [loading, setLoading] = useState(true)
 
   // Logs state
