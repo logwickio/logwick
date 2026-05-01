@@ -26,10 +26,10 @@ export default async function handler(req, res) {
 
   // Validate key
   const { getSupabaseAdmin } = await import('../../../../lib/supabase')
-  const { hashApiKey } = await import('../../../../lib/apiKeys')
+  const { hashKey } = await import('../../../../lib/apiKeys')
   const supabase = getSupabaseAdmin()
 
-  const keyHash = hashApiKey(rawKey)
+  const keyHash = hashKey(rawKey)
   const { data: keyData } = await supabase
     .from('api_keys')
     .select('org_id, key_prefix')
