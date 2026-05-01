@@ -626,6 +626,25 @@ export default function Dashboard() {
       <div style={S.scrollContent}>
         <div style={{ maxWidth: 680 }}>
           <div style={{ fontSize: 20, fontFamily: 'var(--font-sans)', fontWeight: 800, color: '#d4e8f5', marginBottom: 6 }}>API Reference</div>
+
+          {/* Setup button — always visible */}
+          <div style={{ background: '#07101a', border: '1px solid #1e3040', borderRadius: 8, padding: '14px 18px', marginBottom: 20, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 10 }}>
+            <div>
+              <div style={{ fontSize: 13, fontWeight: 700, color: '#d4e8f5', marginBottom: 4 }}>Add Logwick to your project automatically</div>
+              <div style={{ fontSize: 11, color: '#a8c8dc' }}>Copy the setup docs and paste into any AI assistant — it wires everything up for you.</div>
+            </div>
+            <button
+              style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '8px 16px', background: 'linear-gradient(135deg,#0ea5e9,#0284c7)', border: 'none', borderRadius: 8, color: '#fff', fontSize: 12, fontFamily: 'var(--font-mono)', cursor: 'pointer', fontWeight: 600 }}
+              onClick={() => {
+                const key = apiKeys[0]?.key_prefix ? apiKeys[0].key_prefix + '...' : 'sk-lw-your-key'
+                const msg = 'Here are the Logwick docs:\n\nINSTALL\nnpm install logwick\n\nQUICK START\nimport { LogwickClient } from \'logwick\'\nconst logwick = new LogwickClient({ apiKey: process.env.LOGWICK_API_KEY })\nlogwick.fire({ agent: \'gpt-4o\', action: \'my_action\', status: \'success\', input: userPrompt, output: result, tokens: 312 })\n\nOPENAI WRAPPER\nconst result = await logwick.openai(() => openai.chat.completions.create({ model: \'gpt-4o\', messages }), { action: \'email_draft\', user: req.user.email })\n\nANTHROPIC WRAPPER\nconst result = await logwick.anthropic(() => anthropic.messages.create({ model: \'claude-3-5-sonnet-20241022\', messages, max_tokens: 1024 }), { action: \'document_review\' })\n\nPYTHON\nimport logwick\nlogwick.init(api_key=\'your-key\')\nlogwick.fire({ \'agent\': \'gpt-4o\', \'action\': \'my_action\', \'status\': \'success\', \'input\': prompt, \'output\': result })\n\nNow add Logwick to my project. My API key is ' + key
+                navigator.clipboard.writeText(msg).then(() => {
+                  toast('Copied! Paste into your AI assistant and hit send')
+                })
+              }}>
+              ⊕ Copy setup docs
+            </button>
+          </div>
           <div style={{ fontSize: 11, color: '#b8d4e4', marginBottom: 24, lineHeight: 1.7 }}>
             Base URL: <span style={{ color: '#0ea5e9' }}>{typeof window !== 'undefined' ? window.location.origin : 'https://yourapp.vercel.app'}/api/v1</span><br />
             Auth: <code style={{ color: '#c8dce8' }}>Authorization: Bearer sk-lw-...</code>
@@ -718,6 +737,28 @@ curl "${typeof window !== 'undefined' ? window.location.origin : 'https://yourap
 
 # Export as CSV:
 curl ".../api/v1/logs?format=csv" -H "Authorization: Bearer sk-lw-..."` },
+            { method: 'GET', path: '/v1/logs/stream', title: 'Stream logs (SSE)', code: `curl -N "https://logwick.io/api/v1/logs/stream?status=error&limit=50" \\
+  -H "Authorization: Bearer sk-lw-your-key"
+
+# Returns Server-Sent Events:
+# event: start
+# data: {"message":"Stream started","filters":{...}}
+#
+# event: log
+# data: {"id":"...","agent":"gpt-4o","action":"email_draft",...}
+#
+# event: end
+# data: {"message":"Stream complete","total":12}` },
+            { method: 'POST', path: '/v1/agent-log', title: 'Pay-per-log (x402)', code: `# No account required — pay $0.001 USDC on Base mainnet
+# Step 1: Discover price
+curl https://logwick.io/api/v1/agent-log
+# Returns HTTP 402 with payment requirements
+
+# Step 2: Pay and log (using x402 client)
+curl -X POST https://logwick.io/api/v1/agent-log \\
+  -H "Content-Type: application/json" \\
+  -H "X-Payment: <signed-payment-proof>" \\
+  -d '{"agent":"gpt-4o","action":"email_draft","status":"success"}'` },
             { method: 'GET', path: '/v1/stats', title: 'Get statistics', code: `curl "${typeof window !== 'undefined' ? window.location.origin : 'https://yourapp.vercel.app'}/api/v1/stats?days=30" \\
   -H "Authorization: Bearer sk-lw-your-key"
 
