@@ -26,6 +26,22 @@ export default async function handler(req, res) {
   if (req.method === 'POST') {
     const { label, url, events, secret } = req.body
     if (!label || !url) return res.status(400).json({ error: 'label and url required' })
+
+    // Check plan — webhooks are Pro only
+    const { data: org } = await supabase
+      .from('organizations')
+      .select('plan')
+      .eq('id', orgId)
+      .single()
+
+    const plan = org?.plan || 'free'
+    if (plan === 'free') {
+      return res.status(403).json({
+        error: 'Webhooks are a Pro feature. Upgrade to Pro at logwick.io/dashboard.',
+        plan,
+      })
+    }
+
     const { data, error } = await supabase.from('webhooks')
       .insert({ org_id: orgId, label, url, events: events || ['error'], secret }).select().single()
     if (error) return res.status(500).json({ error: error.message })
