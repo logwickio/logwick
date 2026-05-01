@@ -1,0 +1,508 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Logwick API",
+    "description": "The audit log for AI agents. Log, search, and understand what your AI agents are doing in production.",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Logwick",
+      "url": "https://logwick.io",
+      "email": "hello@logwick.io"
+    },
+    "license": {
+      "name": "MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://logwick.io/api/v1",
+      "description": "Production"
+    }
+  ],
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "paths": {
+    "/logs": {
+      "post": {
+        "summary": "Ingest a log entry",
+        "description": "Log an AI agent action. Call this after every AI request to maintain a full audit trail.",
+        "operationId": "ingestLog",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LogEntry"
+              },
+              "example": {
+                "agent": "gpt-4o",
+                "action": "email_draft",
+                "status": "success",
+                "input": "Draft a follow-up email to a client",
+                "output": "Subject: Following up on our conversation...",
+                "tokens": 312,
+                "latency_ms": 1842,
+                "user": "customer@acme.com",
+                "cost_usd": 0.0021
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Log ingested successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IngestResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing required fields",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid or missing API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Query logs",
+        "description": "Search and filter log entries. Returns up to 100 results per request.",
+        "operationId": "queryLogs",
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "description": "Filter by status",
+            "schema": {
+              "type": "string",
+              "enum": ["success", "error", "pending"]
+            }
+          },
+          {
+            "name": "agent",
+            "in": "query",
+            "description": "Filter by agent name",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "action",
+            "in": "query",
+            "description": "Filter by action type",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "description": "Search across agent, action, input, output, and user fields",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "description": "Start date filter (YYYY-MM-DD)",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "description": "End date filter (YYYY-MM-DD)",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Number of results (max 100, default 50)",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 50
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "Pagination offset",
+            "schema": {
+              "type": "integer",
+              "default": 0
+            }
+          },
+          {
+            "name": "format",
+            "in": "query",
+            "description": "Response format",
+            "schema": {
+              "type": "string",
+              "enum": ["json", "csv"],
+              "default": "json"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Log entries matching query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LogsResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid or missing API key"
+          }
+        }
+      }
+    },
+    "/stats": {
+      "get": {
+        "summary": "Get usage statistics",
+        "description": "Returns aggregated statistics including total logs, success rate, error rate, average latency, total tokens, and estimated cost.",
+        "operationId": "getStats",
+        "parameters": [
+          {
+            "name": "days",
+            "in": "query",
+            "description": "Number of days to include (default 30)",
+            "schema": {
+              "type": "integer",
+              "default": 30,
+              "minimum": 1,
+              "maximum": 365
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Usage statistics",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatsResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid or missing API key"
+          }
+        }
+      }
+    },
+    "/agent-log": {
+      "get": {
+        "summary": "Discover x402 payment requirements",
+        "description": "Returns HTTP 402 with payment requirements for AI agents. No authentication required. Use this to discover the price before submitting a paid log.",
+        "operationId": "discoverAgentLog",
+        "security": [],
+        "responses": {
+          "402": {
+            "description": "Payment required — returns x402 payment requirements",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/X402PaymentRequired"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Ingest a log entry via x402 payment",
+        "description": "Log an AI agent action by paying $0.001 USDC on Base mainnet. No account or API key required — payment is authentication.",
+        "operationId": "ingestAgentLog",
+        "security": [],
+        "parameters": [
+          {
+            "name": "X-Payment",
+            "in": "header",
+            "required": true,
+            "description": "Signed x402 payment proof",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LogEntry"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Log ingested successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IngestResponse"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "Payment required or invalid payment",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/X402PaymentRequired"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "API key from your Logwick dashboard. Format: Bearer sk-lw-..."
+      }
+    },
+    "schemas": {
+      "LogEntry": {
+        "type": "object",
+        "required": ["agent", "action"],
+        "properties": {
+          "agent": {
+            "type": "string",
+            "description": "AI model or agent name",
+            "example": "gpt-4o"
+          },
+          "action": {
+            "type": "string",
+            "description": "Action or task type",
+            "example": "email_draft"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["success", "error", "pending"],
+            "default": "success",
+            "description": "Outcome of the AI action"
+          },
+          "input": {
+            "type": "string",
+            "description": "Prompt or input sent to the AI agent"
+          },
+          "output": {
+            "type": "string",
+            "description": "Response or output from the AI agent"
+          },
+          "user": {
+            "type": "string",
+            "description": "User or system that triggered this action"
+          },
+          "tokens": {
+            "type": "integer",
+            "description": "Total tokens used"
+          },
+          "latency_ms": {
+            "type": "integer",
+            "description": "Response time in milliseconds"
+          },
+          "cost_usd": {
+            "type": "number",
+            "description": "Estimated cost in USD"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Tags for categorization"
+          },
+          "metadata": {
+            "type": "object",
+            "description": "Additional key-value data"
+          }
+        }
+      },
+      "IngestResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Log entry ID"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the log was stored"
+          },
+          "status": {
+            "type": "string",
+            "example": "ingested"
+          },
+          "paid": {
+            "type": "boolean",
+            "description": "Whether payment was made (x402 only)"
+          },
+          "tx": {
+            "type": "string",
+            "description": "Transaction hash (x402 only)"
+          }
+        }
+      },
+      "LogsResponse": {
+        "type": "object",
+        "properties": {
+          "logs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LogRecord"
+            }
+          },
+          "total": {
+            "type": "integer",
+            "description": "Total matching log count"
+          },
+          "limit": {
+            "type": "integer"
+          },
+          "offset": {
+            "type": "integer"
+          }
+        }
+      },
+      "LogRecord": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/LogEntry"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "created_at": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          }
+        ]
+      },
+      "StatsResponse": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "integer",
+            "description": "Total log count in period"
+          },
+          "success": {
+            "type": "integer"
+          },
+          "error": {
+            "type": "integer"
+          },
+          "pending": {
+            "type": "integer"
+          },
+          "success_rate": {
+            "type": "number",
+            "description": "Success rate as percentage"
+          },
+          "error_rate": {
+            "type": "number",
+            "description": "Error rate as percentage"
+          },
+          "avg_latency": {
+            "type": "integer",
+            "description": "Average latency in milliseconds"
+          },
+          "total_tokens": {
+            "type": "integer"
+          },
+          "total_cost": {
+            "type": "number",
+            "description": "Total estimated cost in USD"
+          },
+          "period_days": {
+            "type": "integer"
+          }
+        }
+      },
+      "X402PaymentRequired": {
+        "type": "object",
+        "properties": {
+          "x402Version": {
+            "type": "integer",
+            "example": 1
+          },
+          "accepts": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "scheme": { "type": "string", "example": "exact" },
+                "network": { "type": "string", "example": "eip155:8453" },
+                "maxAmountRequired": { "type": "string", "example": "1000" },
+                "resource": { "type": "string" },
+                "description": { "type": "string" },
+                "payTo": { "type": "string" },
+                "maxTimeoutSeconds": { "type": "integer" }
+              }
+            }
+          },
+          "error": {
+            "type": "string"
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "Error message"
+          }
+        }
+      }
+    }
+  }
+}

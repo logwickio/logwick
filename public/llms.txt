@@ -1,0 +1,95 @@
+# Logwick
+
+> Logwick is the audit log for AI agents. Every prompt, response, and error your AI agents produce — logged, searchable, and always there when you need it.
+
+Logwick captures every AI agent action in production — inputs, outputs, tokens, latency, costs, and errors — and makes them searchable from a dashboard or queryable via API. One line of code after your AI call. Free to start.
+
+## What Logwick does
+
+- Logs every AI agent action — agent name, action type, input, output, status, tokens, latency, cost
+- Provides a searchable dashboard for investigating incidents and monitoring AI agent behavior
+- Sends webhook alerts when error rates spike
+- Exports logs as CSV for compliance and reporting
+- Connects to Claude Desktop via MCP — query logs in plain English
+- Accepts payments from AI agents via x402 — no account required, $0.001 USDC per log
+
+## Who uses Logwick
+
+Developers and companies building AI-powered applications who need visibility into what their AI agents are doing in production. Particularly useful for debugging incidents, monitoring costs, and meeting compliance requirements.
+
+## Quick start
+
+Sign up at https://logwick.io to get an API key. Then add one line after each AI call:
+
+```javascript
+fetch('https://logwick.io/api/v1/logs', {
+  method: 'POST',
+  headers: { 'Authorization': 'Bearer YOUR_API_KEY', 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    agent: 'gpt-4o',
+    action: 'email_draft',
+    status: 'success',
+    input: userPrompt,
+    output: result,
+    tokens: 312,
+    latency_ms: 1842,
+    user: currentUser.email
+  })
+}).catch(() => {})
+```
+
+## SDK installation
+
+```bash
+npm install logwick
+pip install logwick
+```
+
+## API endpoints
+
+- POST https://logwick.io/api/v1/logs — Ingest a log entry (requires API key)
+- GET https://logwick.io/api/v1/logs — Query logs (requires API key)
+- GET https://logwick.io/api/v1/stats — Get usage statistics (requires API key)
+- POST https://logwick.io/api/v1/agent-log — Ingest a log entry via x402 payment (no API key required)
+- GET https://logwick.io/api/v1/agent-log — Discover x402 pricing (returns HTTP 402 with payment requirements)
+
+## Authentication
+
+API key authentication: Pass your API key as a Bearer token in the Authorization header.
+x402 payment authentication: POST to /api/v1/agent-log with a signed x402 payment — no account required.
+
+## MCP server
+
+Connect Logwick to Claude Desktop via MCP:
+
+```json
+{
+  "mcpServers": {
+    "logwick": {
+      "command": "npx",
+      "args": ["-y", "@logwick/mcp"],
+      "env": { "LOGWICK_API_KEY": "your-key" }
+    }
+  }
+}
+```
+
+Available MCP tools: ingest_log, query_logs, get_stats, get_log, delete_log
+
+## Pricing
+
+- Free: 5,000 logs/month, 7-day retention, 1 API key, CSV export
+- Pro: $29/month — 100,000 logs/month, 90-day retention, unlimited webhooks, 10 API keys
+- Enterprise: Custom pricing, custom retention up to 7 years, SLA, SSO
+
+## x402 pay-per-log
+
+AI agents can log without an account by paying $0.001 USDC per log on Base mainnet (eip155:8453). The endpoint returns HTTP 402 with payment requirements on GET requests. Listed on agentic.market.
+
+## Documentation
+
+Full documentation: https://logwick.io/docs
+Node.js SDK: https://npmjs.com/package/logwick
+Python SDK: https://pypi.org/project/logwick
+MCP server: https://npmjs.com/package/@logwick/mcp
+GitHub: https://github.com/logwickio

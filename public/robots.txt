@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+
+# AI agent discovery files
+Allow: /llms.txt
+Allow: /openapi.json
+
+Sitemap: https://logwick.io/sitemap.xml
+
+# Logwick - The audit log for AI agents
+# API documentation: https://logwick.io/docs
+# OpenAPI spec: https://logwick.io/openapi.json
+# llms.txt: https://logwick.io/llms.txt
+# MCP server: npx @logwick/mcp
