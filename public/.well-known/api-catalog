@@ -1,17 +1,29 @@
 {
   "linkset": [
     {
-      "anchor": "https://logwick.io/api/v1",
-      "https://www.rfc-editor.org/info/rfc9727": [
+      "anchor": "https://logwick.io",
+      "item": [
         {
           "href": "https://logwick.io/openapi.json",
           "type": "application/openapi+json",
-          "title": "Logwick REST API — OpenAPI 3.0 specification"
+          "title": "Logwick REST API"
+        },
+        {
+          "href": "https://logwick.io/docs",
+          "type": "text/html",
+          "title": "Logwick Documentation"
+        },
+        {
+          "href": "https://logwick.io/llms.txt",
+          "type": "text/plain",
+          "title": "Logwick LLMs.txt"
+        },
+        {
+          "href": "https://logwick.io/llms-full.txt",
+          "type": "text/plain",
+          "title": "Logwick Full Documentation"
         }
-      ]
-    },
-    {
-      "anchor": "https://logwick.io/api/v1/logs",
+      ],
       "service-desc": [
         {
           "href": "https://logwick.io/openapi.json",
@@ -20,10 +32,20 @@
       ]
     },
     {
-      "anchor": "https://logwick.io/api/v1/agent-log",
-      "service-desc": [
+      "anchor": "https://logwick.io/api/v1/logs",
+      "item": [
         {
-          "href": "https://logwick.io/openapi.json",
+          "href": "https://logwick.io/openapi.json#/paths/~1logs",
+          "type": "application/openapi+json",
+          "title": "Log ingestion and query endpoint"
+        }
+      ]
+    },
+    {
+      "anchor": "https://logwick.io/api/v1/agent-log",
+      "item": [
+        {
+          "href": "https://logwick.io/openapi.json#/paths/~1agent-log",
           "type": "application/openapi+json",
           "title": "x402 pay-per-log endpoint"
         }
