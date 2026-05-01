@@ -657,7 +657,7 @@ export default function Dashboard() {
               <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
                 <span style={{ fontSize: 10, color: '#4a7a90' }}>{apiKeys.length}/{isPro ? 10 : 1} keys</span>
                 <input style={{ ...S.fInput, width: 140, padding: '5px 10px' }} placeholder="Key name…" value={newKeyName} onChange={e => setNewKeyName(e.target.value)} />
-                <button style={btn('primary')} onClick={handleGenerateKey} disabled={!isPro && apiKeys.length >= 1}>{!isPro && apiKeys.length >= 1 ? 'Upgrade for more' : 'Generate'}</button>
+                {!isPro && apiKeys.length >= 1 ? <button style={btn('primary')} onClick={() => setShowPricing(true)}>Upgrade for more →</button> : <button style={btn('primary')} onClick={handleGenerateKey}>Generate</button>}
               </div>
             </div>
             {newKeyResult && (
