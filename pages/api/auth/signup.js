@@ -113,10 +113,28 @@ export default async function handler(req, res) {
               `).join('')}
             </div>
 
+            <!-- AI Setup Section -->
+            <div style="background:#07101a;border:1px solid #1e3040;border-radius:8px;overflow:hidden;margin-bottom:28px;">
+              <div style="padding:10px 16px;border-bottom:1px solid #1e3040;font-size:10px;color:#4a7a90;letter-spacing:0.1em;text-transform:uppercase;">
+                Fastest setup — let your AI do it
+              </div>
+              <div style="padding:14px 16px;">
+                <p style="font-size:13px;color:#7a9db5;line-height:1.7;margin:0 0 12px;">
+                  Go to <a href="https://logwick.io/docs" style="color:#38bdf8;text-decoration:none;">logwick.io/docs</a>, click <strong style="color:#c8dce8;">Copy docs for your AI assistant</strong>, paste into Claude, ChatGPT, Gemini, or any AI you use, and say:
+                </p>
+                <div style="background:#060c14;border-radius:6px;padding:12px;font-size:12px;color:#38bdf8;font-family:'JetBrains Mono',monospace;line-height:1.75;margin-bottom:12px;">
+                  "Add Logwick to my project. My API key is ${key}"
+                </div>
+                <p style="font-size:12px;color:#4a7a90;line-height:1.6;margin:0;">
+                  Your AI assistant reads the docs and wires everything up automatically. Takes about 30 seconds.
+                </p>
+              </div>
+            </div>
+
             <!-- MCP Section -->
             <div style="background:#07101a;border:1px solid rgba(14,165,233,0.3);border-radius:8px;overflow:hidden;margin-bottom:28px;">
               <div style="padding:10px 16px;border-bottom:1px solid #1e3040;font-size:10px;color:#38bdf8;letter-spacing:0.1em;text-transform:uppercase;">
-                ✦ Claude MCP Integration — Ask Claude about your logs
+                ✦ Claude MCP — Query logs in plain English (Claude Desktop)
               </div>
               <div style="padding:14px 16px;">
                 <p style="font-size:13px;color:#7a9db5;line-height:1.7;margin:0 0 12px;">Connect Logwick to Claude Desktop and ask questions in plain English:</p>
@@ -124,7 +142,7 @@ export default async function handler(req, res) {
                   "Show me my last 10 error logs"<br/>
                   "What was my success rate this week?"<br/>
                   "How many tokens did I spend yesterday?"<br/>
-                  "Here are the Logwick docs: [paste from logwick.io/docs]. Add Logwick to my project. My API key is sk-lw-..."
+                  "Find all failed email_draft actions"
                 </div>
                 <div style="background:#060c14;border-radius:6px;padding:12px;font-size:11px;color:#6a9ab5;font-family:'JetBrains Mono',monospace;line-height:1.75;">
                   // Add to claude_desktop_config.json<br/>
