@@ -209,11 +209,11 @@ metadata — any additional key-value data
 Get your API key at logwick.io — 5,000 logs/month free.`
                     navigator.clipboard.writeText(docs)
                     const btn = document.getElementById('copy-docs-btn')
-                    if (btn) { btn.textContent = '✓ Copied — paste into Claude'; btn.style.background = 'rgba(52,211,153,0.1)'; btn.style.borderColor = '#34d399'; btn.style.color = '#34d399'; setTimeout(() => { btn.textContent = '⊕ Copy docs for Claude'; btn.style.background = 'rgba(14,165,233,0.08)'; btn.style.borderColor = 'rgba(14,165,233,0.3)'; btn.style.color = '#38bdf8' }, 3000) }
+                    if (btn) { btn.textContent = '✓ Copied — paste into your AI assistant'; btn.style.background = 'rgba(52,211,153,0.1)'; btn.style.borderColor = '#34d399'; btn.style.color = '#34d399'; setTimeout(() => { btn.textContent = '⊕ Copy docs for your AI assistant'; btn.style.background = 'rgba(14,165,233,0.08)'; btn.style.borderColor = 'rgba(14,165,233,0.3)'; btn.style.color = '#38bdf8' }, 3000) }
                   }}
                   id="copy-docs-btn"
                   style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 20px', background: 'rgba(14,165,233,0.08)', border: '1px solid rgba(14,165,233,0.3)', borderRadius: 8, color: '#38bdf8', fontSize: 13, fontFamily: 'var(--font-mono)', cursor: 'pointer', transition: 'all 0.2s' }}>
-                  ⊕ Copy docs for Claude
+                  ⊕ Copy docs for your AI assistant
                 </button>
                 <a href="https://logwick.io/dashboard" style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 20px', background: '#0ea5e9', borderRadius: 8, color: '#fff', fontSize: 13, fontFamily: 'var(--font-mono)', textDecoration: 'none', fontWeight: 600 }}>
                   Get your API key →
