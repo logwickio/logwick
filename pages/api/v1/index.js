@@ -42,6 +42,13 @@ export default function handler(req, res) {
       format: 'Authorization: Bearer sk-lw-your-key',
       get_key: 'https://logwick.io/dashboard'
     },
+    streaming: {
+      endpoint: 'GET /api/v1/logs/stream',
+      protocol: 'text/event-stream (SSE)',
+      description: 'Stream log entries as Server-Sent Events. Emits start, log, and end events.',
+      example: 'curl -N -H "Authorization: Bearer sk-lw-..." https://logwick.io/api/v1/logs/stream',
+      events: ['start', 'log', 'end', 'error']
+    },
     sdks: {
       nodejs: 'npm install logwick',
       python: 'pip install logwick',
