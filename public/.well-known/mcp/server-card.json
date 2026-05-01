@@ -1,0 +1,89 @@
+{
+  "schema_version": "v1",
+  "name": "Logwick",
+  "description": "The audit log for AI agents. Query logs, get stats, and ingest log entries via natural language.",
+  "url": "https://logwick.io",
+  "install": {
+    "type": "npx",
+    "command": "npx",
+    "args": ["-y", "@logwick/mcp"],
+    "env": {
+      "LOGWICK_API_KEY": {
+        "description": "Your Logwick API key from logwick.io/dashboard",
+        "required": true
+      }
+    }
+  },
+  "tools": [
+    {
+      "name": "ingest_log",
+      "description": "Log an AI agent action to Logwick. Use after every AI call to maintain a full audit trail.",
+      "inputSchema": {
+        "type": "object",
+        "required": ["agent", "action"],
+        "properties": {
+          "agent": { "type": "string", "description": "AI model name e.g. gpt-4o, claude-3-5-sonnet" },
+          "action": { "type": "string", "description": "Action type e.g. email_draft, data_analysis" },
+          "status": { "type": "string", "enum": ["success", "error", "pending"] },
+          "input": { "type": "string" },
+          "output": { "type": "string" },
+          "tokens": { "type": "number" },
+          "latency_ms": { "type": "number" },
+          "user": { "type": "string" }
+        }
+      }
+    },
+    {
+      "name": "query_logs",
+      "description": "Search and retrieve logs. Find errors, filter by agent or action, search by keyword.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "string", "enum": ["success", "error", "pending"] },
+          "agent": { "type": "string" },
+          "action": { "type": "string" },
+          "search": { "type": "string" },
+          "limit": { "type": "number" },
+          "from": { "type": "string" },
+          "to": { "type": "string" }
+        }
+      }
+    },
+    {
+      "name": "get_stats",
+      "description": "Get usage statistics — total logs, success rate, error rate, token spend, and cost.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "days": { "type": "number", "description": "Number of days to include (default 30)" }
+        }
+      }
+    },
+    {
+      "name": "get_log",
+      "description": "Get full details of a single log entry by ID.",
+      "inputSchema": {
+        "type": "object",
+        "required": ["id"],
+        "properties": {
+          "id": { "type": "string", "description": "Log entry UUID" }
+        }
+      }
+    },
+    {
+      "name": "delete_log",
+      "description": "Delete a log entry by ID.",
+      "inputSchema": {
+        "type": "object",
+        "required": ["id"],
+        "properties": {
+          "id": { "type": "string" }
+        }
+      }
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "description": "API key from logwick.io/dashboard"
+  }
+}

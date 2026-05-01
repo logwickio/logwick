@@ -1,0 +1,20 @@
+{
+  "apis": [
+    {
+      "title": "Logwick REST API",
+      "description": "Ingest and query AI agent audit logs. Log every prompt, response, and error your AI agents produce.",
+      "url": "https://logwick.io/openapi.json",
+      "type": "openapi",
+      "authTypes": ["bearer"],
+      "docsUrl": "https://logwick.io/docs"
+    },
+    {
+      "title": "Logwick x402 Agent API",
+      "description": "Pay-per-log endpoint for AI agents. No account required — pay $0.001 USDC on Base per log entry.",
+      "url": "https://logwick.io/openapi.json",
+      "type": "openapi",
+      "authTypes": ["x402"],
+      "docsUrl": "https://logwick.io/docs#x402"
+    }
+  ]
+}
