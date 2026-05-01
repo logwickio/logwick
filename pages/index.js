@@ -428,16 +428,16 @@ export default function Home() {
       <div className="section" id="how-it-works" style={{paddingTop:0}}>
         <div className="eyebrow2">How it works</div>
         <div className="stitle">Up and running in minutes</div>
-        <div className="ssub">Two ways to get started — let Claude do it for you, or add one line of code yourself.</div>
+        <div className="ssub">Two ways to get started — let your AI assistant do it for you, or add one line of code yourself.</div>
 
         <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:1,background:'#1e3040',borderRadius:12,overflow:'hidden',marginBottom:40}}>
           <div style={{background:'#07101a',padding:'28px 28px 32px'}}>
-            <div style={{fontSize:10,color:'#38bdf8',letterSpacing:'0.14em',textTransform:'uppercase',fontFamily:"'JetBrains Mono',monospace",marginBottom:14}}>Option 1 — Let Claude do it</div>
+            <div style={{fontSize:10,color:'#38bdf8',letterSpacing:'0.14em',textTransform:'uppercase',fontFamily:"'JetBrains Mono',monospace",marginBottom:14}}>Option 1 — Let your AI do it</div>
             <div style={{display:'flex',flexDirection:'column',gap:20}}>
               {[
                 ['1','Sign up and get your key','Create a free account at logwick.io and copy your API key from the dashboard.'],
-                ['2','Open Claude Desktop','Make sure you have Claude Desktop installed and open a new conversation.'],
-                ['3','Say this to Claude','"Here are the Logwick docs: [paste from logwick.io/docs]. Add Logwick to my project. My API key is sk-lw-..."'],
+                ['2','Open your AI assistant','Open Claude, ChatGPT, Gemini, or any AI assistant you use for coding.'],
+                ['3','Say this to your AI','"Here are the Logwick docs: [paste from logwick.io/docs]. Add Logwick to my project. My API key is sk-lw-..."'],
               ].map(([num,title,desc]) => (
                 <div key={num} style={{display:'flex',gap:14,alignItems:'flex-start'}}>
                   <div style={{width:28,height:28,borderRadius:'50%',background:'linear-gradient(135deg,#0ea5e9,#0284c7)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:12,fontWeight:700,color:'#fff',flexShrink:0}}>{num}</div>
