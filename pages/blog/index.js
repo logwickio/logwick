@@ -4,6 +4,14 @@ import { useRouter } from 'next/router'
 
 const posts = [
   {
+    slug: 'logwick-92-agent-ready-score',
+    title: 'From 32 to 92: How We Built One of the Most Agent-Ready Developer Tools on the Internet',
+    description: 'We took Logwick from 32 to 92/100 on ora.run's agent readiness benchmark — top 0.4% of 8,400 sites. Here's exactly what we built and why it matters.',
+    date: 'May 2, 2026',
+    tags: ['Behind the build', 'AI agents', 'Infrastructure'],
+    readTime: '6 min read',
+  },
+  {
     slug: 'how-to-log-openai-api-calls',
     title: 'How to Log OpenAI API Calls in Production',
     description: 'Learn how to log every OpenAI API call in production — inputs, outputs, tokens, latency, and costs. Complete guide with code examples for GPT-4o and LangChain.',
