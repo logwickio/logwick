@@ -4,6 +4,14 @@ import { useRouter } from 'next/router'
 
 const posts = [
   {
+    slug: 'how-to-log-openai-api-calls',
+    title: 'How to Log OpenAI API Calls in Production',
+    description: 'Learn how to log every OpenAI API call in production — inputs, outputs, tokens, latency, and costs. Complete guide with code examples for GPT-4o and LangChain.',
+    date: 'May 2, 2026',
+    tags: ['Guide', 'OpenAI', 'Production'],
+    readTime: '7 min read',
+  },
+  {
     slug: 'audit-logging-for-ai-agents',
     title: 'The Complete Guide to Audit Logging for AI Agents',
     description: 'Learn how to implement audit logging for AI agents and LLM applications. Complete guide with code examples for OpenAI, Anthropic, Gemini, and LangChain.',
