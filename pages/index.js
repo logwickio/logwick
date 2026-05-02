@@ -260,12 +260,14 @@ function HeroCopyBtn() {
     <button
       onClick={handleCopy}
       style={{
-        display: 'flex', alignItems: 'center', gap: 8, padding: '10px 20px',
+        display: 'inline-flex', alignItems: 'center', gap: 8, padding: '10px 20px',
         background: copied ? 'rgba(52,211,153,0.1)' : 'rgba(14,165,233,0.08)',
         border: copied ? '1px solid #34d399' : '1px solid rgba(14,165,233,0.3)',
         borderRadius: 8, color: copied ? '#34d399' : '#38bdf8',
         fontSize: 13, fontFamily: "'JetBrains Mono',monospace",
-        cursor: 'pointer', transition: 'all 0.2s', userSelect: 'none'
+        cursor: 'pointer', transition: 'all 0.2s', userSelect: 'none',
+        outline: 'none', width: '100%', justifyContent: 'center',
+        letterSpacing: '0.02em'
       }}
     >
       {copied ? '✓ Copied — paste into your AI assistant' : '⊕ Copy docs for your AI assistant'}
@@ -431,11 +433,17 @@ export default function Home() {
           <a href="/signup"><button className="btn-primary">Start for free →</button></a>
           <a href="#how-it-works"><button className="btn-ghost">See how it works</button></a>
         </div>
-        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 16 }}>
+        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 24, marginTop: 8 }}>
           <a href="https://ora.run/score/logwick.io" target="_blank" rel="noreferrer"
-            style={{ display: 'flex', alignItems: 'center', gap: 10, background: 'rgba(14,165,233,0.06)', border: '1px solid rgba(14,165,233,0.2)', borderRadius: 8, padding: '8px 16px', textDecoration: 'none' }}>
-            <img src="https://ora.run/api/badge/logwick.io" alt="ora agent readiness score 92/100" style={{ height: 28, borderRadius: 4 }} />
-            <span style={{ fontSize: 12, color: '#4a7a90', fontFamily: "'JetBrains Mono',monospace" }}>#2 overall · 8,400 sites ranked</span>
+            style={{ display: 'flex', alignItems: 'center', gap: 12, background: 'rgba(14,165,233,0.06)', border: '1px solid rgba(14,165,233,0.2)', borderRadius: 10, padding: '12px 20px', textDecoration: 'none', transition: 'border-color 0.2s' }}
+            onMouseEnter={e => e.currentTarget.style.borderColor = 'rgba(14,165,233,0.5)'}
+            onMouseLeave={e => e.currentTarget.style.borderColor = 'rgba(14,165,233,0.2)'}
+          >
+            <img src="https://ora.run/api/badge/logwick.io" alt="ora agent readiness score 92/100" style={{ height: 40, borderRadius: 6 }} />
+            <div style={{ textAlign: 'left' }}>
+              <div style={{ fontSize: 13, fontWeight: 700, color: '#38bdf8', fontFamily: "'Syne',sans-serif" }}>#2 of 8,400 sites</div>
+              <div style={{ fontSize: 11, color: '#4a7a90', fontFamily: "'JetBrains Mono',monospace" }}>Agent readiness score · ora.run</div>
+            </div>
           </a>
         </div>
         <div className="demo-wrap-outer">
