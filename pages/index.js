@@ -434,16 +434,19 @@ export default function Home() {
           <a href="#how-it-works"><button className="btn-ghost">See how it works</button></a>
         </div>
         <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 24, marginTop: 8, pointerEvents: 'all', position: 'relative', zIndex: 10 }}>
+          <div style={{ textAlign: 'center', marginBottom: 10 }}>
+            <div style={{ fontSize: 16, fontWeight: 800, color: '#f1f5f9', fontFamily: "'Syne',sans-serif", marginBottom: 4 }}>Try the most agent-ready logging tool available</div>
+            <div style={{ fontSize: 12, color: '#4a7a90', fontFamily: "'JetBrains Mono',monospace" }}>Verified by ora.run</div>
+          </div>
           <a href="https://ora.run/score/logwick.io" target="_blank" rel="noreferrer"
-            style={{ display: 'flex', alignItems: 'center', gap: 12, background: 'rgba(14,165,233,0.06)', border: '1px solid rgba(14,165,233,0.2)', borderRadius: 10, padding: '12px 20px', textDecoration: 'none', transition: 'border-color 0.2s', pointerEvents: 'all', cursor: 'pointer' }}
+            style={{ display: 'flex', alignItems: 'center', gap: 16, background: 'rgba(14,165,233,0.06)', border: '1px solid rgba(14,165,233,0.2)', borderRadius: 12, padding: '16px 24px', textDecoration: 'none', transition: 'border-color 0.2s', pointerEvents: 'all', cursor: 'pointer' }}
             onMouseEnter={e => e.currentTarget.style.borderColor = 'rgba(14,165,233,0.5)'}
             onMouseLeave={e => e.currentTarget.style.borderColor = 'rgba(14,165,233,0.2)'}
           >
-            <div style={{ fontSize: 11, color: '#4a7a90', fontFamily: "'JetBrains Mono',monospace", marginBottom: 4 }}>Verified by ora.run</div>
-            <img src="https://ora.run/api/badge/logwick.io" alt="ora agent readiness score 92/100" style={{ height: 40, borderRadius: 6, display: 'block' }} />
+            <img src="https://ora.run/api/badge/logwick.io" alt="ora agent readiness score 92/100" style={{ height: 52, borderRadius: 8, display: 'block' }} />
             <div style={{ textAlign: 'left' }}>
-              <div style={{ fontSize: 13, fontWeight: 700, color: '#38bdf8', fontFamily: "'Syne',sans-serif" }}>#2 of 8,400 sites</div>
-              <div style={{ fontSize: 11, color: '#4a7a90', fontFamily: "'JetBrains Mono',monospace" }}>Agent readiness · ora.run</div>
+              <div style={{ fontSize: 18, fontWeight: 800, color: '#38bdf8', fontFamily: "'Syne',sans-serif", marginBottom: 2 }}>#2 of 8,400 sites</div>
+              <div style={{ fontSize: 13, color: '#7ab0c8', fontFamily: "'JetBrains Mono',monospace" }}>92/100 · Grade A · Agent readiness</div>
             </div>
           </a>
         </div>
