@@ -257,19 +257,19 @@ function HeroCopyBtn() {
     }
   }
   return (
-    <div
+    <button
       onClick={handleCopy}
-      style={{display:'flex',alignItems:'center',gap:10,background:'rgba(14,165,233,0.08)',border:'1px solid rgba(14,165,233,0.25)',borderRadius:40,padding:'10px 20px',cursor:'pointer',userSelect:'none'}}
+      style={{
+        display: 'flex', alignItems: 'center', gap: 8, padding: '10px 20px',
+        background: copied ? 'rgba(52,211,153,0.1)' : 'rgba(14,165,233,0.08)',
+        border: copied ? '1px solid #34d399' : '1px solid rgba(14,165,233,0.3)',
+        borderRadius: 8, color: copied ? '#34d399' : '#38bdf8',
+        fontSize: 13, fontFamily: "'JetBrains Mono',monospace",
+        cursor: 'pointer', transition: 'all 0.2s', userSelect: 'none'
+      }}
     >
-      <svg width="18" height="18" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" style={{flexShrink:0}}>
-        <rect width="36" height="36" rx="8" fill="#0ea5e9"/>
-        <path d="M11 8 L11 24 L25 24" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
-        <circle cx="25" cy="24" r="3.5" fill="white"/>
-      </svg>
-      <span style={{fontSize:13,color: copied ? '#34d399' : '#7dd3fc',fontFamily:"'JetBrains Mono',monospace",letterSpacing:'0.02em'}}>
-        {copied ? '✓ Copied — paste into your AI assistant' : '⊕ Copy docs for your AI assistant'}
-      </span>
-    </div>
+      {copied ? '✓ Copied — paste into your AI assistant' : '⊕ Copy docs for your AI assistant'}
+    </button>
   )
 }
 
@@ -432,8 +432,10 @@ export default function Home() {
           <a href="#how-it-works"><button className="btn-ghost">See how it works</button></a>
         </div>
         <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 16 }}>
-          <a href="https://ora.run/scan/logwick.io" target="_blank" rel="noreferrer" title="Logwick is ranked #2 on ora.run agent readiness benchmark">
-            <img src="https://ora.run/api/badge/logwick.io" alt="ora agent readiness score — 92/100" style={{ borderRadius: 6, height: 32 }} />
+          <a href="https://ora.run/score/logwick.io" target="_blank" rel="noreferrer"
+            style={{ display: 'flex', alignItems: 'center', gap: 10, background: 'rgba(14,165,233,0.06)', border: '1px solid rgba(14,165,233,0.2)', borderRadius: 8, padding: '8px 16px', textDecoration: 'none' }}>
+            <img src="https://ora.run/api/badge/logwick.io" alt="ora agent readiness score 92/100" style={{ height: 28, borderRadius: 4 }} />
+            <span style={{ fontSize: 12, color: '#4a7a90', fontFamily: "'JetBrains Mono',monospace" }}>#2 overall · 8,400 sites ranked</span>
           </a>
         </div>
         <div className="demo-wrap-outer">
