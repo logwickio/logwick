@@ -418,7 +418,7 @@ export default function Home() {
         <h1 style={{marginBottom:16}}>The audit log<br/><span>for AI agents.</span></h1>
         <div style={{fontSize:'clamp(18px,3vw,28px)',color:'#94b8cc',fontFamily:"'Syne',sans-serif",fontWeight:600,marginBottom:8,letterSpacing:'-0.01em'}}>Leave a trail. Know what your AI did, always.</div>
         <p className="sub">Logwick captures every prompt, response, and error your AI agents produce — searchable, exportable, and always there when you need it.</p>
-        <div style={{display:'flex',flexDirection:'column',gap:8,marginBottom:16,marginTop:-8}}>
+        <div style={{display:'flex',flexDirection:'column',gap:8,marginBottom:16,marginTop:-8,position:'relative',zIndex:10}}>
           <HeroCopyBtn />
           <div style={{display:'flex',alignItems:'center',gap:10,background:'rgba(14,165,233,0.05)',border:'1px solid rgba(14,165,233,0.15)',borderRadius:40,padding:'10px 20px'}}>
             <svg width="18" height="18" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" style={{flexShrink:0}}>
@@ -433,16 +433,17 @@ export default function Home() {
           <a href="/signup"><button className="btn-primary">Start for free →</button></a>
           <a href="#how-it-works"><button className="btn-ghost">See how it works</button></a>
         </div>
-        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 24, marginTop: 8 }}>
+        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 24, marginTop: 8, pointerEvents: 'all', position: 'relative', zIndex: 10 }}>
           <a href="https://ora.run/score/logwick.io" target="_blank" rel="noreferrer"
-            style={{ display: 'flex', alignItems: 'center', gap: 12, background: 'rgba(14,165,233,0.06)', border: '1px solid rgba(14,165,233,0.2)', borderRadius: 10, padding: '12px 20px', textDecoration: 'none', transition: 'border-color 0.2s' }}
+            style={{ display: 'flex', alignItems: 'center', gap: 12, background: 'rgba(14,165,233,0.06)', border: '1px solid rgba(14,165,233,0.2)', borderRadius: 10, padding: '12px 20px', textDecoration: 'none', transition: 'border-color 0.2s', pointerEvents: 'all', cursor: 'pointer' }}
             onMouseEnter={e => e.currentTarget.style.borderColor = 'rgba(14,165,233,0.5)'}
             onMouseLeave={e => e.currentTarget.style.borderColor = 'rgba(14,165,233,0.2)'}
           >
-            <img src="https://ora.run/api/badge/logwick.io" alt="ora agent readiness score 92/100" style={{ height: 40, borderRadius: 6 }} />
+            <div style={{ fontSize: 11, color: '#4a7a90', fontFamily: "'JetBrains Mono',monospace", marginBottom: 4 }}>Verified by ora.run</div>
+            <img src="https://ora.run/api/badge/logwick.io" alt="ora agent readiness score 92/100" style={{ height: 40, borderRadius: 6, display: 'block' }} />
             <div style={{ textAlign: 'left' }}>
               <div style={{ fontSize: 13, fontWeight: 700, color: '#38bdf8', fontFamily: "'Syne',sans-serif" }}>#2 of 8,400 sites</div>
-              <div style={{ fontSize: 11, color: '#4a7a90', fontFamily: "'JetBrains Mono',monospace" }}>Agent readiness score · ora.run</div>
+              <div style={{ fontSize: 11, color: '#4a7a90', fontFamily: "'JetBrains Mono',monospace" }}>Agent readiness · ora.run</div>
             </div>
           </a>
         </div>
