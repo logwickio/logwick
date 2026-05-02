@@ -270,6 +270,11 @@ function HeroCopyBtn() {
         letterSpacing: '0.02em'
       }}
     >
+      <svg width="14" height="14" viewBox="0 0 36 36" fill="none" style={{flexShrink:0}}>
+        <rect width="36" height="36" rx="8" fill="currentColor" opacity="0.3"/>
+        <path d="M11 8 L11 24 L25 24" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+        <circle cx="25" cy="24" r="3.5" fill="currentColor"/>
+      </svg>
       {copied ? '✓ Copied — paste into your AI assistant' : '⊕ Copy docs for your AI assistant'}
     </button>
   )
@@ -435,7 +440,7 @@ export default function Home() {
         </div>
         <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 24, marginTop: 8, pointerEvents: 'all', position: 'relative', zIndex: 10 }}>
           <div style={{ textAlign: 'center', marginBottom: 16 }}>
-            <div style={{ fontSize: 15, fontWeight: 800, color: '#f1f5f9', fontFamily: "'Syne',sans-serif", marginBottom: 8 }}>Try the most agent-ready logging tool available</div>
+            <div style={{ fontSize: 13, color: '#4a7a90', fontFamily: "'JetBrains Mono',monospace", marginBottom: 8, letterSpacing: '0.08em', textTransform: 'uppercase' }}>Ranked #2 of 8,400 sites · Verified by ora.run</div>
             <a href="https://ora.run/score/logwick.io" target="_blank" rel="noreferrer"
               style={{ display: 'inline-flex', alignItems: 'center', gap: 14, background: 'rgba(14,165,233,0.06)', border: '1px solid rgba(14,165,233,0.2)', borderRadius: 12, padding: '14px 20px', textDecoration: 'none', transition: 'border-color 0.2s', pointerEvents: 'all', cursor: 'pointer' }}
               onMouseEnter={e => e.currentTarget.style.borderColor = 'rgba(14,165,233,0.5)'}
