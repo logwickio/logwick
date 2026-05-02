@@ -1,0 +1,15 @@
+{
+  "keys": [
+    {
+      "kty": "OKP",
+      "crv": "Ed25519",
+      "kid": "logwick-2026-01",
+      "use": "sig",
+      "nbf": 1735689600,
+      "exp": 1798761600
+    }
+  ],
+  "owner": "logwick.io",
+  "contact": "hello@logwick.io",
+  "documentation": "https://logwick.io/docs"
+}

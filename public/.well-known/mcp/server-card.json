@@ -1,0 +1,30 @@
+{
+  "schema_version": "v1",
+  "name": "Logwick",
+  "description": "The audit log for AI agents. Query logs, get stats, and ingest log entries via natural language.",
+  "version": "1.0.1",
+  "serverUrl": "https://logwick.io/api/mcp",
+  "url": "https://logwick.io",
+  "install": {
+    "type": "npx",
+    "command": "npx",
+    "args": ["-y", "@logwick/mcp"],
+    "env": {
+      "LOGWICK_API_KEY": {
+        "description": "Your Logwick API key from logwick.io/dashboard",
+        "required": true
+      }
+    }
+  },
+  "tools": [
+    { "name": "ingest_log", "description": "Log an AI agent action to Logwick." },
+    { "name": "query_logs", "description": "Search and retrieve logs." },
+    { "name": "get_stats", "description": "Get usage stats — success rate, tokens, cost." },
+    { "name": "get_log", "description": "Get full details of a single log entry by ID." },
+    { "name": "delete_log", "description": "Delete a log entry by ID." }
+  ],
+  "auth": {
+    "type": "bearer",
+    "description": "API key from logwick.io/dashboard"
+  }
+}

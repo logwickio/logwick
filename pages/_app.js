@@ -10,7 +10,7 @@ export default function App({ Component, pageProps }) {
 
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      const publicRoutes = ['/', '/login', '/signup', '/docs', '/blog', '/about', '/contact', '/compare']
+      const publicRoutes = ['/', '/login', '/signup', '/docs', '/blog', '/about', '/contact', '/compare', '/status']
       const isPublic = publicRoutes.includes(router.pathname)
 
       if (event === 'SIGNED_OUT' && !isPublic) {
