@@ -67,8 +67,8 @@ export default function BlogPost() {
                   <div style={{ fontSize: 11, color: '#4a7a90', marginTop: 4 }}>Final score</div>
                 </div>
                 <div>
-                  <div style={{ fontSize: 32, fontWeight: 800, color: '#34d399', fontFamily: "'Syne', sans-serif" }}>Top 0.4%</div>
-                  <div style={{ fontSize: 11, color: '#4a7a90', marginTop: 4 }}>of 8,400 sites</div>
+                  <div style={{ fontSize: 32, fontWeight: 800, color: '#34d399', fontFamily: "'Syne', sans-serif" }}>#2</div>
+                  <div style={{ fontSize: 11, color: '#4a7a90', marginTop: 4 }}>overall out of 8,400 sites</div>
                 </div>
               </div>
             </div>
@@ -271,6 +271,14 @@ export default function BlogPost() {
                 <div style={{ fontSize: 13, color: '#94b8cc', lineHeight: 1.7 }}>{desc}</div>
               </div>
             ))}
+          </div>
+
+          {/* Badge */}
+          <div style={{ textAlign: 'center', marginBottom: 32 }}>
+            <div style={{ fontSize: 13, color: '#4a7a90', marginBottom: 12 }}>Verified by ora.run</div>
+            <a href="https://ora.run/scan/logwick.io" target="_blank" rel="noreferrer">
+              <img src="https://ora.run/api/badge/logwick.io" alt="ora agent readiness score" style={{ borderRadius: 8 }} />
+            </a>
           </div>
 
           {/* CTA */}

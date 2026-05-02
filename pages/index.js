@@ -379,6 +379,11 @@ export default function Home() {
           <a href="/signup"><button className="btn-primary">Start for free →</button></a>
           <a href="#how-it-works"><button className="btn-ghost">See how it works</button></a>
         </div>
+        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 16 }}>
+          <a href="https://ora.run/scan/logwick.io" target="_blank" rel="noreferrer" title="Logwick is ranked #2 on ora.run agent readiness benchmark">
+            <img src="https://ora.run/api/badge/logwick.io" alt="ora agent readiness score — 92/100" style={{ borderRadius: 6, height: 24 }} />
+          </a>
+        </div>
         <div className="demo-wrap-outer">
           <div className="demo-label">Live demo — watch events stream in</div>
           <LiveDemo />
