@@ -81,6 +81,61 @@
                 }
               }
             }
+          },
+          "429": {
+            "description": "Rate limit exceeded",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "description": "Maximum requests per minute",
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-RateLimit-Remaining": {
+                "description": "Remaining requests in current window",
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "Retry-After": {
+                "description": "Seconds until rate limit resets",
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Rate limit exceeded. Max 1000 requests/minute."
+                    },
+                    "retry_after": {
+                      "type": "integer",
+                      "example": 60
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       },
@@ -95,7 +150,11 @@
             "description": "Filter by status",
             "schema": {
               "type": "string",
-              "enum": ["success", "error", "pending"]
+              "enum": [
+                "success",
+                "error",
+                "pending"
+              ]
             }
           },
           {
@@ -166,7 +225,10 @@
             "description": "Response format",
             "schema": {
               "type": "string",
-              "enum": ["json", "csv"],
+              "enum": [
+                "json",
+                "csv"
+              ],
               "default": "json"
             }
           }
@@ -184,6 +246,61 @@
           },
           "401": {
             "description": "Invalid or missing API key"
+          },
+          "429": {
+            "description": "Rate limit exceeded",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "description": "Maximum requests per minute",
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-RateLimit-Remaining": {
+                "description": "Remaining requests in current window",
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "Retry-After": {
+                "description": "Seconds until rate limit resets",
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Rate limit exceeded. Max 1000 requests/minute."
+                    },
+                    "retry_after": {
+                      "type": "integer",
+                      "example": 60
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -219,6 +336,61 @@
           },
           "401": {
             "description": "Invalid or missing API key"
+          },
+          "429": {
+            "description": "Rate limit exceeded",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "description": "Maximum requests per minute",
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-RateLimit-Remaining": {
+                "description": "Remaining requests in current window",
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "Retry-After": {
+                "description": "Seconds until rate limit resets",
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Rate limit exceeded. Max 1000 requests/minute."
+                    },
+                    "retry_after": {
+                      "type": "integer",
+                      "example": 60
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -231,11 +403,66 @@
         "security": [],
         "responses": {
           "402": {
-            "description": "Payment required — returns x402 payment requirements",
+            "description": "Payment required \u2014 returns x402 payment requirements",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/X402PaymentRequired"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit exceeded",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "description": "Maximum requests per minute",
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-RateLimit-Remaining": {
+                "description": "Remaining requests in current window",
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "Retry-After": {
+                "description": "Seconds until rate limit resets",
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Rate limit exceeded. Max 1000 requests/minute."
+                    },
+                    "retry_after": {
+                      "type": "integer",
+                      "example": 60
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
@@ -244,7 +471,7 @@
       },
       "post": {
         "summary": "Ingest a log entry via x402 payment",
-        "description": "Log an AI agent action by paying $0.001 USDC on Base mainnet. No account or API key required — payment is authentication.",
+        "description": "Log an AI agent action by paying $0.001 USDC on Base mainnet. No account or API key required \u2014 payment is authentication.",
         "operationId": "ingestAgentLog",
         "security": [],
         "parameters": [
@@ -288,6 +515,61 @@
                 }
               }
             }
+          },
+          "429": {
+            "description": "Rate limit exceeded",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "description": "Maximum requests per minute",
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-RateLimit-Remaining": {
+                "description": "Remaining requests in current window",
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "Retry-After": {
+                "description": "Seconds until rate limit resets",
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Rate limit exceeded. Max 1000 requests/minute."
+                    },
+                    "retry_after": {
+                      "type": "integer",
+                      "example": 60
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -304,7 +586,10 @@
     "schemas": {
       "LogEntry": {
         "type": "object",
-        "required": ["agent", "action"],
+        "required": [
+          "agent",
+          "action"
+        ],
         "properties": {
           "agent": {
             "type": "string",
@@ -318,7 +603,11 @@
           },
           "status": {
             "type": "string",
-            "enum": ["success", "error", "pending"],
+            "enum": [
+              "success",
+              "error",
+              "pending"
+            ],
             "default": "success",
             "description": "Outcome of the AI action"
           },
@@ -479,13 +768,30 @@
             "items": {
               "type": "object",
               "properties": {
-                "scheme": { "type": "string", "example": "exact" },
-                "network": { "type": "string", "example": "eip155:8453" },
-                "maxAmountRequired": { "type": "string", "example": "1000" },
-                "resource": { "type": "string" },
-                "description": { "type": "string" },
-                "payTo": { "type": "string" },
-                "maxTimeoutSeconds": { "type": "integer" }
+                "scheme": {
+                  "type": "string",
+                  "example": "exact"
+                },
+                "network": {
+                  "type": "string",
+                  "example": "eip155:8453"
+                },
+                "maxAmountRequired": {
+                  "type": "string",
+                  "example": "1000"
+                },
+                "resource": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "payTo": {
+                  "type": "string"
+                },
+                "maxTimeoutSeconds": {
+                  "type": "integer"
+                }
               }
             }
           },

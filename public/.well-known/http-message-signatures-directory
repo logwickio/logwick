@@ -5,6 +5,8 @@
       "crv": "Ed25519",
       "kid": "logwick-2026-01",
       "use": "sig",
+      "alg": "EdDSA",
+      "x": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo",
       "nbf": 1735689600,
       "exp": 1798761600
     }
