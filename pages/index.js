@@ -394,7 +394,7 @@ export default function Home() {
       {/* Features */}
       <div className="section" id="features">
         <div className="eyebrow2">Features</div>
-        <div className="stitle">Everything you need to trust your AI stack</div>
+        <h2 className="stitle">Everything you need to trust your AI stack</h2>
         <div className="ssub">One API endpoint. Instant visibility across every agent, model, and workflow — including native Claude MCP integration.</div>
         <div style={{display:'flex',gap:12,justifyContent:'center',flexWrap:'wrap',marginTop:16}}>
           {[
@@ -427,7 +427,7 @@ export default function Home() {
       {/* How it works */}
       <div className="section" id="how-it-works" style={{paddingTop:0}}>
         <div className="eyebrow2">How it works</div>
-        <div className="stitle">Up and running in minutes</div>
+        <h2 className="stitle">Up and running in minutes</h2>
         <div className="ssub">Two ways to get started — let your AI assistant do it for you, or add one line of code yourself.</div>
 
         <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:1,background:'#1e3040',borderRadius:12,overflow:'hidden',marginBottom:40}}>
@@ -551,7 +551,7 @@ fetch('https://logwick.io/api/v1/logs', {
       {/* FAQ */}
       <div className="section" id="faq" style={{paddingTop:0}}>
         <div className="eyebrow2">FAQ</div>
-        <div className="stitle">Common questions</div>
+        <h2 className="stitle">Common questions</h2>
         <div className="ssub">Everything developers ask before adding Logwick to a project.</div>
         <div style={{maxWidth:720,margin:'0 auto',display:'flex',flexDirection:'column',gap:2}}>
           {[
@@ -576,7 +576,7 @@ fetch('https://logwick.io/api/v1/logs', {
       {/* Pricing */}
       <div className="section" id="pricing" style={{paddingTop:0}}>
         <div className="eyebrow2">Pricing</div>
-        <div className="stitle">Simple, usage-based pricing</div>
+        <h2 className="stitle">Simple, usage-based pricing</h2>
         <div className="ssub">Start free. Scale when you need it. No surprise bills.</div>
         <div className="pricing">
           <div className="plan">
