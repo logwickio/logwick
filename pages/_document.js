@@ -77,6 +77,10 @@ export default function Document() {
             "contactType": "customer support",
             "availableLanguage": "English"
           },
+          "address": {
+            "@type": "PostalAddress",
+            "addressCountry": "US"
+          },
           "sameAs": [
             "https://github.com/logwickio",
             "https://twitter.com/logwickio",

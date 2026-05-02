@@ -125,14 +125,14 @@ npx @logwick/mcp (Claude Desktop MCP)
 
 ## Full documentation
 
-Complete docs: https://logwick.io/llms-full.txt
-OpenAPI spec: https://logwick.io/openapi.json
-Pricing: https://logwick.io/pricing.md
-Human docs: https://logwick.io/docs
-Blog: https://logwick.io/blog
-Compare: https://logwick.io/compare
-Status: https://logwick.io/status
-GitHub: https://github.com/logwickio
-npm: https://npmjs.com/package/logwick
-PyPI: https://pypi.org/project/logwick
-MCP: https://npmjs.com/package/@logwick/mcp
+Complete docs: [llms-full.txt](https://logwick.io/llms-full.txt)
+OpenAPI spec: [openapi.json](https://logwick.io/openapi.json)
+Pricing: [pricing.md](https://logwick.io/pricing.md)
+Human docs: [logwick.io/docs](https://logwick.io/docs)
+Blog: [logwick.io/blog](https://logwick.io/blog)
+Compare: [logwick.io/compare](https://logwick.io/compare)
+Status: [logwick.io/status](https://logwick.io/status)
+GitHub: [github.com/logwickio](https://github.com/logwickio)
+npm: [npmjs.com/package/logwick](https://npmjs.com/package/logwick)
+PyPI: [pypi.org/project/logwick](https://pypi.org/project/logwick)
+MCP: [npmjs.com/package/@logwick/mcp](https://npmjs.com/package/@logwick/mcp)
