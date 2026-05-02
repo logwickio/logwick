@@ -238,7 +238,7 @@ logwick.fire({ 'agent': 'gpt-4o', 'action': 'my_action', 'status': 'success', 'i
 Now add Logwick to my project.`
 
 function HeroCopyBtn() {
-  const [copied, setCopied] = React.useState(false)
+  const [copied, setCopied] = useState(false)
   function handleCopy() {
     if (typeof navigator !== 'undefined' && navigator.clipboard) {
       navigator.clipboard.writeText(DOCS_MSG).then(() => {
