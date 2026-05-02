@@ -358,13 +358,22 @@ export default function Home() {
         <div style={{fontSize:'clamp(18px,3vw,28px)',color:'#94b8cc',fontFamily:"'Syne',sans-serif",fontWeight:600,marginBottom:8,letterSpacing:'-0.01em'}}>Leave a trail. Know what your AI did, always.</div>
         <p className="sub">Logwick captures every prompt, response, and error your AI agents produce — searchable, exportable, and always there when you need it.</p>
         <div style={{display:'flex',flexDirection:'column',gap:8,marginBottom:16,marginTop:-8}}>
-          <div style={{display:'flex',alignItems:'center',gap:10,background:'rgba(14,165,233,0.08)',border:'1px solid rgba(14,165,233,0.25)',borderRadius:40,padding:'10px 20px'}}>
+          <div
+            onClick={() => {
+              const msg = 'Here are the Logwick docs:\n\nINSTALL\nnpm install logwick\n\nQUICK START\nimport { LogwickClient } from \'logwick\'\nconst logwick = new LogwickClient({ apiKey: process.env.LOGWICK_API_KEY })\nlogwick.fire({ agent: \'gpt-4o\', action: \'my_action\', status: \'success\', input: userPrompt, output: result, tokens: 312 })\n\nOPENAI WRAPPER\nconst result = await logwick.openai(() => openai.chat.completions.create({ model: \'gpt-4o\', messages }), { action: \'email_draft\', user: req.user.email })\n\nANTHROPIC WRAPPER\nconst result = await logwick.anthropic(() => anthropic.messages.create({ model: \'claude-3-5-sonnet-20241022\', messages, max_tokens: 1024 }), { action: \'document_review\' })\n\nPYTHON\nimport logwick\nlogwick.init(api_key=\'your-key\')\nlogwick.fire({ \'agent\': \'gpt-4o\', \'action\': \'my_action\', \'status\': \'success\', \'input\': prompt, \'output\': result })\n\nNow add Logwick to my project.'
+              navigator.clipboard.writeText(msg).then(() => {
+                const el = document.getElementById('hero-copy-btn')
+                if (el) { el.textContent = '✓ Copied — paste into your AI assistant'; setTimeout(() => { el.textContent = '⊕ Copy docs for your AI assistant' }, 3000) }
+              })
+            }}
+            style={{display:'flex',alignItems:'center',gap:10,background:'rgba(14,165,233,0.08)',border:'1px solid rgba(14,165,233,0.25)',borderRadius:40,padding:'10px 20px',cursor:'pointer',userSelect:'none'}}
+          >
             <svg width="18" height="18" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" style={{flexShrink:0}}>
               <rect width="36" height="36" rx="8" fill="#0ea5e9"/>
               <path d="M11 8 L11 24 L25 24" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
               <circle cx="25" cy="24" r="3.5" fill="white"/>
             </svg>
-            <span style={{fontSize:13,color:'#7dd3fc',fontFamily:"'JetBrains Mono',monospace",letterSpacing:'0.02em'}}>Copy docs for your AI assistant at logwick.io/docs — paste and say: add Logwick to my project.</span>
+            <span id="hero-copy-btn" style={{fontSize:13,color:'#7dd3fc',fontFamily:"'JetBrains Mono',monospace",letterSpacing:'0.02em'}}>⊕ Copy docs for your AI assistant</span>
           </div>
           <div style={{display:'flex',alignItems:'center',gap:10,background:'rgba(14,165,233,0.05)',border:'1px solid rgba(14,165,233,0.15)',borderRadius:40,padding:'10px 20px'}}>
             <svg width="18" height="18" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" style={{flexShrink:0}}>
@@ -442,7 +451,7 @@ export default function Home() {
               {[
                 ['1','Sign up and get your key','Create a free account at logwick.io and copy your API key from the dashboard.'],
                 ['2','Open your AI assistant','Open Claude, ChatGPT, Gemini, or any AI assistant you use for coding.'],
-                ['3','Say this to your AI','"Here are the Logwick docs: [paste from logwick.io/docs]. Add Logwick to my project. My API key is sk-lw-..."'],
+                ['3','Say this to your AI','"Here are the Logwick docs: [paste from logwick.io/docs]. Add Logwick to my project."'],
               ].map(([num,title,desc]) => (
                 <div key={num} style={{display:'flex',gap:14,alignItems:'flex-start'}}>
                   <div style={{width:28,height:28,borderRadius:'50%',background:'linear-gradient(135deg,#0ea5e9,#0284c7)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:12,fontWeight:700,color:'#fff',flexShrink:0}}>{num}</div>
