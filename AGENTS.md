@@ -1,85 +1,47 @@
-# AGENTS.md — AI Coding Agent Instructions for Logwick
+# Logwick — Agent Instructions
 
-This file tells AI coding agents how to interact with the Logwick codebase.
+Logwick is the audit log for AI agents. This file provides instructions for AI coding agents working with or integrating Logwick.
 
-## Project overview
+## What Logwick does
 
-Logwick is a Next.js 14 SaaS application for AI agent audit logging. It uses:
-- **Frontend**: Next.js 14 (Pages Router), React, inline styles
-- **Backend**: Next.js API routes (pages/api/)
-- **Database**: Supabase (PostgreSQL)
-- **Auth**: Supabase Auth with JWT Bearer tokens
-- **Payments**: Stripe (subscriptions) + x402 (pay-per-log)
-- **Email**: Resend
-- **Deployment**: Vercel
+Logwick captures every AI agent action in production — inputs, outputs, tokens, latency, costs, and errors — and makes them searchable from a dashboard or queryable via API.
 
-## Key directories
+## How to integrate Logwick into a project
 
-- `pages/` — Next.js pages and API routes
-- `pages/api/v1/` — Public REST API endpoints
-- `pages/api/dashboard/` — Authenticated dashboard API endpoints
-- `pages/api/billing/` — Stripe webhook and portal handlers
-- `pages/api/auth/` — Signup and auth handlers
-- `lib/` — Shared utilities (supabase.js, apiKeys.js, webhooks.js, x402.js)
-- `public/` — Static files including llms.txt, openapi.json, robots.txt
+1. Install the SDK: `npm install logwick` or `pip install logwick`
+2. Add `LOGWICK_API_KEY` to environment variables
+3. After each AI call, fire a log:
 
-## Development guidelines
+```javascript
+import { LogwickClient } from 'logwick'
+const logwick = new LogwickClient({ apiKey: process.env.LOGWICK_API_KEY })
 
-### Authentication pattern
-- Public API routes (`/api/v1/*`) use API key auth via `lib/apiKeys.js`
-- Dashboard routes (`/api/dashboard/*`) use Supabase JWT via `authFetch` with Bearer token
-- x402 routes use USDC payment verification via `lib/x402.js`
-
-### Adding a new API endpoint
-1. Create file in `pages/api/v1/your-endpoint.js`
-2. Set `res.setHeader('Content-Type', 'application/json')`
-3. Validate API key using pattern from existing endpoints
-4. Return structured JSON errors (never HTML)
-5. Add endpoint to `public/openapi.json` and `public/llms.txt`
-
-### Database access
-Always use `getSupabaseAdmin()` from `lib/supabase.js` in API routes.
-Never use the browser client in server-side code.
-
-### Environment variables required
-- NEXT_PUBLIC_SUPABASE_URL
-- NEXT_PUBLIC_SUPABASE_ANON_KEY
-- SUPABASE_SERVICE_ROLE_KEY
-- STRIPE_SECRET_KEY
-- STRIPE_WEBHOOK_SECRET
-- STRIPE_PAYMENT_LINK
-- RESEND_API_KEY
-- X402_WALLET_ADDRESS
-- X402_FACILITATOR_URL
-- X402_NETWORK
-- CDP_API_KEY_ID
-- CDP_API_KEY_SECRET
-
-### Testing API endpoints
-Use curl with your API key:
-```bash
-curl -X POST https://logwick.io/api/v1/logs \
-  -H "Authorization: Bearer sk-lw-your-key" \
-  -H "Content-Type: application/json" \
-  -d '{"agent":"gpt-4o","action":"test","status":"success","input":"test","output":"test"}'
+// After your AI call:
+logwick.fire({
+  agent: 'gpt-4o',
+  action: 'email_draft',
+  status: 'success',
+  input: userPrompt,
+  output: result,
+  tokens: usage.total_tokens
+})
 ```
 
-### Style conventions
-- Use inline styles (no CSS modules or Tailwind)
-- Dark theme: background #06090c, accent #0ea5e9
-- Fonts: Syne (display), JetBrains Mono (mono)
-- All API responses must be JSON with Content-Type: application/json
+## API endpoints
 
-## Running locally
+- `POST https://logwick.io/api/v1/logs` — ingest a log (requires API key)
+- `GET https://logwick.io/api/v1/logs` — query logs (requires API key)
+- `GET https://logwick.io/api/v1/stats` — get stats (requires API key)
+- `GET https://logwick.io/api/v1/guest-token` — get a demo key (no auth)
 
-```bash
-npm install
-cp .env.example .env.local  # add your env vars
-npm run dev
-```
+## Authentication
 
-## Links
-- Live site: https://logwick.io
-- Docs: https://logwick.io/docs
-- OpenAPI: https://logwick.io/openapi.json
-- llms.txt: https://logwick.io/llms.txt
+All API endpoints require `Authorization: Bearer sk-lw-your-key` header.
+Get an API key at https://logwick.io/dashboard after signing up.
+
+## Full documentation
+
+- Human docs: https://logwick.io/docs
+- Machine docs: https://logwick.io/llms.txt
+- Full docs: https://logwick.io/llms-full.txt
+- OpenAPI spec: https://logwick.io/openapi.json

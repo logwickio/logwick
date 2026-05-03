@@ -52,3 +52,6 @@ Sitemap: https://logwick.io/sitemap.xml
 # llms.txt: https://logwick.io/llms.txt
 # llms-full.txt: https://logwick.io/llms-full.txt
 # MCP: npx @logwick/mcp
+
+# NLWeb Schema Feeds
+schemamap: https://logwick.io/sitemap.xml
