@@ -437,10 +437,10 @@ export default function Home() {
             onMouseEnter={e => e.currentTarget.style.borderColor='rgba(14,165,233,0.5)'}
             onMouseLeave={e => e.currentTarget.style.borderColor='rgba(14,165,233,0.25)'}
           >
-            <img src="https://ora.run/api/badge/logwick.io" alt="ora agent readiness score 92/100" style={{height:40,borderRadius:6,display:'block'}} />
+            <img src="https://ora.run/api/badge/logwick.io" alt="ora agent readiness score" style={{height:40,borderRadius:6,display:'block'}} />
             <div style={{textAlign:'left'}}>
               <div style={{fontSize:14,fontWeight:800,color:'#38bdf8',fontFamily:"'Syne',sans-serif",marginBottom:2}}>Top 1% of AI tools</div>
-              <div style={{fontSize:11,color:'#4a7a90',fontFamily:"'JetBrains Mono',monospace"}}>Agent readiness · Grade A · Verified by ora.run</div>
+              <div style={{fontSize:11,color:'#4a7a90',fontFamily:"'JetBrains Mono',monospace"}}>Agent readiness · Verified by ora.run</div>
             </div>
           </a>
         </div>
