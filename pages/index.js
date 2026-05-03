@@ -439,8 +439,8 @@ export default function Home() {
           >
             <img src="https://ora.run/api/badge/logwick.io" alt="ora agent readiness score 92/100" style={{height:40,borderRadius:6,display:'block'}} />
             <div style={{textAlign:'left'}}>
-              <div style={{fontSize:14,fontWeight:800,color:'#38bdf8',fontFamily:"'Syne',sans-serif",marginBottom:2}}>#2 of 8,400 sites</div>
-              <div style={{fontSize:11,color:'#4a7a90',fontFamily:"'JetBrains Mono',monospace"}}>92/100 · Grade A · Verified by ora.run</div>
+              <div style={{fontSize:14,fontWeight:800,color:'#38bdf8',fontFamily:"'Syne',sans-serif",marginBottom:2}}>Top 1% of AI tools</div>
+              <div style={{fontSize:11,color:'#4a7a90',fontFamily:"'JetBrains Mono',monospace"}}>Agent readiness · Grade A · Verified by ora.run</div>
             </div>
           </a>
         </div>
