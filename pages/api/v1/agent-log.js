@@ -3,84 +3,136 @@
 // No API key or account required — payment is the authentication
 
 import { getSupabaseAdmin } from '../../../lib/supabase'
-import { verifyX402Payment, x402Config } from '../../../lib/x402'
 
-const PAYMENT_REQUIREMENTS = {
+const USDC_BASE_MAINNET = '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913'
+const PAYTO = process.env.X402_WALLET_ADDRESS || '0x19f50adb4a5b41802594814f9ad51f26324ee90e'
+const CDP_FACILITATOR = 'https://api.cdp.coinbase.com/platform/v2/x402/facilitator'
+
+const PAYMENT_ENVELOPE = {
   x402Version: 2,
+  error: 'Payment required',
+  resource: {
+    url: 'https://logwick.io/api/v1/agent-log',
+    description: 'Ingest one AI agent audit log entry to Logwick. Logs agent name, action, input, output, tokens, latency, and status. Works with any LLM — GPT-4o, Claude, Gemini, or any custom model.',
+    mimeType: 'application/json',
+  },
   accepts: [{
     scheme: 'exact',
     network: 'eip155:8453',
-    maxAmountRequired: '1000', // $0.001 USDC in microUSDC
-    resource: 'https://logwick.io/api/v1/agent-log',
-    description: 'Ingest one AI agent audit log entry to Logwick. Logs agent name, action, input, output, tokens, latency, and status.',
-    mimeType: 'application/json',
-    payTo: process.env.X402_WALLET_ADDRESS || '0x19f50adb4a5b41802594814f9ad51f26324ee90e',
+    amount: '1000',
+    asset: USDC_BASE_MAINNET,
+    payTo: PAYTO,
     maxTimeoutSeconds: 300,
-    extensions: {
-      bazaar: {
-        name: 'Logwick — AI Agent Audit Log',
-        description: 'Log any AI agent action to Logwick. Captures agent name, action, input prompt, output, token usage, latency, cost, and status. Searchable from dashboard. Works with GPT-4o, Claude, Gemini, Mistral, or any LLM.',
-        category: 'logging',
-        tags: ['logging', 'audit', 'ai-agents', 'observability', 'llm', 'monitoring'],
-        url: 'https://logwick.io',
-        docsUrl: 'https://logwick.io/docs',
-        inputSchema: {
-          type: 'object',
-          properties: {
-            agent: { type: 'string', description: 'AI model or agent name (e.g. gpt-4o, claude-3-5-sonnet)' },
-            action: { type: 'string', description: 'What the agent was doing (e.g. email_draft, code_review)' },
-            status: { type: 'string', enum: ['success', 'error', 'pending'], description: 'Outcome of the action' },
-            input: { type: 'string', description: 'The prompt or input sent to the agent' },
-            output: { type: 'string', description: 'The response or output from the agent' },
-            tokens: { type: 'number', description: 'Total tokens used' },
-            latency_ms: { type: 'number', description: 'Time taken in milliseconds' },
-            cost_usd: { type: 'number', description: 'Estimated cost in USD' },
-            user: { type: 'string', description: 'User or customer identifier' },
-            tags: { type: 'array', items: { type: 'string' }, description: 'Optional tags for filtering' },
-            metadata: { type: 'object', description: 'Any additional key-value data' }
-          },
-          required: ['agent', 'action']
-        },
-        outputSchema: {
-          type: 'object',
-          properties: {
-            id: { type: 'string', description: 'Log entry ID' },
-            timestamp: { type: 'string', description: 'ISO timestamp of when the log was stored' },
-            status: { type: 'string', description: 'ingested' }
-          }
-        }
-      }
-    }
   }],
-  error: 'Payment required — $0.001 USDC per log entry',
+  extensions: {
+    bazaar: {
+      info: {
+        input: {
+          type: 'http',
+          method: 'POST',
+          body: {
+            agent: 'gpt-4o',
+            action: 'email_draft',
+            status: 'success',
+            input: 'Draft a follow-up email',
+            output: 'Subject: Following up...',
+            tokens: 312,
+            latency_ms: 1842,
+          },
+          bodyType: 'json',
+        },
+        output: {
+          type: 'json',
+          example: {
+            id: 'uuid-here',
+            timestamp: '2026-05-04T12:00:00.000Z',
+            status: 'ingested',
+          },
+        },
+      },
+      schema: {
+        type: 'object',
+        properties: {
+          id: { type: 'string' },
+          timestamp: { type: 'string' },
+          status: { type: 'string' },
+        },
+        required: ['id', 'timestamp', 'status'],
+      },
+    },
+  },
+}
+
+const PAYMENT_ENVELOPE_B64 = Buffer.from(JSON.stringify(PAYMENT_ENVELOPE)).toString('base64')
+
+async function verifyPayment(paymentHeader) {
+  if (!paymentHeader) return { valid: false }
+  try {
+    const response = await fetch(`${CDP_FACILITATOR}/verify`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        payment: paymentHeader,
+        payload: PAYMENT_ENVELOPE,
+      }),
+    })
+    const data = await response.json()
+    return { valid: response.ok && data.isValid, data }
+  } catch (err) {
+    console.error('x402 verify error:', err)
+    return { valid: false }
+  }
+}
+
+async function settlePayment(paymentHeader) {
+  try {
+    await fetch(`${CDP_FACILITATOR}/settle`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        payment: paymentHeader,
+        payload: PAYMENT_ENVELOPE,
+      }),
+    })
+  } catch (err) {
+    console.error('x402 settle error:', err)
+  }
 }
 
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*')
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS, GET')
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, X-Payment, Payment, PAYMENT-SIGNATURE')
-  res.setHeader('payment-required', 'true')
-  res.setHeader('X-Payment-Network', 'eip155:8453')
-  res.setHeader('X-Payment-Price', '0.001')
-  res.setHeader('X-Payment-Asset', 'USDC')
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, X-Payment, Payment, PAYMENT-SIGNATURE, payment-required')
+  res.setHeader('payment-required', PAYMENT_ENVELOPE_B64)
 
   if (req.method === 'OPTIONS') return res.status(200).end()
 
-  // GET returns 402 so agents can discover pricing and Bazaar metadata
+  // GET returns 402 so agents can discover pricing
   if (req.method === 'GET') {
-    return res.status(402).json(PAYMENT_REQUIREMENTS)
+    return res.status(402)
+      .setHeader('Content-Type', 'application/json')
+      .json({ error: 'Payment required', x402Version: 2 })
   }
 
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' })
   }
 
-  // Verify x402 payment
-  const payment = await verifyX402Payment(req)
+  // Check for payment header
+  const paymentHeader = req.headers['x-payment'] || req.headers['payment-signature'] || req.headers['payment']
 
-  if (!payment.valid) {
-    res.setHeader('Content-Type', 'application/json')
-    return res.status(402).json(PAYMENT_REQUIREMENTS)
+  if (!paymentHeader) {
+    return res.status(402)
+      .setHeader('payment-required', PAYMENT_ENVELOPE_B64)
+      .json({ error: 'Payment required', x402Version: 2 })
+  }
+
+  // Verify payment
+  const verification = await verifyPayment(paymentHeader)
+  if (!verification.valid) {
+    return res.status(402)
+      .setHeader('payment-required', PAYMENT_ENVELOPE_B64)
+      .json({ error: 'Payment verification failed', x402Version: 2 })
   }
 
   // Store the log
@@ -95,7 +147,6 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'agent and action are required' })
   }
 
-  // Get x402 public org
   const { data: publicOrg } = await supabase
     .from('organizations')
     .select('id')
@@ -105,8 +156,6 @@ export default async function handler(req, res) {
   if (!publicOrg) {
     return res.status(500).json({ error: 'x402 org not configured' })
   }
-
-  const walletRef = payment.walletAddress || null
 
   const { data: log, error } = await supabase
     .from('logs')
@@ -123,7 +172,6 @@ export default async function handler(req, res) {
       user: user ? String(user).slice(0, 200) : null,
       tags: Array.isArray(tags) ? tags : [],
       metadata: typeof metadata === 'object' ? metadata : {},
-      wallet_ref: walletRef,
     })
     .select('id, created_at')
     .single()
@@ -131,6 +179,9 @@ export default async function handler(req, res) {
   if (error) {
     return res.status(500).json({ error: error.message })
   }
+
+  // Settle payment in background
+  settlePayment(paymentHeader)
 
   return res.status(200).json({
     id: log.id,
