@@ -51,4 +51,12 @@ nextConfig.headers = async () => [
   },
 ]
 
+nextConfig.redirects = async () => [
+  {
+    source: '/blog/logwick-92-agent-ready-score',
+    destination: '/blog/how-we-built-an-agent-ready-developer-tool',
+    permanent: true,
+  },
+]
+
 module.exports = nextConfig
