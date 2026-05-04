@@ -115,7 +115,7 @@ export default function BlogPost() {
               This matters because AI agents are increasingly the interface between users and software. When a developer tells Claude to "add logging to my project," Claude needs to be able to discover Logwick, understand what it does, authenticate, and integrate it — all without human intervention. A high ora.run score means Logwick works natively in the agentic world.
             </p>
             <p style={{ fontSize: 14, color: '#c8dce8', lineHeight: 1.9 }}>
-              Most developer tools score in the 40-60 range. Scoring 92 puts Logwick alongside companies that have dedicated engineering teams working on agent infrastructure. We did it in a single focused sprint.
+              Most developer tools score in the 40-60 range. Achieving Grade A puts Logwick alongside companies that have dedicated engineering teams working on agent infrastructure. We did it in a single focused sprint.
             </p>
           </div>
 
