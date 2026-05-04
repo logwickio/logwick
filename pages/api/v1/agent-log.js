@@ -124,7 +124,7 @@ export default async function handler(req, res) {
   if (!paymentHeader) {
     return res.status(402)
       .setHeader('payment-required', PAYMENT_ENVELOPE_B64)
-      .json({ error: 'Payment required', x402Version: 2 })
+      .json({ error: 'Payment required', x402Version: 2, id: '', timestamp: '', status: '' })
   }
 
   // Verify payment
