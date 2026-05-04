@@ -8,10 +8,10 @@ export default function BlogPost() {
   return (
     <>
       <Head>
-        <title>From 32 to 92: How We Built One of the Most Agent-Ready Developer Tools on the Internet | Logwick</title>
-        <meta name="description" content="We took Logwick from a score of 32 to 92/100 on ora.run's agent readiness benchmark — putting us in the top 1% of sites scanned. Here's exactly what we built and why it matters." />
-        <meta property="og:title" content="From 32 to 92: How We Built One of the Most Agent-Ready Developer Tools on the Internet" />
-        <meta property="og:description" content="We took Logwick from 32 to 92/100 on ora.run's agent readiness benchmark — top 1% of sites scanned. Here's exactly what we built." />
+        <title>How We Built One of the Most Agent-Ready Developer Tools on the Internet | Logwick</title>
+        <meta name="description" content="How Logwick achieved Grade A on ora.run's agent readiness benchmark — putting us in the top 1% of sites scanned. Here's exactly what we built and why it matters." />
+        <meta property="og:title" content="How We Built One of the Most Agent-Ready Developer Tools on the Internet" />
+        <meta property="og:description" content="How Logwick achieved Grade A on ora.run's agent readiness benchmark — top 1% of sites scanned. Here's exactly what we built." />
         <meta property="og:url" content="https://logwick.io/blog/logwick-92-agent-ready-score" />
         <meta property="og:type" content="article" />
         <meta name="twitter:card" content="summary_large_image" />
@@ -20,8 +20,8 @@ export default function BlogPost() {
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "Article",
-          "headline": "From 32 to 92: How We Built One of the Most Agent-Ready Developer Tools on the Internet",
-          "description": "We took Logwick from 32 to 92/100 on ora.run's agent readiness benchmark.",
+          "headline": "How We Built One of the Most Agent-Ready Developer Tools on the Internet",
+          "description": "How Logwick achieved Grade A on ora.run's agent readiness benchmark — top 1% of sites scanned.",
           "url": "https://logwick.io/blog/logwick-92-agent-ready-score",
           "author": { "@type": "Organization", "name": "Logwick", "url": "https://logwick.io" },
           "publisher": { "@type": "Organization", "name": "Logwick", "url": "https://logwick.io" },
@@ -51,10 +51,10 @@ export default function BlogPost() {
           <div style={{ marginBottom: 48 }}>
             <div style={{ fontSize: 11, color: '#4a7a90', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 16 }}>Behind the build · May 2026</div>
             <h1 style={{ fontFamily: "'Syne', sans-serif", fontSize: 'clamp(26px,5vw,40px)', fontWeight: 800, color: '#f1f5f9', lineHeight: 1.1, marginBottom: 20, letterSpacing: '-0.02em' }}>
-              From 32 to 92: How We Built One of the Most Agent-Ready Developer Tools on the Internet
+              How We Built One of the Most Agent-Ready Developer Tools on the Internet
             </h1>
             <p style={{ fontSize: 16, color: '#94b8cc', lineHeight: 1.8, marginBottom: 24 }}>
-              <a href="https://ora.run" style={{ color: '#38bdf8', textDecoration: 'none' }}>Ora.run</a> scans websites and scores how ready they are for AI agents — things like MCP servers, OpenAPI specs, x402 payments, llms.txt files, and structured data. We started at 32/100. We hit 92/100, putting Logwick in the top 1% of sites scanned. Here's exactly what we built, why it matters, and what we learned. (Scores update as the benchmark evolves — rankings reflect the time of writing.)
+              <a href="https://ora.run" style={{ color: '#38bdf8', textDecoration: 'none' }}>Ora.run</a> scans websites and scores how ready they are for AI agents — things like MCP servers, OpenAPI specs, x402 payments, llms.txt files, and structured data. We started at a failing score and worked our way to Grade A — putting Logwick in the top 1% of sites scanned. Here's exactly what we built, why it matters, and what we learned. (Scores update as the benchmark evolves.)
             </p>
             <div style={{ background: 'rgba(14,165,233,0.08)', border: '1px solid rgba(14,165,233,0.2)', borderRadius: 8, padding: '16px 20px', marginBottom: 24 }}>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16, textAlign: 'center' }}>
