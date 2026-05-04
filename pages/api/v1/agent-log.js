@@ -44,9 +44,18 @@ const PAYMENT_ENVELOPE = {
         output: {
           type: 'json',
           example: {
-            id: 'uuid-here',
+            id: '550e8400-e29b-41d4-a716-446655440000',
             timestamp: '2026-05-04T12:00:00.000Z',
             status: 'ingested',
+          },
+          schema: {
+            type: 'object',
+            required: ['id', 'timestamp', 'status'],
+            properties: {
+              id: { type: 'string' },
+              timestamp: { type: 'string' },
+              status: { type: 'string' },
+            },
           },
         },
       },
@@ -111,7 +120,7 @@ export default async function handler(req, res) {
   if (req.method === 'GET') {
     return res.status(402)
       .setHeader('Content-Type', 'application/json')
-      .json({ error: 'Payment required', x402Version: 2 })
+      .json({ error: 'Payment required', x402Version: 2, id: '', timestamp: '', status: '' })
   }
 
   if (req.method !== 'POST') {
