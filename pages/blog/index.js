@@ -5,8 +5,8 @@ import { useRouter } from 'next/router'
 const posts = [
   {
     slug: 'logwick-92-agent-ready-score',
-    title: 'From 32 to 92: How We Built One of the Most Agent-Ready Developer Tools on the Internet',
-    description: "We took Logwick from 32 to 92/100 on ora.run's agent readiness benchmark — top 0.4% of 8,400 sites. Here's exactly what we built and why it matters.",
+    title: 'How We Built One of the Most Agent-Ready Developer Tools on the Internet',
+    description: "How Logwick achieved Grade A on ora.run's agent readiness benchmark — top 1% of sites scanned. Here's exactly what we built and why it matters.",
     date: 'May 2, 2026',
     tags: ['Behind the build', 'AI agents', 'Infrastructure'],
     readTime: '6 min read',

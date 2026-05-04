@@ -63,12 +63,12 @@ export default function BlogPost() {
                   <div style={{ fontSize: 11, color: '#4a7a90', marginTop: 4 }}>Starting score</div>
                 </div>
                 <div>
-                  <div style={{ fontSize: 32, fontWeight: 800, color: '#38bdf8', fontFamily: "'Syne', sans-serif" }}>92</div>
-                  <div style={{ fontSize: 11, color: '#4a7a90', marginTop: 4 }}>Final score</div>
+                  <div style={{ fontSize: 32, fontWeight: 800, color: '#38bdf8', fontFamily: "'Syne', sans-serif" }}>A</div>
+                  <div style={{ fontSize: 11, color: '#4a7a90', marginTop: 4 }}>Grade</div>
                 </div>
                 <div>
-                  <div style={{ fontSize: 32, fontWeight: 800, color: '#34d399', fontFamily: "'Syne', sans-serif" }}>#2</div>
-                  <div style={{ fontSize: 11, color: '#4a7a90', marginTop: 4 }}>overall out of 8,400 sites</div>
+                  <div style={{ fontSize: 32, fontWeight: 800, color: '#34d399', fontFamily: "'Syne', sans-serif" }}>Top 1%</div>
+                  <div style={{ fontSize: 11, color: '#4a7a90', marginTop: 4 }}>of all sites scanned</div>
                 </div>
               </div>
             </div>
@@ -91,12 +91,12 @@ export default function BlogPost() {
               { score: 82, label: 'Split JSON-LD into separate blocks, Ed25519 key, og:image', color: '#22d3ee' },
               { score: 87, label: 'Added llms-full.txt, pricing.md, index.md, modular llms.txt', color: '#38bdf8' },
               { score: 88, label: 'Added markdown links to llms.txt, PostalAddress schema', color: '#60a5fa' },
-              { score: 92, label: 'Blog post made content citable, OpenAPI 429 errors, guest token', color: '#a78bfa' },
+              { score: 'A', label: 'Grade A achieved — top 1% of all sites scanned', color: '#a78bfa' },
             ].map((item, i) => (
               <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 10 }}>
                 <div style={{ width: 36, textAlign: 'right', fontSize: 13, fontWeight: 700, color: item.color, flexShrink: 0 }}>{item.score}</div>
                 <div style={{ flex: 1, height: 6, background: '#0a1520', borderRadius: 3, overflow: 'hidden' }}>
-                  <div style={{ height: '100%', width: `${item.score}%`, background: item.color, borderRadius: 3, transition: 'width 0.5s' }} />
+                  <div style={{ height: '100%', width: typeof item.score === 'number' ? `${item.score}%` : '100%', background: item.color, borderRadius: 3, transition: 'width 0.5s' }} />
                 </div>
                 <div style={{ fontSize: 11, color: '#7a9db5', flex: 2 }}>{item.label}</div>
               </div>
