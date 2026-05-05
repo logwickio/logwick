@@ -8,6 +8,36 @@ const USDC_BASE_MAINNET = '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913'
 const PAYTO = process.env.X402_WALLET_ADDRESS || '0x19f50adb4a5b41802594814f9ad51f26324ee90e'
 const CDP_FACILITATOR = 'https://api.cdp.coinbase.com/platform/v2/x402/facilitator'
 
+// Generate CDP JWT for authentication
+async function getCDPAuthHeaders(method, path) {
+  const { createSign } = await import('crypto')
+  const keyName = process.env.CDP_API_KEY_NAME
+  const privateKey = process.env.CDP_API_KEY_PRIVATE_KEY?.replace(/\\n/g, '\n')
+  
+  if (!keyName || !privateKey) return {}
+
+  const host = 'api.cdp.coinbase.com'
+  const uri = `${method} ${host}${path}`
+  const payload = {
+    iss: 'cdp',
+    nbf: Math.floor(Date.now() / 1000),
+    exp: Math.floor(Date.now() / 1000) + 120,
+    sub: keyName,
+    uri,
+  }
+
+  const header = Buffer.from(JSON.stringify({ alg: 'ES256', kid: keyName, nonce: Math.random().toString(36).slice(2) })).toString('base64url')
+  const body = Buffer.from(JSON.stringify(payload)).toString('base64url')
+  const signingInput = `${header}.${body}`
+
+  const sign = createSign('SHA256')
+  sign.update(signingInput)
+  const signature = sign.sign(privateKey, 'base64url')
+
+  const jwt = `${signingInput}.${signature}`
+  return { Authorization: `Bearer ${jwt}` }
+}
+
 const PAYMENT_ENVELOPE = {
   x402Version: 2,
   error: 'Payment required',
@@ -77,9 +107,10 @@ const PAYMENT_ENVELOPE_B64 = Buffer.from(JSON.stringify(PAYMENT_ENVELOPE)).toStr
 async function verifyPayment(paymentHeader) {
   if (!paymentHeader) return { valid: false }
   try {
+    const authHeaders = await getCDPAuthHeaders('POST', '/platform/v2/x402/facilitator/verify')
     const response = await fetch(`${CDP_FACILITATOR}/verify`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', ...authHeaders },
       body: JSON.stringify({
         payment: paymentHeader,
         payload: PAYMENT_ENVELOPE,
@@ -95,9 +126,10 @@ async function verifyPayment(paymentHeader) {
 
 async function settlePayment(paymentHeader) {
   try {
+    const authHeaders = await getCDPAuthHeaders('POST', '/platform/v2/x402/facilitator/settle')
     await fetch(`${CDP_FACILITATOR}/settle`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', ...authHeaders },
       body: JSON.stringify({
         payment: paymentHeader,
         payload: PAYMENT_ENVELOPE,
